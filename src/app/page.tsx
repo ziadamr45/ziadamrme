@@ -4,6 +4,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Card, CardContent } from "@/components/ui/card";
 import { useApp } from "@/components/providers";
 import { Controls } from "@/components/controls";
+import { AnimatedBackground } from "@/components/animated-background";
 
 const socialLinks = [
   {
@@ -128,11 +129,8 @@ export default function Home() {
       {/* Controls */}
       <Controls />
 
-      {/* Background decoration */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
-        <div className="absolute -top-40 -right-40 w-80 h-80 bg-linear-to-br from-orange-200/30 to-amber-200/30 dark:from-orange-500/10 dark:to-amber-500/10 rounded-full blur-3xl" />
-        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-linear-to-br from-blue-200/30 to-cyan-200/30 dark:from-blue-500/10 dark:to-cyan-500/10 rounded-full blur-3xl" />
-      </div>
+      {/* Animated Background */}
+      <AnimatedBackground />
 
       <Card className="relative w-full max-w-md mx-auto overflow-hidden border-0 shadow-2xl shadow-slate-200/50 dark:shadow-black/50 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl">
         <CardContent className="p-8">
