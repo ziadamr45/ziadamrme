@@ -137,7 +137,7 @@ export default function Home() {
   }, [showImageModal]);
 
   return (
-    <div className="relative min-h-screen flex flex-col items-center justify-center bg-linear-to-br from-slate-50 via-white to-slate-100 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 px-4 py-12">
+    <div className="relative min-h-screen flex flex-col items-center justify-center bg-[#0a0a1a] dark:bg-[#050510] px-4 py-12 overflow-hidden">
       {/* Controls */}
       <Controls />
 
@@ -162,7 +162,7 @@ export default function Home() {
         </div>
       )}
 
-      <Card className="relative w-full max-w-md mx-auto overflow-hidden border-0 shadow-2xl shadow-slate-200/50 dark:shadow-black/50 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl">
+      <Card className="relative w-full max-w-md mx-auto overflow-hidden border border-white/20 dark:border-white/10 shadow-2xl shadow-black/10 dark:shadow-black/40 bg-white/30 dark:bg-white/5 backdrop-blur-2xl">
         <CardContent className="p-8">
           {/* Profile Section */}
           <div className="flex flex-col items-center text-center mb-8">
@@ -195,17 +195,17 @@ export default function Home() {
             </button>
 
             {/* Name */}
-            <h1 className="text-2xl font-bold text-slate-900 dark:text-white mb-1">
+            <h1 className="text-2xl font-bold text-white mb-1">
               {t.name}
             </h1>
             {t.subtitle && (
-              <p className="text-lg text-slate-600 dark:text-slate-400 mb-4 font-medium">
+              <p className="text-lg text-slate-300 mb-4 font-medium">
                 {t.subtitle}
               </p>
             )}
 
             {/* Title */}
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-linear-to-r from-orange-500/10 to-amber-500/10 dark:from-orange-500/20 dark:to-amber-500/20 text-orange-600 dark:text-orange-400 text-sm font-medium mb-4">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-linear-to-r from-orange-500/15 to-amber-500/15 dark:from-orange-500/25 dark:to-amber-500/25 text-orange-400 dark:text-orange-300 text-sm font-medium mb-4">
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
               </svg>
@@ -213,16 +213,16 @@ export default function Home() {
             </div>
 
             {/* Mission */}
-            <p className="text-sm text-slate-500 dark:text-slate-400 leading-relaxed max-w-sm">
+            <p className="text-sm text-slate-400 dark:text-slate-400 leading-relaxed max-w-sm">
               {t.mission}
             </p>
           </div>
 
           {/* Divider */}
           <div className="flex items-center gap-4 mb-6">
-            <div className="flex-1 h-px bg-linear-to-r from-transparent via-slate-200 dark:via-slate-700 to-transparent" />
-            <span className="text-xs text-slate-400 dark:text-slate-500 font-medium">{t.socialLinksTitle}</span>
-            <div className="flex-1 h-px bg-linear-to-r from-transparent via-slate-200 dark:via-slate-700 to-transparent" />
+            <div className="flex-1 h-px bg-linear-to-r from-transparent via-white/15 to-transparent" />
+            <span className="text-xs text-slate-300 dark:text-slate-400 font-medium">{t.socialLinksTitle}</span>
+            <div className="flex-1 h-px bg-linear-to-r from-transparent via-white/15 to-transparent" />
           </div>
 
           {/* Social Links */}
@@ -233,7 +233,7 @@ export default function Home() {
                 href={link.url}
                 {...(link.url.startsWith("mailto:") ? {} : { target: "_blank", rel: "noopener noreferrer" })}
                 aria-label={`${t.socialNames[link.key as keyof typeof t.socialNames]} — ${link.url.startsWith("mailto:") ? t.ariaSendEmail : t.ariaOpensNew}`}
-                className={`inline-flex items-center justify-center gap-3 h-12 w-full rounded-lg border border-slate-200 dark:border-slate-700 bg-background px-4 text-sm font-medium text-slate-700 dark:text-slate-300 transition-all duration-300 ${link.color} hover:text-foreground`}
+                className={`inline-flex items-center justify-center gap-3 h-12 w-full rounded-lg border border-white/15 bg-white/5 backdrop-blur-sm px-4 text-sm font-medium text-slate-200 dark:text-slate-300 transition-all duration-300 hover:bg-white/10 dark:hover:bg-white/10 ${link.color} hover:text-foreground`}
               >
                 {link.icon}
                 <span className="font-medium">{t.socialNames[link.key as keyof typeof t.socialNames]}</span>
@@ -244,7 +244,7 @@ export default function Home() {
       </Card>
 
       {/* Footer */}
-      <p className="mt-8 text-xs text-slate-400 dark:text-slate-500">
+      <p className="mt-8 text-xs text-slate-500 dark:text-slate-500">
         © {new Date().getFullYear()} Ziad Amr
       </p>
     </div>
