@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Card, CardContent } from "@/components/ui/card";
 import { useApp } from "@/components/providers";
@@ -123,6 +124,17 @@ const translations = {
 export default function Home() {
   const { language } = useApp();
   const t = translations[language];
+  const [showImageModal, setShowImageModal] = useState(false);
+
+  // Lock body scroll when modal is open
+  useEffect(() => {
+    if (showImageModal) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => { document.body.style.overflow = ""; };
+  }, [showImageModal]);
 
   return (
     <div className="relative min-h-screen flex flex-col items-center justify-center bg-linear-to-br from-slate-50 via-white to-slate-100 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 px-4 py-12">
@@ -132,21 +144,55 @@ export default function Home() {
       {/* Animated Background */}
       <AnimatedBackground />
 
+      {/* Image Lightbox Modal */}
+      {showImageModal && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm animate-in fade-in duration-200 cursor-zoom-out"
+          onClick={() => setShowImageModal(false)}
+          role="dialog"
+          aria-modal="true"
+          aria-label={language === "ar" ? "عرض الصورة الشخصية" : "View profile picture"}
+        >
+          <img
+            src="/profile.jpg"
+            alt="Ziad Amr"
+            className="max-w-[90vw] max-h-[85vh] rounded-2xl shadow-2xl object-contain animate-in zoom-in-95 duration-300"
+            onClick={(e) => e.stopPropagation()}
+          />
+        </div>
+      )}
+
       <Card className="relative w-full max-w-md mx-auto overflow-hidden border-0 shadow-2xl shadow-slate-200/50 dark:shadow-black/50 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl">
         <CardContent className="p-8">
           {/* Profile Section */}
           <div className="flex flex-col items-center text-center mb-8">
-            {/* Avatar */}
-            <div className="relative mb-6">
-              <Avatar className="w-28 h-28 ring-4 ring-white dark:ring-slate-800 shadow-xl">
+            {/* Avatar — clickable */}
+            <button
+              type="button"
+              onClick={() => setShowImageModal(true)}
+              aria-label={language === "ar" ? "اضغط لعرض الصورة كاملة" : "Click to view full image"}
+              className="relative mb-6 group cursor-pointer focus:outline-none"
+            >
+              <Avatar className="w-28 h-28 ring-4 ring-white dark:ring-slate-800 shadow-xl transition-transform duration-300 group-hover:scale-105 group-active:scale-95">
                 <AvatarImage src="/profile.jpg" alt="Ziad Amr" />
                 <AvatarFallback className="text-3xl font-bold bg-linear-to-br from-orange-500 to-amber-500 text-white">
                   {t.avatarFallback}
                 </AvatarFallback>
               </Avatar>
+              {/* Zoom hint overlay */}
+              <div className="absolute inset-0 flex items-center justify-center rounded-full bg-black/0 group-hover:bg-black/30 transition-all duration-300">
+                <svg
+                  className="w-8 h-8 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300 drop-shadow-lg"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m3-3H7" />
+                </svg>
+              </div>
               {/* Online indicator */}
               <span className="absolute bottom-1 right-1 w-5 h-5 bg-green-500 border-[3px] border-white dark:border-slate-900 rounded-full" aria-hidden="true" />
-            </div>
+            </button>
 
             {/* Name */}
             <h1 className="text-2xl font-bold text-slate-900 dark:text-white mb-1">
