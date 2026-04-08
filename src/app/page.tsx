@@ -1,10 +1,13 @@
+"use client";
+
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Card, CardContent } from "@/components/ui/card";
+import { useApp } from "@/components/providers";
+import { Controls } from "@/components/controls";
 
 const socialLinks = [
   {
-    name: "Facebook",
-    nameAr: "فيسبوك",
+    key: "facebook",
     url: "https://www.facebook.com/ziad7mr",
     icon: (
       <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -14,8 +17,7 @@ const socialLinks = [
     color: "hover:bg-[#1877F2] hover:text-white hover:border-[#1877F2]",
   },
   {
-    name: "Telegram",
-    nameAr: "تليجرام",
+    key: "telegram",
     url: "https://t.me/ziadamr",
     icon: (
       <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -25,8 +27,7 @@ const socialLinks = [
     color: "hover:bg-[#0088cc] hover:text-white hover:border-[#0088cc]",
   },
   {
-    name: "Instagram",
-    nameAr: "انستجرام",
+    key: "instagram",
     url: "https://www.instagram.com/ziadamr455/",
     icon: (
       <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -36,8 +37,7 @@ const socialLinks = [
     color: "hover:bg-linear-to-r hover:from-[#833AB4] hover:via-[#FD1D1D] hover:to-[#F77737] hover:text-white hover:border-transparent",
   },
   {
-    name: "X (Twitter)",
-    nameAr: "اكس",
+    key: "x",
     url: "https://x.com/ziad90216",
     icon: (
       <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -47,8 +47,7 @@ const socialLinks = [
     color: "hover:bg-black hover:text-white hover:border-black dark:hover:bg-white dark:hover:text-black",
   },
   {
-    name: "Threads",
-    nameAr: "ثريدز",
+    key: "threads",
     url: "https://www.threads.com/@ziadamr455",
     icon: (
       <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -58,8 +57,7 @@ const socialLinks = [
     color: "hover:bg-black hover:text-white hover:border-black dark:hover:bg-white dark:hover:text-black",
   },
   {
-    name: "YouTube",
-    nameAr: "يوتيوب",
+    key: "youtube",
     url: "https://youtube.com/@alhayat_ala_eltarek?si=pcsc_31Kcv3Jym14",
     icon: (
       <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -69,8 +67,7 @@ const socialLinks = [
     color: "hover:bg-[#FF0000] hover:text-white hover:border-[#FF0000]",
   },
   {
-    name: "Email",
-    nameAr: "البريد الإلكتروني",
+    key: "email",
     url: "mailto:ziad90216@gmail.com",
     icon: (
       <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -81,9 +78,56 @@ const socialLinks = [
   },
 ];
 
+const translations = {
+  ar: {
+    name: "زياد عمرو",
+    subtitle: "Ziad Amr",
+    title: "مطوِّر مواقع ويب",
+    mission: "الهدف: إنشاء خدمات مجانية وإتاحة التكنولوجيا الحديثة للجميع ونشر الخير والفائدة",
+    socialLinksTitle: "روابط التواصل",
+    avatarFallback: "زياد",
+    ariaSendEmail: "أرسل بريد إلكتروني",
+    ariaOpensNew: "يفتح في نافذة جديدة",
+    socialNames: {
+      facebook: "فيسبوك",
+      telegram: "تليجرام",
+      instagram: "انستجرام",
+      x: "اكس",
+      threads: "ثريدز",
+      youtube: "يوتيوب",
+      email: "البريد الإلكتروني",
+    },
+  },
+  en: {
+    name: "Ziad Amr",
+    subtitle: "",
+    title: "Web Developer",
+    mission: "Mission: Creating free services and making modern technology accessible to everyone, spreading goodness and benefit",
+    socialLinksTitle: "Social Links",
+    avatarFallback: "ZA",
+    ariaSendEmail: "Send email",
+    ariaOpensNew: "Opens in new window",
+    socialNames: {
+      facebook: "Facebook",
+      telegram: "Telegram",
+      instagram: "Instagram",
+      x: "X (Twitter)",
+      threads: "Threads",
+      youtube: "YouTube",
+      email: "Email",
+    },
+  },
+};
+
 export default function Home() {
+  const { language } = useApp();
+  const t = translations[language];
+
   return (
     <div className="relative min-h-screen flex flex-col items-center justify-center bg-linear-to-br from-slate-50 via-white to-slate-100 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 px-4 py-12">
+      {/* Controls */}
+      <Controls />
+
       {/* Background decoration */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
         <div className="absolute -top-40 -right-40 w-80 h-80 bg-linear-to-br from-orange-200/30 to-amber-200/30 dark:from-orange-500/10 dark:to-amber-500/10 rounded-full blur-3xl" />
@@ -99,7 +143,7 @@ export default function Home() {
               <Avatar className="w-28 h-28 ring-4 ring-white dark:ring-slate-800 shadow-xl">
                 <AvatarImage src="/profile.jpg" alt="Ziad Amr" />
                 <AvatarFallback className="text-3xl font-bold bg-linear-to-br from-orange-500 to-amber-500 text-white">
-                  زياد
+                  {t.avatarFallback}
                 </AvatarFallback>
               </Avatar>
               {/* Online indicator */}
@@ -108,30 +152,32 @@ export default function Home() {
 
             {/* Name */}
             <h1 className="text-2xl font-bold text-slate-900 dark:text-white mb-1">
-              زياد عمرو
+              {t.name}
             </h1>
-            <p className="text-lg text-slate-600 dark:text-slate-400 mb-4 font-medium">
-              Ziad Amr
-            </p>
+            {t.subtitle && (
+              <p className="text-lg text-slate-600 dark:text-slate-400 mb-4 font-medium">
+                {t.subtitle}
+              </p>
+            )}
 
             {/* Title */}
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-linear-to-r from-orange-500/10 to-amber-500/10 dark:from-orange-500/20 dark:to-amber-500/20 text-orange-600 dark:text-orange-400 text-sm font-medium mb-4">
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
               </svg>
-              مطوِّر مواقع ويب
+              {t.title}
             </div>
 
             {/* Mission */}
             <p className="text-sm text-slate-500 dark:text-slate-400 leading-relaxed max-w-sm">
-              الهدف: إنشاء خدمات مجانية وإتاحة التكنولوجيا الحديثة للجميع ونشر الخير والفائدة
+              {t.mission}
             </p>
           </div>
 
           {/* Divider */}
           <div className="flex items-center gap-4 mb-6">
             <div className="flex-1 h-px bg-linear-to-r from-transparent via-slate-200 dark:via-slate-700 to-transparent" />
-            <span className="text-xs text-slate-400 dark:text-slate-500 font-medium">روابط التواصل</span>
+            <span className="text-xs text-slate-400 dark:text-slate-500 font-medium">{t.socialLinksTitle}</span>
             <div className="flex-1 h-px bg-linear-to-r from-transparent via-slate-200 dark:via-slate-700 to-transparent" />
           </div>
 
@@ -139,14 +185,14 @@ export default function Home() {
           <div className="space-y-3">
             {socialLinks.map((link) => (
               <a
-                key={link.name}
+                key={link.key}
                 href={link.url}
                 {...(link.url.startsWith("mailto:") ? {} : { target: "_blank", rel: "noopener noreferrer" })}
-                aria-label={`${link.nameAr} — ${link.url.startsWith("mailto:") ? "أرسل بريد إلكتروني" : "يفتح في نافذة جديدة"}`}
+                aria-label={`${t.socialNames[link.key as keyof typeof t.socialNames]} — ${link.url.startsWith("mailto:") ? t.ariaSendEmail : t.ariaOpensNew}`}
                 className={`inline-flex items-center justify-center gap-3 h-12 w-full rounded-lg border border-slate-200 dark:border-slate-700 bg-background px-4 text-sm font-medium text-slate-700 dark:text-slate-300 transition-all duration-300 ${link.color} hover:text-foreground`}
               >
                 {link.icon}
-                <span className="font-medium">{link.nameAr}</span>
+                <span className="font-medium">{t.socialNames[link.key as keyof typeof t.socialNames]}</span>
               </a>
             ))}
           </div>
