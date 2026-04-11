@@ -19,6 +19,7 @@ export const metadata: Metadata = {
   description: "الصفحة الشخصية لزياد عمرو — مطوِّر مواقع ويب. الهدف: إنشاء خدمات مجانية وإتاحة التكنولوجيا الحديثة للجميع ونشر الخير والفائدة.",
  icons: {
     icon: "/favicon.png",
+    apple: "/favicon.png",
   },
   openGraph: {
     title: "Ziad Amr — مطوِّر مواقع ويب",
