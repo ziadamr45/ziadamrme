@@ -80,12 +80,104 @@ const socialLinks = [
   },
 ];
 
+const projects = [
+  {
+    key: "radio",
+    emoji: "📡",
+    name: { ar: "إسمع راديو", en: "Esma3 Radio" },
+    description: {
+      ar: "تطبيق ويب احترافي للاستماع إلى محطات الراديو من مختلف أنحاء العالم، مدعوم بالذكاء الاصطناعي ويتضمن قسمًا للقرآن الكريم مع توصيات ذكية ونظام إشعارات متقدم",
+      en: "Professional web app for listening to radio stations worldwide, powered by AI with a Quran section, smart recommendations, and an advanced notification system",
+    },
+    tech: ["Next.js", "React", "TypeScript", "Tailwind CSS", "PostgreSQL", "Prisma", "AI", "Anthropic Claude"],
+    url: "https://esma3radio.vercel.app",
+    github: "https://github.com/ziadamr45/Radio",
+    featured: true,
+  },
+  {
+    key: "notifications",
+    emoji: "⚙️",
+    name: { ar: "لوحة تحكم الإشعارات", en: "Notification Dashboard" },
+    description: {
+      ar: "لوحة تحكم إدارية متكاملة لإدارة إشعارات تطبيق إسمع راديو، تتضمن إحصائيات المستخدمين والاستماع وتحليلات الأجهزة ونظام جدولة الإشعارات",
+      en: "Comprehensive admin dashboard for managing Esma3 Radio notifications with user analytics, listening stats, device analytics, and notification scheduling",
+    },
+    tech: ["Next.js", "React", "TypeScript", "Tailwind CSS", "PostgreSQL", "Prisma"],
+    url: null,
+    github: "https://github.com/ziadamr45/Notifications",
+    featured: true,
+  },
+  {
+    key: "weather",
+    emoji: "🌤️",
+    name: { ar: "تطبيق الطقس", en: "Weather App" },
+    description: {
+      ar: "تطبيق احترافي لمعرفة حالة الطقس مدعوم بالكامل بالذكاء الاصطناعي، يوفر توقعات دقيقة وتحليلات مناخية مفصلة",
+      en: "Professional weather application fully powered by AI, providing accurate forecasts and detailed climate analysis",
+    },
+    tech: ["Python", "AI"],
+    url: null,
+    github: "https://github.com/ziadamr45/Weather-",
+    featured: false,
+  },
+  {
+    key: "tammeny",
+    emoji: "📍",
+    name: { ar: "تميني", en: "Tammeny" },
+    description: {
+      ar: "تطبيق آمن بالكامل لمشاركة الموقع الجغرافي مع الأصدقاء والعائلة، يعتمد على أحدث معايير الأمان والتشفير لحماية خصوصية المستخدم",
+      en: "A fully secure application for sharing your location with friends and family, built with the latest security standards and encryption to protect user privacy",
+    },
+    tech: ["Next.js", "TypeScript", "Tailwind CSS"],
+    url: null,
+    github: "https://github.com/ziadamr45/Tammeny",
+    featured: false,
+  },
+  {
+    key: "elmokhber",
+    emoji: "🕵️",
+    name: { ar: "المخبر", en: "Elmokhber" },
+    description: {
+      ar: "لعبة اجتماعية تفاعلية تعتمد على الذكاء والفهم والخداع الاستراتيجي بين اللاعبين في جو من الإثارة والتشويق",
+      en: "An interactive social deduction game based on intelligence, understanding, and strategic deception among players in an atmosphere of excitement",
+    },
+    tech: ["Next.js", "TypeScript", "Tailwind CSS"],
+    url: null,
+    github: "https://github.com/ziadamr45/Elmokhber",
+    featured: false,
+  },
+];
+
+const techStack = [
+  { name: "Next.js", color: "from-black/80 to-black dark:from-white/90 dark:to-white" },
+  { name: "React", color: "from-cyan-500/80 to-sky-500" },
+  { name: "TypeScript", color: "from-blue-600/80 to-blue-500" },
+  { name: "Tailwind CSS", color: "from-teal-500/80 to-cyan-400" },
+  { name: "PostgreSQL", color: "from-indigo-600/80 to-blue-500" },
+  { name: "Prisma", color: "from-violet-600/80 to-purple-400" },
+  { name: "Python", color: "from-yellow-500/80 to-amber-400" },
+  { name: "Node.js", color: "from-green-600/80 to-emerald-500" },
+  { name: "Git", color: "from-orange-600/80 to-red-500" },
+  { name: "Framer Motion", color: "from-pink-500/80 to-purple-500" },
+  { name: "AI / Claude", color: "from-amber-500/80 to-orange-400" },
+  { name: "Vercel", color: "from-gray-700/80 to-gray-600 dark:from-gray-200/80 dark:to-gray-300" },
+];
+
 const translations = {
   ar: {
     name: "زياد عمرو",
     subtitle: "Ziad Amr",
     title: "مطوِّر مواقع ويب",
-    mission: "الهدف: إنشاء خدمات مجانية وإتاحة التكنولوجيا الحديثة للجميع ونشر الخير والفائدة",
+    mission: "إنشاء خدمات مجانية وإتاحة التكنولوجيا الحديثة للجميع ونشر الخير والفائدة",
+    aboutTitle: "نبذة عني",
+    aboutText: "مطوِّر ويب مصري بدأت رحلتي في عالم البرمجة وأنا في سن مبكرة. أعمل على بناء تطبيقات ويب حديثة ومتكاملة باستخدام أحدث التقنيات والأطر البرمجية. أؤمن بأن التقنية ليست مجرد أكواد، بل أداة لحل المشكلات وتقديم قيمة حقيقية للمستخدمين. إلى جانب شغفي بالبرمجة، أمتلك خبرة في مجال الكتابة والتأليف الأدبي الدعوي والإرشادي، وأسعى دائمًا لدمج مهاراتي المختلفة في إنتاج محتوى تقني هادف. حلمي هو التخصص في هندسة البرمجيات وعلوم الحاسب، وأن أصبح مطوِّرًا محترفًا قادرًا على المنافسة عالميًا والمساهمة في تطوير مجتمع المطورين العرب.",
+    projectsTitle: "مشاريعي",
+    projectsSubtitle: "مجموعة من المشاريع التي عملت عليها",
+    featuredTag: "مميز",
+    visitSite: "زيارة الموقع",
+    viewCode: "عرض الكود",
+    techStackTitle: "التقنيات",
+    techStackSubtitle: "الأدوات والتقنيات التي أستخدمها",
     socialLinksTitle: "روابط التواصل",
     avatarFallback: "زياد",
     ariaSendEmail: "أرسل بريد إلكتروني",
@@ -104,7 +196,16 @@ const translations = {
     name: "Ziad Amr",
     subtitle: "",
     title: "Web Developer",
-    mission: "Mission: Creating free services and making modern technology accessible to everyone, spreading goodness and benefit",
+    mission: "Creating free services and making modern technology accessible to everyone, spreading goodness and benefit",
+    aboutTitle: "About Me",
+    aboutText: "An Egyptian web developer who started my programming journey at a young age. I build modern, integrated web applications using the latest technologies and frameworks. I believe technology is more than just code — it's a tool for solving problems and delivering real value to users. Beyond my passion for programming, I have experience in writing faith-based and educational literary content, and I constantly strive to combine my diverse skills to produce meaningful technical work. My dream is to specialize in software engineering and computer science, becoming a professional developer capable of competing globally and contributing to the growth of the Arab developer community.",
+    projectsTitle: "My Projects",
+    projectsSubtitle: "A collection of projects I've worked on",
+    featuredTag: "Featured",
+    visitSite: "Visit Site",
+    viewCode: "View Code",
+    techStackTitle: "Tech Stack",
+    techStackSubtitle: "Tools and technologies I work with",
     socialLinksTitle: "Social Links",
     avatarFallback: "ZA",
     ariaSendEmail: "Send email",
@@ -137,7 +238,7 @@ export default function Home() {
   }, [showImageModal]);
 
   return (
-    <div className="relative min-h-screen flex flex-col items-center justify-center bg-linear-to-br from-slate-50 via-white to-slate-100 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 px-4 py-12">
+    <div className="relative min-h-screen flex flex-col items-center bg-linear-to-br from-slate-50 via-white to-slate-100 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950">
       {/* Controls */}
       <Controls />
 
@@ -162,91 +263,211 @@ export default function Home() {
         </div>
       )}
 
-      <Card className="relative w-full max-w-md mx-auto overflow-hidden border-0 shadow-2xl shadow-slate-200/50 dark:shadow-black/50 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl">
-        <CardContent className="p-8">
-          {/* Profile Section */}
-          <div className="flex flex-col items-center text-center mb-8">
-            {/* Avatar — clickable */}
-            <button
-              type="button"
-              onClick={() => setShowImageModal(true)}
-              aria-label={language === "ar" ? "اضغط لعرض الصورة كاملة" : "Click to view full image"}
-              className="relative mb-6 group cursor-pointer focus:outline-none"
-            >
-              <Avatar className="w-28 h-28 ring-4 ring-white dark:ring-slate-800 shadow-xl transition-transform duration-300 group-hover:scale-105 group-active:scale-95">
-                <AvatarImage src="/profile.jpg" alt="Ziad Amr" />
-                <AvatarFallback className="text-3xl font-bold bg-linear-to-br from-orange-500 to-amber-500 text-white">
-                  {t.avatarFallback}
-                </AvatarFallback>
-              </Avatar>
-              {/* Zoom hint overlay */}
-              <div className="absolute inset-0 flex items-center justify-center rounded-full bg-black/0 group-hover:bg-black/30 transition-all duration-300">
-                <svg
-                  className="w-8 h-8 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300 drop-shadow-lg"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m3-3H7" />
+      {/* ===== PROFILE CARD ===== */}
+      <section className="w-full max-w-md mx-auto px-4 pt-12 pb-8">
+        <Card className="relative w-full overflow-hidden border-0 shadow-2xl shadow-slate-200/50 dark:shadow-black/50 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl">
+          <CardContent className="p-8">
+            {/* Profile Section */}
+            <div className="flex flex-col items-center text-center mb-8">
+              {/* Avatar */}
+              <button
+                type="button"
+                onClick={() => setShowImageModal(true)}
+                aria-label={language === "ar" ? "اضغط لعرض الصورة كاملة" : "Click to view full image"}
+                className="relative mb-6 group cursor-pointer focus:outline-none"
+              >
+                <Avatar className="w-28 h-28 ring-4 ring-white dark:ring-slate-800 shadow-xl transition-transform duration-300 group-hover:scale-105 group-active:scale-95">
+                  <AvatarImage src="/profile.jpg" alt="Ziad Amr" />
+                  <AvatarFallback className="text-3xl font-bold bg-linear-to-br from-orange-500 to-amber-500 text-white">
+                    {t.avatarFallback}
+                  </AvatarFallback>
+                </Avatar>
+                <div className="absolute inset-0 flex items-center justify-center rounded-full bg-black/0 group-hover:bg-black/30 transition-all duration-300">
+                  <svg className="w-8 h-8 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300 drop-shadow-lg" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m3-3H7" />
+                  </svg>
+                </div>
+                <span className="absolute bottom-1 right-1 w-5 h-5 bg-green-500 border-[3px] border-white dark:border-slate-900 rounded-full" aria-hidden="true" />
+              </button>
+
+              <h1 className="text-2xl font-bold text-slate-900 dark:text-white mb-1">{t.name}</h1>
+              {t.subtitle && (
+                <p className="text-lg text-slate-600 dark:text-slate-400 mb-4 font-medium">{t.subtitle}</p>
+              )}
+
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-linear-to-r from-orange-500/10 to-amber-500/10 dark:from-orange-500/20 dark:to-amber-500/20 text-orange-600 dark:text-orange-400 text-sm font-medium mb-4">
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
                 </svg>
+                {t.title}
               </div>
-              {/* Online indicator */}
-              <span className="absolute bottom-1 right-1 w-5 h-5 bg-green-500 border-[3px] border-white dark:border-slate-900 rounded-full" aria-hidden="true" />
-            </button>
 
-            {/* Name */}
-            <h1 className="text-2xl font-bold text-slate-900 dark:text-white mb-1">
-              {t.name}
-            </h1>
-            {t.subtitle && (
-              <p className="text-lg text-slate-600 dark:text-slate-400 mb-4 font-medium">
-                {t.subtitle}
-              </p>
-            )}
-
-            {/* Title */}
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-linear-to-r from-orange-500/10 to-amber-500/10 dark:from-orange-500/20 dark:to-amber-500/20 text-orange-600 dark:text-orange-400 text-sm font-medium mb-4">
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
-              </svg>
-              {t.title}
+              <p className="text-sm text-slate-500 dark:text-slate-400 leading-relaxed max-w-sm">{t.mission}</p>
             </div>
 
-            {/* Mission */}
-            <p className="text-sm text-slate-500 dark:text-slate-400 leading-relaxed max-w-sm">
-              {t.mission}
-            </p>
-          </div>
+            {/* Divider */}
+            <div className="flex items-center gap-4 mb-6">
+              <div className="flex-1 h-px bg-linear-to-r from-transparent via-slate-200 dark:via-slate-700 to-transparent" />
+              <span className="text-xs text-slate-400 dark:text-slate-500 font-medium">{t.socialLinksTitle}</span>
+              <div className="flex-1 h-px bg-linear-to-r from-transparent via-slate-200 dark:via-slate-700 to-transparent" />
+            </div>
 
-          {/* Divider */}
-          <div className="flex items-center gap-4 mb-6">
-            <div className="flex-1 h-px bg-linear-to-r from-transparent via-slate-200 dark:via-slate-700 to-transparent" />
-            <span className="text-xs text-slate-400 dark:text-slate-500 font-medium">{t.socialLinksTitle}</span>
-            <div className="flex-1 h-px bg-linear-to-r from-transparent via-slate-200 dark:via-slate-700 to-transparent" />
-          </div>
+            {/* Social Links */}
+            <div className="space-y-3">
+              {socialLinks.map((link) => (
+                <a
+                  key={link.key}
+                  href={link.url}
+                  {...(link.url.startsWith("mailto:") ? {} : { target: "_blank", rel: "noopener noreferrer" })}
+                  aria-label={`${t.socialNames[link.key as keyof typeof t.socialNames]} — ${link.url.startsWith("mailto:") ? t.ariaSendEmail : t.ariaOpensNew}`}
+                  className={`inline-flex items-center justify-center gap-3 h-12 w-full rounded-lg border border-slate-200 dark:border-slate-700 bg-background px-4 text-sm font-medium text-slate-700 dark:text-slate-300 transition-all duration-300 ${link.color} hover:text-foreground`}
+                >
+                  {link.icon}
+                  <span className="font-medium">{t.socialNames[link.key as keyof typeof t.socialNames]}</span>
+                </a>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
+      </section>
 
-          {/* Social Links */}
-          <div className="space-y-3">
-            {socialLinks.map((link) => (
-              <a
-                key={link.key}
-                href={link.url}
-                {...(link.url.startsWith("mailto:") ? {} : { target: "_blank", rel: "noopener noreferrer" })}
-                aria-label={`${t.socialNames[link.key as keyof typeof t.socialNames]} — ${link.url.startsWith("mailto:") ? t.ariaSendEmail : t.ariaOpensNew}`}
-                className={`inline-flex items-center justify-center gap-3 h-12 w-full rounded-lg border border-slate-200 dark:border-slate-700 bg-background px-4 text-sm font-medium text-slate-700 dark:text-slate-300 transition-all duration-300 ${link.color} hover:text-foreground`}
-              >
-                {link.icon}
-                <span className="font-medium">{t.socialNames[link.key as keyof typeof t.socialNames]}</span>
-              </a>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
+      {/* ===== ABOUT SECTION ===== */}
+      <section className="w-full max-w-md mx-auto px-4 pb-8">
+        <Card className="relative w-full overflow-hidden border-0 shadow-xl shadow-slate-200/50 dark:shadow-black/50 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl">
+          <CardContent className="p-8">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-linear-to-br from-blue-500/10 to-indigo-500/10 dark:from-blue-500/20 dark:to-indigo-500/20">
+                <svg className="w-5 h-5 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                </svg>
+              </div>
+              <h2 className="text-lg font-bold text-slate-900 dark:text-white">{t.aboutTitle}</h2>
+            </div>
+            <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">{t.aboutText}</p>
+          </CardContent>
+        </Card>
+      </section>
 
-      {/* Footer */}
-      <p className="mt-8 text-xs text-slate-400 dark:text-slate-500">
-        © {new Date().getFullYear()} Ziad Amr
-      </p>
+      {/* ===== PROJECTS SECTION ===== */}
+      <section className="w-full max-w-md mx-auto px-4 pb-8">
+        <div className="flex items-center gap-3 mb-5">
+          <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-linear-to-br from-purple-500/10 to-pink-500/10 dark:from-purple-500/20 dark:to-pink-500/20">
+            <svg className="w-5 h-5 text-purple-600 dark:text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+            </svg>
+          </div>
+          <div>
+            <h2 className="text-lg font-bold text-slate-900 dark:text-white">{t.projectsTitle}</h2>
+            <p className="text-xs text-slate-500 dark:text-slate-500">{t.projectsSubtitle}</p>
+          </div>
+        </div>
+
+        <div className="space-y-4">
+          {projects.map((project) => (
+            <Card
+              key={project.key}
+              className={`relative w-full overflow-hidden border-0 shadow-lg shadow-slate-200/50 dark:shadow-black/30 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl transition-transform duration-300 hover:scale-[1.02] ${project.featured ? "ring-1 ring-orange-400/30 dark:ring-orange-500/20" : ""}`}
+            >
+              <CardContent className="p-6">
+                {/* Header */}
+                <div className="flex items-start gap-3 mb-3">
+                  <span className="text-2xl mt-0.5">{project.emoji}</span>
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-2 flex-wrap">
+                      <h3 className="text-base font-bold text-slate-900 dark:text-white">{project.name[language]}</h3>
+                      {project.featured && (
+                        <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-semibold bg-orange-500/10 text-orange-600 dark:text-orange-400 border border-orange-500/20">
+                          {t.featuredTag}
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                </div>
+
+                {/* Description */}
+                <p className="text-sm text-slate-500 dark:text-slate-400 leading-relaxed mb-4">{project.description[language]}</p>
+
+                {/* Tech Tags */}
+                <div className="flex flex-wrap gap-1.5 mb-4">
+                  {project.tech.map((tech) => (
+                    <span
+                      key={tech}
+                      className="inline-flex items-center px-2.5 py-1 rounded-md text-[11px] font-medium bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 border border-slate-200/50 dark:border-slate-700/50"
+                    >
+                      {tech}
+                    </span>
+                  ))}
+                </div>
+
+                {/* Action Buttons */}
+                <div className="flex items-center gap-2">
+                  {project.url && (
+                    <a
+                      href={project.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-medium bg-linear-to-r from-orange-500 to-amber-500 text-white shadow-sm hover:shadow-md transition-all duration-300 hover:scale-105"
+                    >
+                      <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                      </svg>
+                      {t.visitSite}
+                    </a>
+                  )}
+                  <a
+                    href={project.github}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-medium border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-all duration-300"
+                  >
+                    <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                    </svg>
+                    {t.viewCode}
+                  </a>
+                </div>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+      </section>
+
+      {/* ===== TECH STACK SECTION ===== */}
+      <section className="w-full max-w-md mx-auto px-4 pb-8">
+        <Card className="relative w-full overflow-hidden border-0 shadow-xl shadow-slate-200/50 dark:shadow-black/50 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl">
+          <CardContent className="p-8">
+            <div className="flex items-center gap-3 mb-1">
+              <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-linear-to-br from-emerald-500/10 to-teal-500/10 dark:from-emerald-500/20 dark:to-teal-500/20">
+                <svg className="w-5 h-5 text-emerald-600 dark:text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+                </svg>
+              </div>
+              <div>
+                <h2 className="text-lg font-bold text-slate-900 dark:text-white">{t.techStackTitle}</h2>
+                <p className="text-xs text-slate-500 dark:text-slate-500">{t.techStackSubtitle}</p>
+              </div>
+            </div>
+
+            <div className="flex flex-wrap gap-2 mt-5">
+              {techStack.map((tech) => (
+                <span
+                  key={tech.name}
+                  className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-gradient-to-r ${tech.color} text-white shadow-sm`}
+                >
+                  {tech.name}
+                </span>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
+      </section>
+
+      {/* ===== FOOTER ===== */}
+      <footer className="w-full pb-8 pt-4">
+        <p className="text-xs text-slate-400 dark:text-slate-500 text-center">
+          &copy; {new Date().getFullYear()} Ziad Amr
+        </p>
+      </footer>
     </div>
   );
 }
