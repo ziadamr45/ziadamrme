@@ -123,7 +123,7 @@ const projects = [
   {
     key: "tammeny",
     emoji: "📍",
-    name: { ar: "تميني", en: "Tammeny" },
+    name: { ar: "طمنّي", en: "Tamanni" },
     description: {
       ar: "تطبيق آمن بالكامل لمشاركة الموقع الجغرافي مع الأصدقاء والعائلة، يعتمد على أحدث معايير الأمان والتشفير لحماية خصوصية المستخدم",
       en: "A fully secure application for sharing your location with friends and family, built with the latest security standards and encryption to protect user privacy",
