@@ -22,6 +22,10 @@ export function Controls() {
     );
   }
 
+  const handleThemeToggle = (e: React.MouseEvent<HTMLButtonElement>) => {
+    toggleTheme(e);
+  };
+
   return (
     <div className="fixed top-4 end-4 flex gap-2 z-50">
       {/* Language Toggle */}
@@ -38,7 +42,7 @@ export function Controls() {
 
       {/* Theme Toggle */}
       <button
-        onClick={toggleTheme}
+        onClick={handleThemeToggle}
         aria-label={theme === "light" ? "الوضع الليلي" : "Light Mode"}
         className="w-9 h-9 rounded-full bg-white/80 dark:bg-slate-800/80 backdrop-blur-md border border-slate-200 dark:border-slate-700 flex items-center justify-center text-slate-600 dark:text-slate-300 hover:text-orange-500 dark:hover:text-orange-400 hover:border-orange-300 dark:hover:border-orange-500/50 transition-all duration-300 shadow-sm hover:shadow-md cursor-pointer"
       >

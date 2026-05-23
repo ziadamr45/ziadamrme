@@ -26,7 +26,7 @@ const OWNER = "ziadamr45";
 // Set a value to "" to clear the homepage
 // ============================================================
 const DESIRED_HOMEPAGES = {
-  "Battle-of-Questions": "https://battle-of-questions.vercel.app",
+  "Battle-of-Questions": "https://ma3raka.vercel.app/",
   "Bawabet-elhadas":   "https://bawabet-elhadas.vercel.app",
   "Eah-Elkalam":       "https://eah-elkalam.vercel.app",
   "Eleqbal-Form":      "https://eleqbal-amrsobhy.vercel.app",
