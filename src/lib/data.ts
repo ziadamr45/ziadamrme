@@ -1,7 +1,19 @@
+// Stats are now computed dynamically from projects and techStack data
+// to ensure they always reflect the actual counts
+export function getStats(projectCount: number) {
+  const techCount = techStack.length;
+  return [
+    { number: "3+", label: { ar: "سنوات خبرة", en: "Years Experience" }, icon: "📅" },
+    { number: `${projectCount}+`, label: { ar: "مشروع منجز", en: "Projects Completed" }, icon: "🚀" },
+    { number: `${techCount}+`, label: { ar: "تقنية مستخدمة", en: "Technologies Used" }, icon: "🛠️" },
+  ];
+}
+
+// Static fallback for non-dynamic usage
 export const stats = [
   { number: "3+", label: { ar: "سنوات خبرة", en: "Years Experience" }, icon: "📅" },
   { number: "10+", label: { ar: "مشروع منجز", en: "Projects Completed" }, icon: "🚀" },
-  { number: "20+", label: { ar: "تقنية مستخدمة", en: "Technologies Used" }, icon: "🛠️" },
+  { number: "24+", label: { ar: "تقنية مستخدمة", en: "Technologies Used" }, icon: "🛠️" },
 ];
 
 export const techStack = [
