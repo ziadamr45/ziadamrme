@@ -11,6 +11,34 @@ export const projects = [
     url: "https://esma3radio.vercel.app",
     github: "https://github.com/ziadamr45/Radio",
     featured: true,
+    details: {
+      ar: {
+        overview: "إسمع راديو هو تطبيق ويب متكامل صُمم لتقديم تجربة استماع احترافية لمحطات الراديو من مختلف أنحاء العالم. يضم التطبيق قاعدة بيانات ضخمة تتضمن آلاف المحطات الإذاعية مصنفة حسب الدولة والنوع، مما يتيح للمستخدم اكتشاف محطات جديدة بسهولة. يتميز التطبيق بوجود قسم مخصص للقرآن الكريم يضم أشهر القراء مع إمكانية الاستماع المباشر والتحكم الكامل في التشغيل. كما يحتوي على محرك توصيات ذكي يقترح محطات بناءً على سجل الاستماع والتفضيلات. النظام مدعوم بتسجيل حسابات المستخدمين وحفظ المفضلات، بالإضافة إلى نظام إشعارات متقدم ينبه المستخدم بالبرامج الجديدة والمحطات المفضلة.",
+        features: [
+          "تصفح آلاف محطات الراديو مصنفة حسب الدولة والنوع الموسيقي مع إمكانية البحث المتقدم والفلترة الذكية",
+          "قسم القرآن الكريم المخصص يضم مكتبة شاملة من القراء المشهورين مع مشغل صوت متقدم يدعم الاستمرار من آخر موضع",
+          "محرك توصيات ذكي يحلل سجل استماع المستخدم ويقترح محطات جديدة تتناسب مع ذوقه",
+          "نظام إشعارات فعّال ينبه المستخدم ببدء البرامج المفضلة والمحطات الجديدة المضافة",
+          "حسابات المستخدمين مع إمكانية حفظ المحطات المفضلة ومزامنتها عبر الأجهزة المختلفة",
+          "تصميم متجاوب يعمل بسلاسة على جميع الأجهزة من الموبايل للكمبيوتر مع وضع داكن مريح للعين",
+        ],
+        challenges: "أكبر تحدٍّ واجهني كان إدارة قاعدة بيانات ضخمة تضم آلاف المحطات مع ضمان سرعة البحث والفلترة. كذلك كان تحديًا إيجاد واجهات برمجية موثوقة لبث الراديو المباشر، حيث كثير من المصادر تتوقف أو تغير روابطها باستمرار. كما كان بناء محرك التوصيات الذكي يتطلب تصميم خوارزمية فعالة تحلل سلوك المستخدم بدون التأثير على أداء التطبيق.",
+        howItWorks: "يعتمد التطبيق على Next.js في الواجهة الأمامية مع PostgreSQL كقاعدة بيانات رئيسية عبر Prisma ORM. يتم جلب بيانات المحطات من مصادر متعددة وتخزينها محليًا مع تحديث دوري. نظام المصادقة يعتمد على NextAuth مع دعم تسجيل الدخول عبر حسابات التواصل الاجتماعي. التوصيات تُحسب عبر خوارزمية تحلل سجل الاستماع وتطابقه مع أنماط المستخدمين المشابهين.",
+      },
+      en: {
+        overview: "Esma3 Radio is a comprehensive web application designed to deliver a professional listening experience for radio stations from around the world. The app features a massive database containing thousands of radio stations categorized by country and genre, allowing users to discover new stations effortlessly. It includes a dedicated Quran section with famous reciters, offering live listening and full playback control. The app is powered by a smart recommendation engine that suggests stations based on listening history and preferences. The system supports user accounts with favorites saving, along with an advanced notification system that alerts users about new programs and favorite stations.",
+        features: [
+          "Browse thousands of radio stations categorized by country and genre with advanced search and smart filtering capabilities",
+          "Dedicated Quran section featuring a comprehensive library of famous reciters with an advanced audio player that resumes from the last position",
+          "Smart recommendation engine that analyzes the user's listening history and suggests new stations matching their taste",
+          "Effective notification system that alerts users when favorite programs start and when new stations are added",
+          "User accounts with the ability to save favorite stations and sync them across different devices",
+          "Responsive design that works smoothly on all devices from mobile to desktop with a comfortable dark mode",
+        ],
+        challenges: "The biggest challenge I faced was managing a massive database of thousands of stations while ensuring fast search and filtering. Another challenge was finding reliable APIs for live radio streaming, as many sources frequently go down or change their URLs. Building the smart recommendation engine also required designing an efficient algorithm that analyzes user behavior without impacting app performance.",
+        howItWorks: "The app relies on Next.js for the frontend with PostgreSQL as the primary database through Prisma ORM. Station data is fetched from multiple sources and stored locally with periodic updates. The authentication system uses NextAuth with support for social media login. Recommendations are calculated through an algorithm that analyzes listening history and matches it with similar users' patterns.",
+      },
+    },
   },
   {
     key: "elmokhber",
@@ -24,6 +52,34 @@ export const projects = [
     url: "https://elmokhber.vercel.app",
     github: "https://github.com/ziadamr45/Elmokhber",
     featured: true,
+    details: {
+      ar: {
+        overview: "المخبر هي لعبة اجتماعية تفاعلية فريدة من نوعها تجمع بين الذكاء والتحليل والخداع الاستراتيجي في بيئة صوتية مباشرة. يستخدم التطبيق تقنية LiveKit لتمكين المكالمات الصوتية الحية بين اللاعبين، مما يضيف بُعدًا واقعيًا للتفاعل والمناقشة. في كل جولة، يُعطى اللاعبون أدوارًا سرية يجب عليهم إخفاؤها أو كشفها بناءً على استراتيجيتهم. الهدف هو اكتشاف هوية المخبر بينما يحاول المخبر بدوره الخداع والتضليل. النظام يدعم إنشاء غرف لعب خاصة والعثور على غرف عامة، مع وضع متفرج لمتابعة اللعب بدون مشاركة.",
+        features: [
+          "مكالمات صوتية مباشرة عبر LiveKit مع جودة صوت عالية وتأخير منخفض للتواصل الحي بين اللاعبين",
+          "نظام تعيين أدوار سرية عشوائي يضيف عنصر المفاجأة والاستراتيجية لكل جولة لعب",
+          "آلية تصويت تفاعلية تتيح للاعبين ترشيح واختيار المشتبه بهم مع عرض النتائج في الوقت الحقيقي",
+          "لوبي اللعب مع إمكانية إنشاء غرف خاصة أو الانضمام لغرف عامة مفتوحة",
+          "لعب استراتيجي يعتمد على الخداع والتحليل حيث يجب على كل لاعب إقناع الآخرين ببراءته",
+          "وضع المتفرج الذي يسمح بمتابعة اللعب والاستماع للنقاشات بدون المشاركة في التصويت",
+        ],
+        challenges: "التحدي الأكبر كان دمج LiveKit في تطبيق Next.js مع ضمان استقرار المكالمات الصوتية حتى مع ضعف الاتصال. كذلك كان تصميم آلية الأدوار السرية وتحليل سلوك اللاعبين يتطلب منطقًا معقدًا لضمان توازن اللعبة. إدارة حالة اللعبة عبر جميع اللاعبين المتصلين كانت تحديًا حقيقيًا خاصة عند انقطاع اتصال أحد اللاعبين.",
+        howItWorks: "يعتمد التطبيق على Next.js للواجهة وLiveKit للمكالمات الصوتية المباشرة. عند دخول اللاعب للغرفة، يتم تعيين دوره سريًا وتخزينه في قاعدة البيانات. أثناء اللعب، يتواصل اللاعبون صوتيًا ويتبادلون الاتهامات، ثم يُجرى التصويت لتحديد المشتبه به. النظام يتعامل مع انقطاع الاتصال بشكل تلقائي ويعيد اللاعب لجلسته عند عودته.",
+      },
+      en: {
+        overview: "Elmokhber is a unique interactive social deduction game that combines intelligence, analysis, and strategic deception in a live voice environment. The app uses LiveKit technology to enable live voice calls between players, adding a realistic dimension to interaction and discussion. In each round, players are given secret roles they must hide or reveal based on their strategy. The goal is to discover the inspector's identity while the inspector attempts to deceive and mislead. The system supports creating private game rooms and finding public ones, with a spectator mode for watching without participating.",
+        features: [
+          "Live voice calls via LiveKit with high audio quality and low latency for real-time communication between players",
+          "Random secret role assignment system that adds surprise and strategy elements to each game round",
+          "Interactive voting mechanism allowing players to nominate and select suspects with real-time result display",
+          "Game lobby with the ability to create private rooms or join open public rooms",
+          "Strategic gameplay based on deception and analysis where each player must convince others of their innocence",
+          "Spectator mode that allows watching gameplay and listening to discussions without participating in voting",
+        ],
+        challenges: "The biggest challenge was integrating LiveKit into a Next.js app while ensuring voice call stability even with weak connections. Designing the secret role mechanism and player behavior analysis also required complex logic to ensure game balance. Managing game state across all connected players was a real challenge, especially when a player's connection drops.",
+        howItWorks: "The app relies on Next.js for the frontend and LiveKit for live voice calls. When a player enters a room, their role is secretly assigned and stored in the database. During gameplay, players communicate verbally and exchange accusations, then voting is conducted to determine the suspect. The system handles disconnections automatically and restores the player's session upon return.",
+      },
+    },
   },
   {
     key: "battle",
@@ -37,6 +93,34 @@ export const projects = [
     url: "https://motaharrer.vercel.app",
     github: "https://github.com/ziadamr45/Battle-of-Questions",
     featured: true,
+    details: {
+      ar: {
+        overview: "معركة الأسئلة هي لعبة مسابقات تفاعلية متعددة اللاعبين تعمل في الوقت الحقيقي باستخدام Socket.io. تتيح اللعبة للاعبين إنشاء غرف لعب والتنافس فرديًا أو كفرق في مسابقات معرفية متنوعة. يتميز النظام بلوحة تسجيل نقاط مباشرة تُحدَّث فوريًا مع كل إجابة، مما يخلق جوًا من الحماس والمنافسة. تشمل اللعبة تصنيفات متعددة للأسئلة مثل العلوم والتاريخ والرياضة والثقافة العامة، مع جولات مؤقتة تضيف ضغطًا إضافيًا. التطبيق مُعبأ بـ Docker لتسهيل النشر والتشغيل في أي بيئة.",
+        features: [
+          "غرف لعب في الوقت الحقيقي عبر Socket.io تسمح لعدة لاعبين بالتنافس في وقت واحد بدون تأخير",
+          "وضع الفرق ضد الفرق حيث يمكن للاعبين تكوين فرق والتنافس جماعيًا مع نظام نقاط مشترك",
+          "لوحة تسجيل نقاط مباشرة تُحدَّث فوريًا مع كل إجابة وتعرض ترتيب اللاعبين والفرق",
+          "تصنيفات متنوعة للأسئلة تشمل العلوم والتاريخ والرياضة والثقافة العامة والجغرافيا",
+          "جولات مؤقتة مع مؤقت عد تنازلي يضيف عنصر الإثارة والضغط على اللاعبين",
+          "تحديثات فورية عبر WebSocket تضمن مزامنة حالة اللعبة بين جميع اللاعبين بدون تأخير",
+        ],
+        challenges: "أكبر تحدٍّ كان ضمان مزامنة حالة اللعبة بين جميع اللاعبين في الوقت الحقيقي بدون تأخير ملحوظ. كذلك كان تصميم نظام الجولات المؤقتة مع التحقق من صحة الإجابات في نفس اللحظة يتطلب دقة عالية. إدارة الاتصالات المتقطعة وإعادة تواصل اللاعبين المنقطعين كانت تحديًا إضافيًا استلزم حلولًا مبتكرة.",
+        howItWorks: "يعتمد التطبيق على Socket.io للاتصال ثنائي الاتجاه بين الخادم والعملاء. عند إنشاء غرفة، ينشئ الخادم مساحة Socket منفصلة ويدير حالة اللعبة مركزيًا. الأسئلة تُرسل لجميع اللاعبين في نفس اللحظة، والإجابات تُقيَّم فوريًا على الخادم لضمان العدالة. Prisma يُستخدم لتخزين سجلات اللعب والنتائج، وDocker يُسهل النشر.",
+      },
+      en: {
+        overview: "Battle of Questions is a multiplayer interactive quiz game that runs in real-time using Socket.io. The game allows players to create game rooms and compete individually or as teams in diverse knowledge contests. The system features a live scoring leaderboard that updates instantly with each answer, creating an atmosphere of excitement and competition. The game includes multiple question categories like science, history, sports, and general knowledge, with timed rounds adding extra pressure. The app is containerized with Docker for easy deployment and operation in any environment.",
+        features: [
+          "Real-time game rooms via Socket.io allowing multiple players to compete simultaneously without delay",
+          "Team vs team mode where players can form teams and compete collectively with a shared scoring system",
+          "Live scoring leaderboard that updates instantly with each answer and displays player and team rankings",
+          "Diverse question categories including science, history, sports, general knowledge, and geography",
+          "Timed rounds with a countdown timer adding excitement and pressure for players",
+          "Instant updates via WebSocket ensuring game state synchronization between all players without delay",
+        ],
+        challenges: "The biggest challenge was ensuring game state synchronization among all players in real-time without noticeable delay. Designing the timed round system with simultaneous answer validation also required high precision. Managing intermittent connections and reconnecting dropped players was an additional challenge that demanded innovative solutions.",
+        howItWorks: "The app relies on Socket.io for bidirectional communication between the server and clients. When a room is created, the server sets up a separate Socket namespace and manages game state centrally. Questions are sent to all players at the same instant, and answers are evaluated immediately on the server to ensure fairness. Prisma is used to store game records and results, and Docker simplifies deployment.",
+      },
+    },
   },
   {
     key: "tammeny",
@@ -50,6 +134,34 @@ export const projects = [
     url: "https://tammeny24.vercel.app/login",
     github: "https://github.com/ziadamr45/Tammeny",
     featured: true,
+    details: {
+      ar: {
+        overview: "طمني هو تطبيق مشاركة موقع جغرافي آمن صُمم مع وضع الخصوصية والأمان في المقام الأول. يتيح التطبيق للمستخدمين مشاركة موقعهم الجغرافي في الوقت الحقيقي مع أشخاص محددين لفترات زمنية محددة، مع تشفير شامل للبيانات أثناء النقل والتخزين. يتميز بنظام روابط مشاركة مؤقتة تنتهي صلاحيتها تلقائيًا، وحلقات عائلية تتيح مشاركة دائمة مع أفراد العائلة. التطبيق مُحسَّن لاستهلاك البطارية ويستخدم تقنيات تتبع ذكية لا تستنزف طاقة الجهاز. التصميم يركز على البساطة مع ضمان أعلى مستويات الأمان.",
+        features: [
+          "مشاركة الموقع الجغرافي في الوقت الحقيقي مع تحديثات فورية ودقة عالية عبر نظام GPS المتقدم",
+          "تشفير شامل من الطرف للطرف يحمي بيانات الموقع أثناء النقل والتخزين على الخوادم",
+          "روابط مشاركة مؤقتة تنتهي صلاحيتها تلقائيًا بعد مدة محددة يختارها المستخدم",
+          "تتبع مُحسَّن لاستهلاك البطارية يستخدم تقنيات ذكية لتقليل استهلاك الطاقة دون فقدان الدقة",
+          "تصميم يركز على الخصوصية مع تحكم كامل في من يرى الموقع وإمكانية إيقاف المشاركة فورًا",
+          "حلقات عائلية تتيح مشاركة دائمة مع أفراد العائلة مع إشعارات وصول وأمان تلقائي",
+        ],
+        challenges: "التحدي الأبرز كان تحقيق التوازن بين دقة التتبع واستهلاك البطارية، حيث التتبع المستمر يستهلك طاقة كبيرة. كذلك كان تطبيق التشفير من الطرف للطرف على بيانات الموقع المتغيرة باستمرار يتطلب حلولًا تقنية متقدمة. ضمان إنهاء صلاحية الروابط المؤقتة بشكل موثوق حتى عند إغلاق التطبيق كان تحديًا إضافيًا.",
+        howItWorks: "يعتمد التطبيق على Next.js مع Prisma لإدارة البيانات وLiveKit للتواصل. الموقع يُرسل مشفرًا من جهاز المستخدم عبر HTTPS ويُخزن مشفرًا في قاعدة البيانات. روابط المشاركة المؤقتة تُدار عبر نظام توكنات تنتهي صلاحيتها تلقائيًا. التتبع يستخدم واجهة Geolocation API مع تحسين ذكي لتردد التحديث حسب حالة البطارية.",
+      },
+      en: {
+        overview: "Tammeny is a secure location sharing app designed with privacy and security as top priorities. The app allows users to share their real-time location with specific people for defined time periods, with full data encryption during transit and storage. It features temporary sharing links that expire automatically and family circles for permanent sharing with family members. The app is optimized for battery consumption and uses smart tracking techniques that don't drain device power. The design focuses on simplicity while ensuring the highest security levels.",
+        features: [
+          "Real-time GPS location sharing with instant updates and high precision through an advanced GPS system",
+          "End-to-end encryption protecting location data during transit and storage on servers",
+          "Temporary sharing links that automatically expire after a user-defined duration",
+          "Battery-optimized tracking using smart techniques to reduce power consumption without losing accuracy",
+          "Privacy-first design with full control over who can see the location and the ability to stop sharing instantly",
+          "Family circles enabling permanent sharing with family members with arrival notifications and automatic security",
+        ],
+        challenges: "The most prominent challenge was balancing tracking accuracy with battery consumption, as continuous tracking drains significant power. Implementing end-to-end encryption on constantly changing location data also required advanced technical solutions. Ensuring reliable expiration of temporary links even when the app is closed was an additional challenge.",
+        howItWorks: "The app relies on Next.js with Prisma for data management and LiveKit for communication. Location is sent encrypted from the user's device via HTTPS and stored encrypted in the database. Temporary sharing links are managed through a token system that expires automatically. Tracking uses the Geolocation API with smart optimization for update frequency based on battery status.",
+      },
+    },
   },
   {
     key: "bawabet",
@@ -63,6 +175,34 @@ export const projects = [
     url: "https://bawabet-elhadas.vercel.app",
     github: "https://github.com/ziadamr45/Bawabet-elhadas",
     featured: false,
+    details: {
+      ar: {
+        overview: "بوابة الحدث هي بوابة أخبار ذكية تقدم تجربة قراءة مخصصة ومتقدمة للمستخدم. يتميز التطبيق بخاصية التلخيص التلقائي التي تحول المقالات الطويلة إلى ملخصات موجزة وسهلة القراءة، مما يوفر وقت المستخدم. يدعم التطبيق تغذية أخبار مخصصة حسب الدولة والفئة المفضلة، مع محرك بحث متقدم يدعم الفلاتر المتعددة. نظام الحفظ والتفضيل يتيح للمستخدم بناء مكتبة أخبار شخصية. التصميم المتجاوب يوفر تجربة قراءة مريحة على جميع الأجهزة.",
+        features: [
+          "تلخيص تلقائي ذكي للمقالات الطويلة يحولها لملخصات موجزة مع الحفاظ على المعلومات الأساسية",
+          "تغذية أخبار مخصصة حسب الدولة والفئة المفضلة مع إمكانية تخصيص المصادر",
+          "بحث متقدم مع فلاتر متعددة تشمل التاريخ والفئة والمصدر والكلمات المفتاحية",
+          "تصفح حسب الفئات المتنوعة مثل السياسة والاقتصاد والرياضة والتكنولوجيا والثقافة",
+          "نظام حفظ وإشارات مرجعية يتيح بناء مكتبة أخبار شخصية يُرجع إليها لاحقًا",
+          "تجربة قراءة متجاوبة ومريحة مع دعم الوضع الداكن وتحسين العرض على الشاشات المختلفة",
+        ],
+        challenges: "التحدي الأكبر كان بناء نظام تلخيص تلقائي ينتج ملخصات دقيقة ومفيدة بدون فقدان المعلومات الجوهرية. كذلك كان تجميع الأخبار من مصادر عربية متنوعة مع توحيد تنسيق البيانات يتطلب معالجة مكثفة. ضمان سرعة تحميل الأخبار مع كثرة المصادر والفلاتر كان تحديًا إضافيًا.",
+        howItWorks: "يعتمد التطبيق على Next.js مع خاصية Server-Side Rendering لضمان سرعة تحميل الأخبار. نظام التلخيص التلقائي يعالج المقالات الطويلة ويستخرج الجمل الرئيسية بناءً على تحليل الأهمية. الأخبار تُجمع من مصادر متعددة عبر واجهات برمجية وتُخزن في قاعدة البيانات مع تحديث مستمر. Prisma يدير بيانات المستخدمين والتفضيلات والحفظات.",
+      },
+      en: {
+        overview: "Bawabet Elhadas is a smart news portal that delivers a personalized and advanced reading experience. The app features an auto-summarization capability that converts lengthy articles into concise, easy-to-read summaries, saving users time. It supports customized news feeds by country and preferred category, with an advanced search engine supporting multiple filters. The bookmarking and favorites system allows users to build a personal news library. The responsive design provides a comfortable reading experience across all devices.",
+        features: [
+          "Smart auto-summarization of lengthy articles converting them into concise summaries while preserving key information",
+          "Customized news feeds by country and preferred category with the ability to customize sources",
+          "Advanced search with multiple filters including date, category, source, and keywords",
+          "Browse by diverse categories such as politics, economy, sports, technology, and culture",
+          "Bookmarking system enabling the creation of a personal news library for later reference",
+          "Responsive reading experience with dark mode support and display optimization across different screens",
+        ],
+        challenges: "The biggest challenge was building an auto-summarization system that produces accurate and useful summaries without losing essential information. Aggregating news from diverse Arabic sources with unified data formatting also required extensive processing. Ensuring fast news loading with numerous sources and filters was an additional challenge.",
+        howItWorks: "The app relies on Next.js with Server-Side Rendering to ensure fast news loading. The auto-summarization system processes lengthy articles and extracts key sentences based on importance analysis. News is collected from multiple sources via APIs and stored in the database with continuous updates. Prisma manages user data, preferences, and bookmarks.",
+      },
+    },
   },
   {
     key: "eah-elkalam",
@@ -76,6 +216,32 @@ export const projects = [
     url: "https://eah-elkalam.vercel.app",
     github: "https://github.com/ziadamr45/Eah-Elkalam",
     featured: false,
+    details: {
+      ar: {
+        overview: "إيه الكلام هو رادار ترند مصري يتيح متابعة أحدث المواضيع الرائجة في مصر في الوقت الحقيقي. يتميز التطبيق بخريطة مصر تفاعلية تعرض الترندات حسب المنطقة الجغرافية، مما يكشف عن الاهتمامات المحلية لكل محافظة. يقدم التطبيق تحليلات ذكية ورسوم بيانية توضح تطور الترندات عبر الزمن وتصنيفاتها. يمكن تصفح الترندات حسب الفئات المختلفة مثل السياسة والترفيه والرياضة، مع بيانات تاريخية تتيح مقارنة الترندات عبر الفترات المختلفة.",
+        features: [
+          "رصد الترندات المصرية في الوقت الحقيقي مع تحديثات فورية للمواضيع الأكثر رواجًا",
+          "خريطة مصر تفاعلية تعرض الترندات حسب المحافظة مع إمكانية النقر لعرض التفاصيل",
+          "رسوم بيانية وتحليلات ذكية توضح تطور الترندات عبر الزمن ومقارنتها ببعضها",
+          "تصفح الترندات حسب الفئات المختلفة مثل السياسة والترفيه والرياضة والتكنولوجيا",
+          "بيانات تاريخية للترندات تتيح البحث والمقارنة عبر الفترات الزمنية المختلفة",
+        ],
+        challenges: "أكبر تحدٍّ كان الحصول على بيانات الترندات المصرية بشكل موثوق ومستمر من مصادر متعددة. ربط الترندات بالمناطق الجغرافية على الخريطة تطلب تحليلًا مكثفًا للبيانات وتصنيفًا جغرافيًا دقيقًا. كذلك كان ضمان تحديث البيانات في الوقت الحقيقي بدون التأثير على أداء التطبيق تحديًا تقنيًا.",
+        howItWorks: "يعتمد التطبيق على Next.js مع جلب بيانات الترندات من مصادر متعددة وتحليلها وتصنيفها جغرافيًا. الخريطة التفاعلية تستخدم بيانات الإحداثيات لربط الترندات بالمحافظات. التحليلات تُحسب عبر خوارزميات تحلل حجم وتطور الترندات عبر الزمن. Prisma يخزن البيانات التاريخية ويسهل الاستعلام عنها.",
+      },
+      en: {
+        overview: "Eah ElKalam is an Egyptian trend radar that enables tracking the latest trending topics in Egypt in real-time. The app features an interactive Egypt map displaying trends by geographic region, revealing local interests for each governorate. It provides smart analytics and charts showing trend evolution over time and their categories. Trends can be browsed by different categories such as politics, entertainment, and sports, with historical data enabling comparison across different periods.",
+        features: [
+          "Real-time Egyptian trend monitoring with instant updates on the most trending topics",
+          "Interactive Egypt map displaying trends by governorate with click-to-view details",
+          "Smart analytics and charts showing trend evolution over time and cross-trend comparisons",
+          "Browse trends by different categories such as politics, entertainment, sports, and technology",
+          "Historical trend data enabling search and comparison across different time periods",
+        ],
+        challenges: "The biggest challenge was obtaining reliable and continuous Egyptian trend data from multiple sources. Linking trends to geographic regions on the map required intensive data analysis and precise geographic classification. Ensuring real-time data updates without affecting app performance was also a technical challenge.",
+        howItWorks: "The app relies on Next.js with trend data fetched from multiple sources, analyzed, and geographically classified. The interactive map uses coordinate data to link trends to governorates. Analytics are calculated through algorithms analyzing trend volume and evolution over time. Prisma stores historical data and facilitates querying.",
+      },
+    },
   },
   {
     key: "hammel",
@@ -89,6 +255,34 @@ export const projects = [
     url: "https://hammel-w-engez.vercel.app",
     github: "https://github.com/ziadamr45/Hammel-w-Engez",
     featured: false,
+    details: {
+      ar: {
+        overview: "حمّل وانجز هي أداة تحميل ذكية تُبسط عملية التحميل من الإنترنت بشكل كبير. كل ما عليك فعله هو لصق أي رابط وسيقوم التطبيق بتحليله تلقائيًا وتحديد نوع الملف وإتاحة التحميل فورًا. يدعم التطبيق التحميل المتعدد في نفس الوقت مع تتبع تقدم كل ملف بشكل منفصل. يتميز بواجهة سحب وإفلات سهلة الاستخدام وتاريخ تحميل كامل يمكن العودة إليه. الحركات والانتقالات المصممة بـ Framer Motion تضيف لمسة احترافية للتجربة.",
+        features: [
+          "لصق أي رابط وتحميل فوري مع تحليل تلقائي لنوع الملف وعرض خيارات التحميل المتاحة",
+          "تحميل متعدد في نفس الوقت مع تتبع تقدم كل ملف بشكل منفصل وعرض النسبة المئوية",
+          "اكتشاف تلقائي لنوع الوسيط سواء كان فيديو أو صوت أو صورة أو مستند مع معاينة سريعة",
+          "تتبع تقدم التحميل مع إشعارات الإكمال وإمكانية إيقاف واستئناف التحميل",
+          "سجل تحميل كامل يتيح العودة للملفات السابقة وإعادة تحميلها بضغطة واحدة",
+          "واجهة سحب وإفلات بديهية مع حركات انتقالية سلسة عبر Framer Motion",
+        ],
+        challenges: "أكبر تحدٍّ كان بناء نظام تحليل الروابط الذي يتعرف على أنواع الملفات المختلفة من مصادر متنوعة. كذلك كان دعم التحميل المتعدد مع تتبع تقدم كل ملف بشكل منفصل يتطلب إدارة حالة معقدة. ضمان توافق الأداة مع مختلف أنواع الروابط والمصادر كان تحديًا مستمرًا.",
+        howItWorks: "يعتمد التطبيق على Next.js مع واجهة برمجية خلفية تحلل الروابط المُدخلة وتكتشف نوع الملف وخيارات التحميل. التحميل المتعدد يُدار عبر قائمة انتظار ذكية تعالج الملفات بشكل متوازي. Framer Motion يضيف حركات انتقالية سلسة للواجهة. تاريخ التحميل يُخزن في Prisma ويُعرض مع فلاتر وبحث.",
+      },
+      en: {
+        overview: "Hammel w Engez is a smart download tool that greatly simplifies the downloading process from the internet. All you need to do is paste any link and the app automatically analyzes it, determines the file type, and enables instant downloading. The app supports simultaneous batch downloads with separate progress tracking for each file. It features an intuitive drag-and-drop interface and a complete download history for reference. Animations and transitions designed with Framer Motion add a professional touch to the experience.",
+        features: [
+          "Paste any link for instant download with automatic file type analysis and available download options display",
+          "Batch simultaneous downloads with separate progress tracking for each file and percentage display",
+          "Automatic media type detection whether video, audio, image, or document with quick preview",
+          "Download progress tracking with completion notifications and the ability to pause and resume downloads",
+          "Complete download history enabling return to previous files and one-click re-downloading",
+          "Intuitive drag-and-drop interface with smooth transitions powered by Framer Motion",
+        ],
+        challenges: "The biggest challenge was building a link analysis system that recognizes different file types from diverse sources. Supporting batch downloads with separate progress tracking for each file also required complex state management. Ensuring tool compatibility with various link types and sources was an ongoing challenge.",
+        howItWorks: "The app relies on Next.js with a backend API that analyzes entered links and detects file type and download options. Batch downloads are managed through a smart queue processing files in parallel. Framer Motion adds smooth transition animations to the interface. Download history is stored in Prisma and displayed with filters and search.",
+      },
+    },
   },
   {
     key: "quadra",
@@ -102,6 +296,32 @@ export const projects = [
     url: "https://quadra-studio.vercel.app",
     github: "https://github.com/ziadamr45/quadra_studio",
     featured: false,
+    details: {
+      ar: {
+        overview: "قدرة ستوديو هو أداة احترافية لإنشاء فيديوهات قرآنية عالية الجودة مخصصة لمنصات يوتيوب وتيك توك. يوفر التطبيق مكتبة قوالب جاهزة مصممة بعناية تناسب أنماط الفيديو المختلفة. يتميز بدمج أصوات أشهر القراء مع تحريك النصوص التلقائي للآيات القرآنية، مما ينتج فيديوهات جذابة بجهد قليل. يدعم التصدير بصيغ متعددة تناسب كل منصة مع خيارات تخصيص شاملة للعلامة التجارية. الجانب الخلفي يعتمد على Python لمعالجة الفيديو وتوليده.",
+        features: [
+          "مكتبة قوالب فيديو جاهزة مصممة بعناية تناسب أنماط العرض المختلفة لليوتيوب والتيك توك",
+          "دمج أصوات أشهر القراء تلقائيًا مع إمكانية اختيار القارئ والسورة والآيات المحددة",
+          "تحريك نصوص تلقائي للآيات القرآنية يزامن ظهور النص مع التلاوة بشكل احترافي",
+          "تصدير بصيغ متعددة تناسب منصات مختلفة مع ضبط الجودة والأبعاد لكل منصة",
+          "خيارات تخصيص شاملة للعلامة التجارية تشمل الألوان والخطوط والشعار والخلفيات",
+        ],
+        challenges: "التحدي الأكبر كان تحقيق المزامنة الدقيقة بين التلاوة الصوتية وظهور النص على الشاشة، وهو ما تطلب معالجة صوتية متقدمة. كذلك كان توليد الفيديو بجودة عالية مع الحفاظ على سرعة المعالجة يتطلب تحسينًا مستمرًا. دعم تنسيقات التصدير المتعددة مع الحفاظ على الجودة كان تحديًا إضافيًا.",
+        howItWorks: "يعتمد التطبيق على Next.js للواجهة الأمامية وPython للمعالجة الخلفية للفيديو. يختار المستخدم القالب والقارئ والآيات، ثم يقوم محرك Python بتوليد الفيديو مع مزامنة الصوت والنص. القوالب تُخزن كقوالب قابلة للتخصيص في Prisma، والتصدير يتم بتنسيقات مختلفة حسب المنصة المستهدفة.",
+      },
+      en: {
+        overview: "Quadra Studio is a professional tool for creating high-quality Quranic videos tailored for YouTube and TikTok platforms. The app provides a library of carefully designed ready-made templates that suit different video styles. It features integration of famous reciter voices with automatic text animation for Quranic verses, producing attractive videos with minimal effort. It supports export in multiple formats suitable for each platform with comprehensive branding customization options. The backend relies on Python for video processing and generation.",
+        features: [
+          "Library of ready-made video templates carefully designed to suit different display styles for YouTube and TikTok",
+          "Automatic integration of famous reciter voices with the ability to select the reciter, surah, and specific verses",
+          "Automatic text animation for Quranic verses that synchronizes text appearance with recitation professionally",
+          "Export in multiple formats suitable for different platforms with quality and dimension settings for each platform",
+          "Comprehensive branding customization options including colors, fonts, logo, and backgrounds",
+        ],
+        challenges: "The biggest challenge was achieving precise synchronization between audio recitation and on-screen text appearance, which required advanced audio processing. Generating high-quality video while maintaining processing speed also required continuous optimization. Supporting multiple export formats while preserving quality was an additional challenge.",
+        howItWorks: "The app relies on Next.js for the frontend and Python for backend video processing. The user selects the template, reciter, and verses, then the Python engine generates the video with audio-text synchronization. Templates are stored as customizable templates in Prisma, and export is done in different formats based on the target platform.",
+      },
+    },
   },
   {
     key: "weather",
@@ -115,6 +335,34 @@ export const projects = [
     url: "https://weather-sand-phi.vercel.app",
     github: "https://github.com/ziadamr45/Weather-App",
     featured: false,
+    details: {
+      ar: {
+        overview: "تطبيق الطقس هو تطبيق احترافي يقدم توقعات طقس دقيقة وتحليلات مناخية مفصلة بتصميم عصري وأنيق. يدعم التطبيق عرض توقعات لسبعة أيام قادمة مع رسوم بيانية توضح تطور درجات الحرارة والرطوبة والرياح. الواجهة ثنائية اللغة تدعم العربية والإنجليزية بسلاسة، مع مساعد طقس ذكي يجيب على أسئلة المستخدم عن حالة الطقس. الكشف التلقائي عن الموقع يحدد مدينة المستخدم فورًا. الحركات المصممة بـ Framer Motion تجعل التفاعل مع التطبيق تجربة ممتعة.",
+        features: [
+          "توقعات طقس دقيقة ومحدّثة مع بيانات شاملة تشمل الحرارة والرطوبة والرياح وفرص الهطول",
+          "عرض توقعات سبعة أيام قادمة مع رسوم بيانية تفاعلية توضح تطور الظروف الجوية",
+          "رسوم بيانية وتحليلات مناخية مفصلة تعرض أنماط الطقس التاريخية والموسمية",
+          "واجهة ثنائية اللغة تدعم العربية والإنجليزية مع تبديل سلس بدون إعادة تحميل",
+          "مساعد طقس ذكي يجيب على أسئلة المستخدم ويقدم نصائح ملائمة لحالة الطقس",
+          "كشف تلقائي عن موقع المستخدم لعرض توقعات مدينته فور فتح التطبيق",
+        ],
+        challenges: "أكبر تحدٍّ كان الحصول على بيانات طقس دقيقة ومحدّثة من مصادر موثوقة وتقديمها بشكل جذاب. تصميم رسوم بيانية تفاعلية تعمل بسلاسة على الموبايل كان يتطلب تحسينًا مستمرًا. دعم اللغتين العربية والإنجليزية مع الحفاظ على تناسق التصميم في كلا الاتجاهين كان تحديًا إضافيًا.",
+        howItWorks: "يعتمد التطبيق على Next.js مع واجهات برمجية للطقس تجلب البيانات المحدّثة. الرسوم البيانية تُعرض عبر مكتبات تصوير متخصصة مع حركات Framer Motion. المساعد الذكي يحلل بيانات الطقس ويجيب على استفسارات المستخدم. الكشف عن الموقع يستخدم Geolocation API لتحديد المدينة تلقائيًا.",
+      },
+      en: {
+        overview: "The Weather App is a professional application delivering accurate weather forecasts and detailed climate analysis with a modern, elegant design. The app supports a 7-day forecast view with charts showing temperature, humidity, and wind evolution. The bilingual interface supports Arabic and English seamlessly, with a smart weather assistant answering user questions about weather conditions. Automatic location detection identifies the user's city instantly. Animations designed with Framer Motion make interacting with the app an enjoyable experience.",
+        features: [
+          "Accurate and updated weather forecasts with comprehensive data including temperature, humidity, wind, and precipitation chances",
+          "7-day forecast view with interactive charts showing weather condition evolution",
+          "Detailed climate analysis charts displaying historical and seasonal weather patterns",
+          "Bilingual interface supporting Arabic and English with seamless switching without page reload",
+          "Smart weather assistant answering user questions and providing advice appropriate to weather conditions",
+          "Automatic user location detection to display city forecasts immediately upon opening the app",
+        ],
+        challenges: "The biggest challenge was obtaining accurate and updated weather data from reliable sources and presenting it attractively. Designing interactive charts that work smoothly on mobile required continuous optimization. Supporting both Arabic and English while maintaining design consistency in both directions was an additional challenge.",
+        howItWorks: "The app relies on Next.js with weather APIs fetching updated data. Charts are displayed through specialized visualization libraries with Framer Motion animations. The smart assistant analyzes weather data and answers user queries. Location detection uses the Geolocation API to automatically identify the city.",
+      },
+    },
   },
   {
     key: "eleqbal",
@@ -128,6 +376,34 @@ export const projects = [
     url: "https://eleqbal-amrsobhy.vercel.app",
     github: "https://github.com/ziadamr45/Eleqbal-Form",
     featured: false,
+    details: {
+      ar: {
+        overview: "نظام الإقبال هو نظام رقمي متكامل صُمم خصيصًا لجمع وإدارة بيانات طلاب مدرسة الإقبال. يتميز النظام بنظام مصادقة آمن عبر OTP يُرسل للطالب على بريده الإلكتروني، مما يضمن خصوصية البيانات. النماذج ثنائية اللغة تدعم العربية والإنجليزية لتسهيل الملء على جميع الطلاب. لوحة تحكم الإدارة تتيح إدارة بيانات الطلاب وعرض الإحصائيات وتصدير البيانات. الوضع الداكن يوفر تجربة مريحة في جميع الظروف.",
+        features: [
+          "مصادقة آمنة عبر OTP تُرسل للبريد الإلكتروني مع صلاحية محدودة تضمن أمان الوصول",
+          "نماذج ثنائية اللغة تدعم العربية والإنجليزية مع تبديل فوري يسهل الملء على الجميع",
+          "لوحة تحكم إدارية شاملة لإدارة بيانات الطلاب وعرض الإحصائيات ومتابعة الحالة",
+          "إدارة بيانات الطلاب الكاملة مع إمكانية البحث والفلترة والتعديل والحذف",
+          "وضع داكن مريح للعين يعمل تلقائيًا حسب إعدادات النظام مع إمكانية التبديل اليدوي",
+          "تصدير البيانات لصيغ PDF وExcel لتسهيل الطباعة والأرشفة والتقارير",
+        ],
+        challenges: "التحدي الأكبر كان تنفيذ نظام OTP آمن وموثوق يعمل بشكل متسق عبر مختلف مزودي البريد الإلكتروني. كذلك كان تصميم نماذج ثنائية اللغة تحافظ على تناسق التصميم في الاتجاهين RTL وLTR يتطلب عناية فائقة. ضمان أمان بيانات الطلاب الحساسة مع توفير واجهة سهلة الاستكان كان توازنًا صعبًا.",
+        howItWorks: "يعتمد النظام على Next.js مع Prisma لإدارة قاعدة البيانات. المصادقة عبر OTP تُولد وتُرسل للبريد الإلكتروني عند التسجيل وتتحقق من صحتها عند الإدخال. النماذج ثنائية اللغة تتكيف تلقائيًا حسب اختيار المستخدم مع دعم كامل لاتجاهي النص. لوحة التحكم تعرض البيانات مع فلاتر وإمكانية التصدير.",
+      },
+      en: {
+        overview: "Eleqbal Form is a comprehensive digital system designed specifically for collecting and managing student data at Eleqbal School. The system features secure OTP authentication sent to the student's email, ensuring data privacy. Bilingual forms support Arabic and English to facilitate completion for all students. The admin dashboard enables student data management, statistics viewing, and data export. Dark mode provides a comfortable experience in all conditions.",
+        features: [
+          "Secure OTP authentication sent via email with limited validity ensuring access security",
+          "Bilingual forms supporting Arabic and English with instant switching making completion easy for everyone",
+          "Comprehensive admin dashboard for managing student data, viewing statistics, and tracking status",
+          "Complete student data management with search, filtering, editing, and deletion capabilities",
+          "Comfortable dark mode that activates automatically based on system settings with manual toggle option",
+          "Data export to PDF and Excel formats facilitating printing, archiving, and reporting",
+        ],
+        challenges: "The biggest challenge was implementing a secure and reliable OTP system that works consistently across different email providers. Designing bilingual forms that maintain design consistency in both RTL and LTR directions required extreme care. Ensuring the security of sensitive student data while providing a user-friendly interface was a difficult balance.",
+        howItWorks: "The system relies on Next.js with Prisma for database management. OTP authentication is generated and sent to email upon registration and verified upon input. Bilingual forms adapt automatically based on user selection with full bidirectional text support. The dashboard displays data with filters and export capabilities.",
+      },
+    },
   },
 ];
 

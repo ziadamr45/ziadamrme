@@ -43,6 +43,10 @@ export const translations = {
     navHome: "الرئيسية",
     navProjects: "المشاريع",
     navBlog: "المدونة",
+    overviewTitle: "نظرة عامة",
+    featuresTitle: "المميزات",
+    howItWorksTitle: "كيف يعمل",
+    challengesTitle: "التحديات",
     socialNames: {
       github: "جيت هب",
       linkedin: "لينكد إن",
@@ -99,6 +103,10 @@ export const translations = {
     navHome: "Home",
     navProjects: "Projects",
     navBlog: "Blog",
+    overviewTitle: "Overview",
+    featuresTitle: "Features",
+    howItWorksTitle: "How It Works",
+    challengesTitle: "Challenges",
     socialNames: {
       github: "GitHub",
       linkedin: "LinkedIn",
