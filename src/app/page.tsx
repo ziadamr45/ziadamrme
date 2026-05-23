@@ -88,7 +88,7 @@ export default function Home() {
       )}
 
       {/* PROFILE CARD */}
-      <section className="relative z-10 w-full max-w-md mx-auto px-4 pt-12 pb-8">
+      <section id="profile" className="relative z-10 w-full max-w-md mx-auto px-4 pt-12 pb-8">
         <Card className="relative w-full overflow-hidden border-0 shadow-2xl shadow-slate-200/50 dark:shadow-black/50 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl">
           <CardContent className="p-8">
             <div className="flex flex-col items-center text-center mb-8">
@@ -315,6 +315,13 @@ export default function Home() {
                 <div>
                   <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">{t.contactMessage}</label>
                   <textarea required rows={4} value={contactForm.message} onChange={(e) => setContactForm({...contactForm, message: e.target.value})} className="w-full px-4 py-2.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-sm text-slate-900 dark:text-white focus:ring-2 focus:ring-orange-500 focus:border-transparent outline-none transition-all resize-none" />
+                </div>
+                <div className="flex flex-col gap-2 p-3 rounded-lg bg-amber-50/80 dark:bg-amber-500/10 border border-amber-200/50 dark:border-amber-500/20">
+                  <p className="text-xs text-amber-700 dark:text-amber-300 font-medium leading-relaxed">{t.contactReplyNotice}</p>
+                  <button type="button" onClick={() => document.getElementById('profile')?.scrollIntoView({ behavior: 'smooth' })} className="inline-flex items-center gap-1.5 text-xs font-semibold text-orange-600 dark:text-orange-400 hover:text-orange-700 dark:hover:text-orange-300 transition-colors cursor-pointer w-fit">
+                    <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 10l7-7m0 0l7 7m-7-7v18" /></svg>
+                    {t.contactSocialLink}
+                  </button>
                 </div>
                 <button type="submit" disabled={contactStatus === "sending"} className="w-full px-4 py-3 rounded-lg text-sm font-medium bg-linear-to-r from-orange-500 to-amber-500 text-white shadow-sm hover:shadow-md transition-all duration-300 hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer">
                   {contactStatus === "sending" ? t.contactSending : t.contactSend}
