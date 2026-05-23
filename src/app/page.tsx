@@ -1,343 +1,24 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
+import Link from "next/link";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Card, CardContent } from "@/components/ui/card";
 import { useApp } from "@/components/providers";
 import { Controls } from "@/components/controls";
 import { AnimatedBackground } from "@/components/animated-background";
-
-const socialLinks = [
-  {
-    key: "github",
-    url: "https://github.com/ziadamr45",
-    icon: (
-      <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-        <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
-      </svg>
-    ),
-    color: "hover:bg-[#181717] hover:text-white hover:border-[#181717] dark:hover:bg-white dark:hover:text-black",
-  },
-  {
-    key: "facebook",
-    url: "https://www.facebook.com/ziad7mr",
-    icon: (
-      <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-        <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
-      </svg>
-    ),
-    color: "hover:bg-[#1877F2] hover:text-white hover:border-[#1877F2]",
-  },
-  {
-    key: "telegram",
-    url: "https://t.me/ziadamr",
-    icon: (
-      <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-        <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/>
-      </svg>
-    ),
-    color: "hover:bg-[#0088cc] hover:text-white hover:border-[#0088cc]",
-  },
-  {
-    key: "instagram",
-    url: "https://www.instagram.com/ziadamr455/",
-    icon: (
-      <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-        <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
-      </svg>
-    ),
-    color: "hover:bg-linear-to-r hover:from-[#833AB4] hover:via-[#FD1D1D] hover:to-[#F77737] hover:text-white hover:border-transparent",
-  },
-  {
-    key: "x",
-    url: "https://x.com/ziad90216",
-    icon: (
-      <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-        <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
-      </svg>
-    ),
-    color: "hover:bg-black hover:text-white hover:border-black dark:hover:bg-white dark:hover:text-black",
-  },
-  {
-    key: "threads",
-    url: "https://www.threads.com/@ziadamr455",
-    icon: (
-      <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-        <path d="M12.186 24h-.007c-3.581-.024-6.334-1.205-8.184-3.509C2.35 18.44 1.5 15.586 1.472 12.01v-.017c.03-3.579.879-6.43 2.525-8.482C5.845 1.205 8.6.024 12.18 0h.014c2.746.02 5.043.725 6.826 2.098 1.677 1.29 2.858 3.13 3.509 5.467l-2.04.569c-1.104-3.96-3.898-5.984-8.304-6.015-2.91.022-5.11.936-6.54 2.717C4.307 6.504 3.616 8.914 3.589 12c.027 3.086.718 5.496 2.057 7.164 1.43 1.783 3.631 2.698 6.54 2.717 2.623-.02 4.358-.631 5.8-2.045 1.647-1.613 1.618-3.593 1.09-4.798-.31-.71-.873-1.3-1.634-1.75-.192 1.352-.622 2.446-1.284 3.272-.886 1.102-2.14 1.704-3.73 1.79-1.202.065-2.361-.218-3.259-.801-1.063-.689-1.685-1.74-1.752-2.96-.065-1.182.408-2.256 1.332-3.023.88-.73 2.088-1.146 3.396-1.17 1.166-.02 2.14.16 2.963.51v-.67c0-.936-.244-1.648-.727-2.117-.54-.524-1.384-.79-2.51-.79-1.242 0-2.255.285-3.013.848l-.168.125-.996-1.63.147-.106c1.09-.78 2.555-1.176 4.354-1.176 1.58 0 2.826.39 3.703 1.158.907.795 1.366 1.953 1.366 3.44v4.84l.333.172c.576.297 1.053.65 1.417 1.052.505.547.88 1.19 1.115 1.913.484 1.487.4 3.22-.792 4.76-1.39 1.796-3.592 2.707-6.542 2.707zm-.96-7.16c.92-.05 1.655-.372 2.184-.96.575-.638.89-1.524.94-2.635-.62-.267-1.357-.402-2.197-.402-.95.017-1.734.242-2.33.67-.57.406-.85.924-.832 1.54.036.78.582 1.707 2.235 1.787z"/>
-      </svg>
-    ),
-    color: "hover:bg-black hover:text-white hover:border-black dark:hover:bg-white dark:hover:text-black",
-  },
-  {
-    key: "youtube",
-    url: "https://youtube.com/@alhayat_ala_eltarek?si=pcsc_31Kcv3Jym14",
-    icon: (
-      <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-        <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
-      </svg>
-    ),
-    color: "hover:bg-[#FF0000] hover:text-white hover:border-[#FF0000]",
-  },
-  {
-    key: "email",
-    url: "mailto:ziad90216@gmail.com",
-    icon: (
-      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-      </svg>
-    ),
-    color: "hover:bg-emerald-500 hover:text-white hover:border-emerald-500",
-  },
-];
-
-const projects = [
-  {
-    key: "radio",
-    emoji: "📡",
-    name: { ar: "إسمع راديو", en: "Esma3 Radio" },
-    description: {
-      ar: "تطبيق ويب احترافي للاستماع إلى محطات الراديو من مختلف أنحاء العالم، يتضمن قسمًا للقرآن الكريم مع توصيات ذكية ونظام إشعارات متقدم",
-      en: "Professional web app for listening to radio stations worldwide, with a Quran section, smart recommendations, and an advanced notification system",
-    },
-    tech: ["Next.js", "React", "TypeScript", "Tailwind CSS", "PostgreSQL", "Prisma", "NextAuth"],
-    url: "https://esma3radio.vercel.app",
-    github: "https://github.com/ziadamr45/Radio",
-    featured: true,
-  },
-  {
-    key: "elmokhber",
-    emoji: "🕵️",
-    name: { ar: "المخبر", en: "Elmokhber" },
-    description: {
-      ar: "لعبة اجتماعية تفاعلية تعتمد على الذكاء والفهم والخداع الاستراتيجي بين اللاعبين، مع مكالمات صوتية مباشرة",
-      en: "An interactive social deduction game based on intelligence, understanding, and strategic deception, with live voice calls",
-    },
-    tech: ["Next.js", "TypeScript", "Tailwind CSS", "LiveKit", "Prisma"],
-    url: "https://elmokhber.vercel.app",
-    github: "https://github.com/ziadamr45/Elmokhber",
-    featured: true,
-  },
-  {
-    key: "battle",
-    emoji: "⚔️",
-    name: { ar: "معركة الأسئلة", en: "Battle of Questions" },
-    description: {
-      ar: "لعبة أسئلة تفاعلية متعددة اللاعبين في الوقت الحقيقي مع غرف لعب، أوضاع فرق، ونظام تسجيل نقاط مباشر",
-      en: "Multiplayer real-time quiz battle game with game rooms, team modes, and live scoring system",
-    },
-    tech: ["Next.js", "TypeScript", "Socket.io", "Tailwind CSS", "Prisma", "Docker"],
-    url: "https://motaharrer.vercel.app",
-    github: "https://github.com/ziadamr45/Battle-of-Questions",
-    featured: true,
-  },
-  {
-    key: "tammeny",
-    emoji: "📍",
-    name: { ar: "طمنّي", en: "Tammeny" },
-    description: {
-      ar: "تطبيق آمن بالكامل لمشاركة الموقع الجغرافي مع الأصدقاء والعائلة، يعتمد على أحدث معايير الأمان والتشفير",
-      en: "A fully secure application for sharing your location with friends and family, built with the latest security standards and encryption",
-    },
-    tech: ["Next.js", "TypeScript", "Tailwind CSS", "Prisma", "LiveKit"],
-    url: "https://tammeny24.vercel.app/login",
-    github: "https://github.com/ziadamr45/Tammeny",
-    featured: true,
-  },
-  {
-    key: "bawabet",
-    emoji: "📰",
-    name: { ar: "بوابة الحدث", en: "Bawabet Elhadas" },
-    description: {
-      ar: "بوابة أخبار ذكية مع تلخيص تلقائي وبحث متقدم وتوصيات مخصصة حسب الدولة والفئة",
-      en: "Smart news portal with auto-summarization, advanced search, and personalized recommendations",
-    },
-    tech: ["Next.js", "TypeScript", "Tailwind CSS", "Prisma"],
-    url: "https://bawabet-elhadas.vercel.app",
-    github: "https://github.com/ziadamr45/Bawabet-elhadas",
-    featured: false,
-  },
-  {
-    key: "eah-elkalam",
-    emoji: "🔥",
-    name: { ar: "إيه الكلام؟", en: "Eah ElKalam" },
-    description: {
-      ar: "رادار الترند المصري — تابع أحدث الترندات في الوقت الحقيقي مع تحليلات ذكية وخريطة مصر تفاعلية",
-      en: "Egyptian Trend Radar — track real-time trending topics with smart analysis and an interactive Egypt map",
-    },
-    tech: ["Next.js", "TypeScript", "Tailwind CSS", "Prisma"],
-    url: "https://eah-elkalam.vercel.app",
-    github: "https://github.com/ziadamr45/Eah-Elkalam",
-    featured: false,
-  },
-  {
-    key: "hammel",
-    emoji: "⬇️",
-    name: { ar: "حمّل وانجز", en: "Hammel w Engez" },
-    description: {
-      ar: "أداة تحميل ذكية من أي رابط — الصق أي رابط وحمّل فورًا مع دعم التحميل المتعدد والتحليل التلقائي",
-      en: "Smart download tool — paste any URL and download instantly with batch support and auto-analysis",
-    },
-    tech: ["Next.js", "TypeScript", "Tailwind CSS", "Prisma", "Framer Motion"],
-    url: "https://hammel-w-engez.vercel.app",
-    github: "https://github.com/ziadamr45/Hammel-w-Engez",
-    featured: false,
-  },
-  {
-    key: "quadra",
-    emoji: "🎬",
-    name: { ar: "قدرة ستوديو", en: "Quadra Studio" },
-    description: {
-      ar: "صانع فيديوهات قرآنية احترافية لليوتيوب والتيك توك مع قوالب جاهزة وأصوات قراء مشهورين",
-      en: "Professional Quranic video maker for YouTube & TikTok with templates and famous reciter voices",
-    },
-    tech: ["Next.js", "TypeScript", "Python", "Tailwind CSS", "Prisma"],
-    url: "https://quadra-studio.vercel.app",
-    github: "https://github.com/ziadamr45/quadra_studio",
-    featured: false,
-  },
-  {
-    key: "weather",
-    emoji: "🌤️",
-    name: { ar: "تطبيق الطقس", en: "Weather App" },
-    description: {
-      ar: "تطبيق طقس احترافي مع توقعات دقيقة وتحليلات مناخية مفصلة وواجهة ثنائية اللغة ومساعد طقس ذكي",
-      en: "Professional weather app with accurate forecasts, detailed climate analysis, bilingual UI, and a smart weather assistant",
-    },
-    tech: ["Next.js", "TypeScript", "Tailwind CSS", "Prisma", "Framer Motion"],
-    url: "https://weather-sand-phi.vercel.app",
-    github: "https://github.com/ziadamr45/Weather-App",
-    featured: false,
-  },
-  {
-    key: "eleqbal",
-    emoji: "🎓",
-    name: { ar: "نظام الإقبال", en: "Eleqbal Form" },
-    description: {
-      ar: "نظام رقمي لجمع بيانات طلاب مدرسة الإقبال مع مصادقة OTP وواجهة ثنائية اللغة والوضع الداكن",
-      en: "Digital student data collection system for Eleqbal School with OTP auth, bilingual UI, and dark mode",
-    },
-    tech: ["Next.js", "TypeScript", "Tailwind CSS", "Prisma"],
-    url: "https://eleqbal-amrsobhy.vercel.app",
-    github: "https://github.com/ziadamr45/Eleqbal-Form",
-    featured: false,
-  },
-];
-
-const stats = [
-  { number: "3+", label: { ar: "سنوات خبرة", en: "Years Experience" }, icon: "📅" },
-  { number: "10+", label: { ar: "مشروع منجز", en: "Projects Completed" }, icon: "🚀" },
-  { number: "12+", label: { ar: "تقنية مستخدمة", en: "Technologies Used" }, icon: "🛠️" },
-];
-
-const techStack = [
-  { name: "Next.js", color: "from-black/80 to-black dark:from-white/90 dark:to-white" },
-  { name: "React", color: "from-cyan-500/80 to-sky-500" },
-  { name: "TypeScript", color: "from-blue-600/80 to-blue-500" },
-  { name: "Tailwind CSS", color: "from-teal-500/80 to-cyan-400" },
-  { name: "PostgreSQL", color: "from-indigo-600/80 to-blue-500" },
-  { name: "Prisma", color: "from-violet-600/80 to-purple-400" },
-  { name: "Python", color: "from-yellow-500/80 to-amber-400" },
-  { name: "Node.js", color: "from-green-600/80 to-emerald-500" },
-  { name: "Git", color: "from-orange-600/80 to-red-500" },
-  { name: "Framer Motion", color: "from-pink-500/80 to-purple-500" },
-  { name: "Socket.io", color: "from-gray-700/80 to-gray-500" },
-  { name: "Vercel", color: "from-gray-700/80 to-gray-600 dark:from-gray-200/80 dark:to-gray-300" },
-  { name: "shadcn/ui", color: "from-slate-600/80 to-slate-500" },
-  { name: "LiveKit", color: "from-blue-500/80 to-indigo-400" },
-  { name: "NextAuth", color: "from-red-500/80 to-orange-400" },
-  { name: "Docker", color: "from-blue-400/80 to-cyan-500" },
-  { name: "Zustand", color: "from-purple-500/80 to-violet-400" },
-  { name: "Recharts", color: "from-orange-500/80 to-red-400" },
-];
-
-const translations = {
-  ar: {
-    name: "زياد عمرو",
-    subtitle: "Ziad Amr",
-    title: "مطوِّر مواقع ويب",
-    mission: "إنشاء خدمات مجانية وإتاحة التكنولوجيا الحديثة للجميع ونشر الخير والفائدة",
-    aboutTitle: "نبذة عني",
-    aboutText: "مطوِّر ويب مصري بخبرة 3 سنوات بدأت رحلتي في عالم البرمجة وأنا في سن مبكرة. أعمل على بناء تطبيقات ويب حديثة ومتكاملة باستخدام أحدث التقنيات والأطر البرمجية. أؤمن بأن التقنية ليست مجرد أكواد، بل أداة لحل المشكلات وتقديم قيمة حقيقية للمستخدمين. إلى جانب شغفي بالبرمجة، أمتلك خبرة في مجال الكتابة والتأليف الأدبي الدعوي والإرشادي، وأسعى دائمًا لدمج مهاراتي المختلفة في إنتاج محتوى تقني هادف. حلمي هو التخصص في هندسة البرمجيات وعلوم الحاسب، وأن أصبح مطوِّرًا محترفًا قادرًا على المنافسة عالميًا والمساهمة في تطوير مجتمع المطورين العرب.",
-    statsTitle: "إحصائيات",
-    projectsTitle: "مشاريعي",
-    projectsSubtitle: "مجموعة من المشاريع التي عملت عليها",
-    featuredTag: "مميز",
-    visitSite: "زيارة الموقع",
-    viewCode: "عرض الكود",
-    techStackTitle: "التقنيات",
-    techStackSubtitle: "الأدوات والتقنيات التي أستخدمها",
-    socialLinksTitle: "روابط التواصل",
-    contactTitle: "تواصل معي",
-    contactSubtitle: "لديك مشروع أو فكرة؟ تواصل معي",
-    contactName: "الاسم",
-    contactEmail: "البريد الإلكتروني",
-    contactMessage: "رسالتك",
-    contactSend: "إرسال الرسالة",
-    contactSending: "جاري الإرسال...",
-    contactSuccess: "تم إرسال رسالتك بنجاح!",
-    contactError: "حدث خطأ، حاول مرة أخرى",
-    avatarFallback: "زياد",
-    ariaSendEmail: "أرسل بريد إلكتروني",
-    ariaOpensNew: "يفتح في نافذة جديدة",
-    socialNames: {
-      github: "جيت هب",
-      facebook: "فيسبوك",
-      telegram: "تليجرام",
-      instagram: "انستجرام",
-      x: "اكس",
-      threads: "ثريدز",
-      youtube: "يوتيوب",
-      email: "البريد الإلكتروني",
-    },
-  },
-  en: {
-    name: "Ziad Amr",
-    subtitle: "",
-    title: "Web Developer",
-    mission: "Creating free services and making modern technology accessible to everyone, spreading goodness and benefit",
-    aboutTitle: "About Me",
-    aboutText: "An Egyptian web developer with 3 years of experience who started my programming journey at a young age. I build modern, integrated web applications using the latest technologies and frameworks. I believe technology is more than just code — it's a tool for solving problems and delivering real value to users. Beyond my passion for programming, I have experience in writing faith-based and educational literary content, and I constantly strive to combine my diverse skills to produce meaningful technical work. My dream is to specialize in software engineering and computer science, becoming a professional developer capable of competing globally and contributing to the growth of the Arab developer community.",
-    statsTitle: "Stats",
-    projectsTitle: "My Projects",
-    projectsSubtitle: "A collection of projects I've worked on",
-    featuredTag: "Featured",
-    visitSite: "Visit Site",
-    viewCode: "View Code",
-    techStackTitle: "Tech Stack",
-    techStackSubtitle: "Tools and technologies I work with",
-    socialLinksTitle: "Social Links",
-    contactTitle: "Contact Me",
-    contactSubtitle: "Have a project or idea? Get in touch",
-    contactName: "Name",
-    contactEmail: "Email",
-    contactMessage: "Your Message",
-    contactSend: "Send Message",
-    contactSending: "Sending...",
-    contactSuccess: "Message sent successfully!",
-    contactError: "Error occurred, please try again",
-    avatarFallback: "ZA",
-    ariaSendEmail: "Send email",
-    ariaOpensNew: "Opens in new window",
-    socialNames: {
-      github: "GitHub",
-      facebook: "Facebook",
-      telegram: "Telegram",
-      instagram: "Instagram",
-      x: "X (Twitter)",
-      threads: "Threads",
-      youtube: "YouTube",
-      email: "Email",
-    },
-  },
-};
+import { Navigation } from "@/components/navigation";
+import { socialLinks } from "@/lib/social-links";
+import { sortedProjects } from "@/lib/projects";
+import { stats, techStack } from "@/lib/data";
+import { translations } from "@/lib/translations";
 
 export default function Home() {
   const { language } = useApp();
   const t = translations[language];
   const [showImageModal, setShowImageModal] = useState(false);
   const [contactForm, setContactForm] = useState({ name: "", email: "", message: "" });
-  const [contactStatus, setContactStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
-  const formRef = useRef<HTMLFormElement>(null);
+  const [contactStatus, setContactStatus] = useState<"idle" | "sending" | "success" | "error" | "rateLimit" | "validation">("idle");
 
   useEffect(() => {
     if (showImageModal) {
@@ -350,6 +31,21 @@ export default function Home() {
 
   const handleContactSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    // Client-side validation
+    if (!contactForm.name.trim() || !contactForm.email.trim() || !contactForm.message.trim()) {
+      setContactStatus("validation");
+      setTimeout(() => setContactStatus("idle"), 4000);
+      return;
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(contactForm.email)) {
+      setContactStatus("validation");
+      setTimeout(() => setContactStatus("idle"), 4000);
+      return;
+    }
+
     setContactStatus("sending");
     try {
       const res = await fetch("/api/contact", {
@@ -361,6 +57,9 @@ export default function Home() {
         setContactStatus("success");
         setContactForm({ name: "", email: "", message: "" });
         setTimeout(() => setContactStatus("idle"), 4000);
+      } else if (res.status === 429) {
+        setContactStatus("rateLimit");
+        setTimeout(() => setContactStatus("idle"), 6000);
       } else {
         setContactStatus("error");
         setTimeout(() => setContactStatus("idle"), 4000);
@@ -375,9 +74,11 @@ export default function Home() {
     <div className="relative min-h-screen flex flex-col items-center bg-linear-to-br from-slate-50 via-white to-slate-100 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950">
       <Controls />
       <AnimatedBackground />
+      <Navigation />
 
       {showImageModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm animate-in fade-in duration-200 cursor-zoom-out" onClick={() => setShowImageModal(false)} role="dialog" aria-modal="true">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src="/profile.jpg" alt="Ziad Amr" className="max-w-[90vw] max-h-[85vh] rounded-2xl shadow-2xl object-contain animate-in zoom-in-95 duration-300" onClick={(e) => e.stopPropagation()} />
         </div>
       )}
@@ -452,6 +153,32 @@ export default function Home() {
         </div>
       </section>
 
+      {/* GITHUB CONTRIBUTION GRAPH */}
+      <section className="w-full max-w-md mx-auto px-4 pb-8">
+        <Card className="relative w-full overflow-hidden border-0 shadow-xl shadow-slate-200/50 dark:shadow-black/50 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl">
+          <CardContent className="p-6">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-linear-to-br from-green-500/10 to-emerald-500/10 dark:from-green-500/20 dark:to-emerald-500/20">
+                <svg className="w-5 h-5 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" /></svg>
+              </div>
+              <div>
+                <h2 className="text-lg font-bold text-slate-900 dark:text-white">{t.contributionTitle}</h2>
+                <p className="text-xs text-slate-500 dark:text-slate-500">{t.contributionSubtitle}</p>
+              </div>
+            </div>
+            <div className="w-full overflow-x-auto">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="https://ghchart.rshah.org/ziadamr45"
+                alt="GitHub Contribution Graph"
+                className="w-full h-auto min-w-[600px] rounded-lg"
+                loading="lazy"
+              />
+            </div>
+          </CardContent>
+        </Card>
+      </section>
+
       {/* PROJECTS SECTION */}
       <section className="w-full max-w-md mx-auto px-4 pb-8">
         <div className="flex items-center gap-3 mb-5">
@@ -464,28 +191,37 @@ export default function Home() {
           </div>
         </div>
         <div className="space-y-4">
-          {projects.map((project) => (
-            <Card key={project.key} className={`relative w-full overflow-hidden border-0 shadow-lg shadow-slate-200/50 dark:shadow-black/30 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl transition-transform duration-300 hover:scale-[1.02] ${project.featured ? "ring-1 ring-orange-400/30 dark:ring-orange-500/20" : ""}`}>
-              <CardContent className="p-6">
-                <div className="flex items-start gap-3 mb-3">
-                  <span className="text-2xl mt-0.5">{project.emoji}</span>
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-2 flex-wrap">
-                      <h3 className="text-base font-bold text-slate-900 dark:text-white">{project.name[language]}</h3>
-                      {project.featured && <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-semibold bg-orange-500/10 text-orange-600 dark:text-orange-400 border border-orange-500/20">{t.featuredTag}</span>}
+          {sortedProjects.map((project) => (
+            <Link key={project.key} href={`/projects/${project.key}`}>
+              <Card className={`relative w-full overflow-hidden border-0 shadow-lg shadow-slate-200/50 dark:shadow-black/30 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl transition-transform duration-300 hover:scale-[1.02] cursor-pointer ${project.featured ? "ring-1 ring-orange-400/30 dark:ring-orange-500/20" : ""}`}>
+                <CardContent className="p-6">
+                  <div className="flex items-start gap-3 mb-3">
+                    <span className="text-2xl mt-0.5">{project.emoji}</span>
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-2 flex-wrap">
+                        <h3 className="text-base font-bold text-slate-900 dark:text-white">{project.name[language]}</h3>
+                        {project.featured && <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-semibold bg-orange-500/10 text-orange-600 dark:text-orange-400 border border-orange-500/20">{t.featuredTag}</span>}
+                      </div>
                     </div>
                   </div>
-                </div>
-                <p className="text-sm text-slate-500 dark:text-slate-400 leading-relaxed mb-4">{project.description[language]}</p>
-                <div className="flex flex-wrap gap-1.5 mb-4">
-                  {project.tech.map((tech) => (<span key={tech} className="inline-flex items-center px-2.5 py-1 rounded-md text-[11px] font-medium bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 border border-slate-200/50 dark:border-slate-700/50">{tech}</span>))}
-                </div>
-                <div className="flex items-center gap-2">
-                  {project.url && <a href={project.url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-medium bg-linear-to-r from-orange-500 to-amber-500 text-white shadow-sm hover:shadow-md transition-all duration-300 hover:scale-105"><svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>{t.visitSite}</a>}
-                  <a href={project.github} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-medium border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-all duration-300"><svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>{t.viewCode}</a>
-                </div>
-              </CardContent>
-            </Card>
+                  <p className="text-sm text-slate-500 dark:text-slate-400 leading-relaxed mb-4 line-clamp-2">{project.description[language]}</p>
+                  <div className="flex flex-wrap gap-1.5 mb-4">
+                    {project.tech.slice(0, 4).map((tech) => (<span key={tech} className="inline-flex items-center px-2.5 py-1 rounded-md text-[11px] font-medium bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 border border-slate-200/50 dark:border-slate-700/50">{tech}</span>))}
+                    {project.tech.length > 4 && <span className="inline-flex items-center px-2.5 py-1 rounded-md text-[11px] font-medium bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 border border-slate-200/50 dark:border-slate-700/50">+{project.tech.length - 4}</span>}
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="inline-flex items-center gap-2 text-xs font-medium text-orange-600 dark:text-orange-400">
+                      {t.viewProject}
+                      <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={language === "ar" ? "M19 12H5m0 0l7 7m-7-7l7-7" : "M5 12h14m0 0l-7-7m7 7l-7 7"} /></svg>
+                    </span>
+                    <div className="flex items-center gap-2">
+                      {project.url && <a href={project.url} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()} className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[11px] font-medium bg-linear-to-r from-orange-500 to-amber-500 text-white shadow-sm hover:shadow-md transition-all duration-300 hover:scale-105"><svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>{t.visitSite}</a>}
+                      <a href={project.github} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()} className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[11px] font-medium border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-all duration-300"><svg className="w-3 h-3" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>{t.viewCode}</a>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </Link>
           ))}
         </div>
       </section>
@@ -508,6 +244,26 @@ export default function Home() {
             </div>
           </CardContent>
         </Card>
+      </section>
+
+      {/* BLOG SECTION LINK */}
+      <section className="w-full max-w-md mx-auto px-4 pb-8">
+        <Link href="/blog">
+          <Card className="relative w-full overflow-hidden border-0 shadow-xl shadow-slate-200/50 dark:shadow-black/50 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl transition-transform duration-300 hover:scale-[1.02] cursor-pointer">
+            <CardContent className="p-8">
+              <div className="flex items-center gap-3">
+                <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-linear-to-br from-amber-500/10 to-yellow-500/10 dark:from-amber-500/20 dark:to-yellow-500/20">
+                  <svg className="w-5 h-5 text-amber-600 dark:text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" /></svg>
+                </div>
+                <div className="flex-1">
+                  <h2 className="text-lg font-bold text-slate-900 dark:text-white">{t.blogTitle}</h2>
+                  <p className="text-xs text-slate-500 dark:text-slate-500">{t.blogSubtitle}</p>
+                </div>
+                <svg className="w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={language === "ar" ? "M19 12H5m0 0l7 7m-7-7l7-7" : "M5 12h14m0 0l-7-7m7 7l-7 7"} /></svg>
+              </div>
+            </CardContent>
+          </Card>
+        </Link>
       </section>
 
       {/* CONTACT FORM SECTION */}
@@ -536,11 +292,33 @@ export default function Home() {
                 <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">{t.contactMessage}</label>
                 <textarea required rows={4} value={contactForm.message} onChange={(e) => setContactForm({...contactForm, message: e.target.value})} className="w-full px-4 py-2.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-sm text-slate-900 dark:text-white focus:ring-2 focus:ring-orange-500 focus:border-transparent outline-none transition-all resize-none" />
               </div>
-              <button type="submit" disabled={contactStatus === "sending"} className="w-full px-4 py-3 rounded-lg text-sm font-medium bg-linear-to-r from-orange-500 to-amber-500 text-white shadow-sm hover:shadow-md transition-all duration-300 hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed">
+              <button type="submit" disabled={contactStatus === "sending"} className="w-full px-4 py-3 rounded-lg text-sm font-medium bg-linear-to-r from-orange-500 to-amber-500 text-white shadow-sm hover:shadow-md transition-all duration-300 hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer">
                 {contactStatus === "sending" ? t.contactSending : t.contactSend}
               </button>
-              {contactStatus === "success" && <p className="text-sm text-emerald-600 dark:text-emerald-400 text-center font-medium">{t.contactSuccess}</p>}
-              {contactStatus === "error" && <p className="text-sm text-red-600 dark:text-red-400 text-center font-medium">{t.contactError}</p>}
+              {contactStatus === "success" && (
+                <div className="flex items-center gap-2 justify-center p-3 rounded-lg bg-emerald-50 dark:bg-emerald-500/10 animate-in fade-in slide-in-from-bottom-2 duration-300">
+                  <svg className="w-4 h-4 text-emerald-600 dark:text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
+                  <p className="text-sm text-emerald-600 dark:text-emerald-400 font-medium">{t.contactSuccess}</p>
+                </div>
+              )}
+              {contactStatus === "error" && (
+                <div className="flex items-center gap-2 justify-center p-3 rounded-lg bg-red-50 dark:bg-red-500/10 animate-in fade-in slide-in-from-bottom-2 duration-300">
+                  <svg className="w-4 h-4 text-red-600 dark:text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
+                  <p className="text-sm text-red-600 dark:text-red-400 font-medium">{t.contactError}</p>
+                </div>
+              )}
+              {contactStatus === "rateLimit" && (
+                <div className="flex items-center gap-2 justify-center p-3 rounded-lg bg-amber-50 dark:bg-amber-500/10 animate-in fade-in slide-in-from-bottom-2 duration-300">
+                  <svg className="w-4 h-4 text-amber-600 dark:text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                  <p className="text-sm text-amber-600 dark:text-amber-400 font-medium">{t.contactRateLimit}</p>
+                </div>
+              )}
+              {contactStatus === "validation" && (
+                <div className="flex items-center gap-2 justify-center p-3 rounded-lg bg-amber-50 dark:bg-amber-500/10 animate-in fade-in slide-in-from-bottom-2 duration-300">
+                  <svg className="w-4 h-4 text-amber-600 dark:text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z" /></svg>
+                  <p className="text-sm text-amber-600 dark:text-amber-400 font-medium">{t.contactValidationError}</p>
+                </div>
+              )}
             </form>
           </CardContent>
         </Card>

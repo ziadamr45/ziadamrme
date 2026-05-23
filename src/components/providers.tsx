@@ -31,6 +31,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     const savedTheme = (localStorage.getItem("theme") as Theme) || "light";
     const savedLanguage = (localStorage.getItem("language") as Language) || "ar";
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- reading from localStorage requires setState
     setTheme(savedTheme);
     setLanguage(savedLanguage);
     setMounted(true);

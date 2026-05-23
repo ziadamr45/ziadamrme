@@ -1,0 +1,13 @@
+{
+  "name": "Ziad Amr - مطور ويب",
+  "short_name": "ZiadAmr",
+  "description": "الموقع الشخصي لزياد عمرو | Personal portfolio of Ziad Amr",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0a5c5c",
+  "theme_color": "#0a5c5c",
+  "icons": [
+    { "src": "/icon.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/icon.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}

@@ -1,16 +1,6 @@
-import { NextResponse } from "next/server";
-
-const GITHUB_USERNAME = "ziadamr45";
-
-// Project metadata - descriptions and tech stack in both languages
-const projectMeta: Record<string, {
-  emoji: string;
-  name: { ar: string; en: string };
-  description: { ar: string; en: string };
-  tech: string[];
-  featured: boolean;
-}> = {
-  Radio: {
+export const projects = [
+  {
+    key: "radio",
     emoji: "📡",
     name: { ar: "إسمع راديو", en: "Esma3 Radio" },
     description: {
@@ -18,9 +8,12 @@ const projectMeta: Record<string, {
       en: "Professional web app for listening to radio stations worldwide, with a Quran section, smart recommendations, and an advanced notification system",
     },
     tech: ["Next.js", "React", "TypeScript", "Tailwind CSS", "PostgreSQL", "Prisma", "NextAuth"],
+    url: "https://esma3radio.vercel.app",
+    github: "https://github.com/ziadamr45/Radio",
     featured: true,
   },
-  Elmokhber: {
+  {
+    key: "elmokhber",
     emoji: "🕵️",
     name: { ar: "المخبر", en: "Elmokhber" },
     description: {
@@ -28,19 +21,25 @@ const projectMeta: Record<string, {
       en: "An interactive social deduction game based on intelligence, understanding, and strategic deception, with live voice calls",
     },
     tech: ["Next.js", "TypeScript", "Tailwind CSS", "LiveKit", "Prisma"],
+    url: "https://elmokhber.vercel.app",
+    github: "https://github.com/ziadamr45/Elmokhber",
     featured: true,
   },
-  "Battle-of-Questions": {
+  {
+    key: "battle",
     emoji: "⚔️",
     name: { ar: "معركة الأسئلة", en: "Battle of Questions" },
     description: {
-      ar: "لعبة أسئلة تفاعلية متعددة اللاعبين في الوقت الحقيقي مع غرف لعب وأوضاع فرق ونظام تسجيل نقاط مباشر",
+      ar: "لعبة أسئلة تفاعلية متعددة اللاعبين في الوقت الحقيقي مع غرف لعب، أوضاع فرق، ونظام تسجيل نقاط مباشر",
       en: "Multiplayer real-time quiz battle game with game rooms, team modes, and live scoring system",
     },
     tech: ["Next.js", "TypeScript", "Socket.io", "Tailwind CSS", "Prisma", "Docker"],
+    url: "https://motaharrer.vercel.app",
+    github: "https://github.com/ziadamr45/Battle-of-Questions",
     featured: true,
   },
-  Tammeny: {
+  {
+    key: "tammeny",
     emoji: "📍",
     name: { ar: "طمني", en: "Tammeny" },
     description: {
@@ -48,9 +47,12 @@ const projectMeta: Record<string, {
       en: "A fully secure application for sharing your location with friends and family, built with the latest security standards and encryption",
     },
     tech: ["Next.js", "TypeScript", "Tailwind CSS", "Prisma", "LiveKit"],
+    url: "https://tammeny24.vercel.app/login",
+    github: "https://github.com/ziadamr45/Tammeny",
     featured: true,
   },
-  "Bawabet-elhadas": {
+  {
+    key: "bawabet",
     emoji: "📰",
     name: { ar: "بوابة الحدث", en: "Bawabet Elhadas" },
     description: {
@@ -58,9 +60,12 @@ const projectMeta: Record<string, {
       en: "Smart news portal with auto-summarization, advanced search, and personalized recommendations",
     },
     tech: ["Next.js", "TypeScript", "Tailwind CSS", "Prisma"],
+    url: "https://bawabet-elhadas.vercel.app",
+    github: "https://github.com/ziadamr45/Bawabet-elhadas",
     featured: false,
   },
-  "Eah-Elkalam": {
+  {
+    key: "eah-elkalam",
     emoji: "🔥",
     name: { ar: "إيه الكلام؟", en: "Eah ElKalam" },
     description: {
@@ -68,9 +73,12 @@ const projectMeta: Record<string, {
       en: "Egyptian Trend Radar — track real-time trending topics with smart analysis and an interactive Egypt map",
     },
     tech: ["Next.js", "TypeScript", "Tailwind CSS", "Prisma"],
+    url: "https://eah-elkalam.vercel.app",
+    github: "https://github.com/ziadamr45/Eah-Elkalam",
     featured: false,
   },
-  "Hammel-w-Engez": {
+  {
+    key: "hammel",
     emoji: "⬇️",
     name: { ar: "حمّل وانجز", en: "Hammel w Engez" },
     description: {
@@ -78,9 +86,12 @@ const projectMeta: Record<string, {
       en: "Smart download tool — paste any URL and download instantly with batch support and auto-analysis",
     },
     tech: ["Next.js", "TypeScript", "Tailwind CSS", "Prisma", "Framer Motion"],
+    url: "https://hammel-w-engez.vercel.app",
+    github: "https://github.com/ziadamr45/Hammel-w-Engez",
     featured: false,
   },
-  quadra_studio: {
+  {
+    key: "quadra",
     emoji: "🎬",
     name: { ar: "قدرة ستوديو", en: "Quadra Studio" },
     description: {
@@ -88,9 +99,12 @@ const projectMeta: Record<string, {
       en: "Professional Quranic video maker for YouTube & TikTok with templates and famous reciter voices",
     },
     tech: ["Next.js", "TypeScript", "Python", "Tailwind CSS", "Prisma"],
+    url: "https://quadra-studio.vercel.app",
+    github: "https://github.com/ziadamr45/quadra_studio",
     featured: false,
   },
-  "Weather-App": {
+  {
+    key: "weather",
     emoji: "🌤️",
     name: { ar: "تطبيق الطقس", en: "Weather App" },
     description: {
@@ -98,82 +112,28 @@ const projectMeta: Record<string, {
       en: "Professional weather app with accurate forecasts, detailed climate analysis, bilingual UI, and a smart weather assistant",
     },
     tech: ["Next.js", "TypeScript", "Tailwind CSS", "Prisma", "Framer Motion"],
+    url: "https://weather-sand-phi.vercel.app",
+    github: "https://github.com/ziadamr45/Weather-App",
     featured: false,
   },
-  Notifications: {
-    emoji: "⚙️",
-    name: { ar: "لوحة تحكم الإشعارات", en: "Notification Dashboard" },
-    description: {
-      ar: "لوحة تحكم إدارية متكاملة لإدارة إشعارات تطبيق إسمع راديو مع إحصائيات المستخدمين وتحليلات الأجهزة",
-      en: "Comprehensive admin dashboard for managing Esma3 Radio notifications with user analytics and device insights",
-    },
-    tech: ["Next.js", "TypeScript", "Tailwind CSS", "PostgreSQL", "Prisma", "Zustand"],
-    featured: false,
-  },
-  "Eleqbal-Form": {
+  {
+    key: "eleqbal",
     emoji: "🎓",
     name: { ar: "نظام الإقبال", en: "Eleqbal Form" },
     description: {
-      ar: "نظام رقمي لجمع بيانات طلاب مدرسة الإقبال مع مصادقة OTP وواجهة ثنائية اللغة",
-      en: "Digital student data collection system for Eleqbal School with OTP auth and bilingual UI",
+      ar: "نظام رقمي لجمع بيانات طلاب مدرسة الإقبال مع مصادقة OTP وواجهة ثنائية اللغة والوضع الداكن",
+      en: "Digital student data collection system for Eleqbal School with OTP auth, bilingual UI, and dark mode",
     },
     tech: ["Next.js", "TypeScript", "Tailwind CSS", "Prisma"],
+    url: "https://eleqbal-amrsobhy.vercel.app",
+    github: "https://github.com/ziadamr45/Eleqbal-Form",
     featured: false,
   },
-};
+];
 
-// Repos to exclude from the projects page
-const EXCLUDED_REPOS = ["ziadamr45", "Qudra-Stydio"];
-
-export async function GET() {
-  try {
-    const response = await fetch(
-      `https://api.github.com/users/${GITHUB_USERNAME}/repos?per_page=100&sort=updated`,
-      {
-        headers: {
-          Accept: "application/vnd.github.v3+json",
-        },
-        next: { revalidate: 3600 }, // Cache for 1 hour
-      }
-    );
-
-    if (!response.ok) {
-      return NextResponse.json({ error: "Failed to fetch repos" }, { status: 500 });
-    }
-
-    const repos = await response.json();
-
-    const projects = repos
-      .filter((repo: Record<string, unknown>) => !repo.fork && !repo.private && !EXCLUDED_REPOS.includes(repo.name as string))
-      .map((repo: Record<string, unknown>) => {
-        const repoName = repo.name as string;
-        const meta = projectMeta[repoName];
-        return {
-          key: repoName,
-          emoji: meta?.emoji || "📦",
-          name: meta?.name || { ar: repoName, en: repoName },
-          description: meta?.description || {
-            ar: (repo.description as string) || "",
-            en: (repo.description as string) || "",
-          },
-          tech: meta?.tech || [],
-          url: (repo.homepage as string) || null,
-          github: repo.html_url as string,
-          featured: meta?.featured || false,
-          stars: repo.stargazers_count as number,
-          language: repo.language as string,
-          updatedAt: repo.updated_at as string,
-        };
-      })
-      .sort((a: { featured: boolean; updatedAt: string }, b: { featured: boolean; updatedAt: string }) => {
-        // Featured first, then by update date
-        if (a.featured && !b.featured) return -1;
-        if (!a.featured && b.featured) return 1;
-        return new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime();
-      });
-
-    return NextResponse.json(projects);
-  } catch {
-    return NextResponse.json({ error: "Failed to fetch projects" }, { status: 500 });
-  }
-}
+// Sort: featured first
+export const sortedProjects = [...projects].sort((a, b) => {
+  if (a.featured && !b.featured) return -1;
+  if (!a.featured && b.featured) return 1;
+  return 0;
+});
