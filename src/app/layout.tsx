@@ -1,45 +1,52 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
-import { Providers } from "@/components/providers";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
-
 export const metadata: Metadata = {
-  metadataBase: new URL("https://ziadamrme.vercel.app"),
-  title: "Ziad Amr — مطوِّر مواقع ويب",
-  description: "الصفحة الشخصية لزياد عمرو — مطوِّر مواقع ويب. الهدف: إنشاء خدمات مجانية وإتاحة التكنولوجيا الحديثة للجميع ونشر الخير والفائدة.",
- icons: {
-    icon: "/favicon.png",
-    apple: "/favicon.png",
-  },
+  title: "Ziad Amr — Web Developer | مطوّر ويب",
+  description:
+    "Egyptian web developer specializing in Next.js, React, TypeScript, and modern web technologies. Building free services and making technology accessible to everyone.",
+  keywords: [
+    "Ziad Amr",
+    "Web Developer",
+    "Next.js",
+    "React",
+    "TypeScript",
+    "Egypt",
+    "Frontend Developer",
+    "Fullstack Developer",
+    "مطور ويب",
+    "زياد عمرو",
+  ],
+  authors: [{ name: "Ziad Amr", url: "https://ziadamrme.vercel.app" }],
+  creator: "Ziad Amr",
   openGraph: {
-    title: "Ziad Amr — مطوِّر مواقع ويب",
-    description: "مطوِّر مواقع ويب — إنشاء خدمات مجانية وإتاحة التكنولوجيا الحديثة للجميع.",
-    locale: "ar_AR",
-    type: "profile",
+    type: "website",
+    locale: "ar_EG",
+    alternateLocale: "en_US",
+    url: "https://ziadamrme.vercel.app",
+    title: "Ziad Amr — Web Developer | مطوّر ويب",
+    description:
+      "Egyptian web developer specializing in Next.js, React, TypeScript, and modern web technologies.",
+    siteName: "Ziad Amr Portfolio",
     images: [
       {
         url: "/og-image.png",
-        width: 1024,
-        height: 1024,
-        alt: "Ziad Amr — Web Developer & AI Enthusiast",
+        width: 1200,
+        height: 630,
+        alt: "Ziad Amr — Web Developer",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Ziad Amr — مطوِّر مواقع ويب",
-    description: "مطوِّر مواقع ويب — إنشاء خدمات مجانية وإتاحة التكنولوجيا الحديثة للجميع.",
+    title: "Ziad Amr — Web Developer",
+    description:
+      "Egyptian web developer specializing in Next.js, React, TypeScript, and modern web technologies.",
     images: ["/og-image.png"],
+  },
+  robots: {
+    index: true,
+    follow: true,
   },
 };
 
@@ -49,15 +56,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html
-      lang="ar"
-      dir="rtl"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
-      suppressHydrationWarning
-    >
-      <body className="min-h-full flex flex-col">
-        <Providers>{children}</Providers>
-      </body>
+    <html lang="ar" dir="rtl" suppressHydrationWarning>
+      <head>
+        <link rel="icon" href="/favicon.png" sizes="any" />
+        <meta name="theme-color" content="#0a5c5c" />
+      </head>
+      <body className="antialiased">{children}</body>
     </html>
   );
 }
