@@ -414,7 +414,7 @@ export const projects = [
       en: "Comprehensive Islamic app featuring morning/evening/sleep Azkar, Tasbih, Quran, prayer times, Quran radio, 99 Names of Allah, 7 color themes, dark/light mode, and bilingual support",
     },
     tech: ["HTML", "CSS", "JavaScript", "Firebase", "PWA"],
-    url: "https://ziadamr45.github.io/Zad-Ziad/",
+    url: "https://zad-ziad.vercel.app/",
     github: "https://github.com/ziadamr45/Zad-Ziad",
     featured: false,
     details: {
