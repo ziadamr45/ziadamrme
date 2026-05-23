@@ -12,10 +12,12 @@ import { socialLinks } from "@/lib/social-links";
 import { sortedProjects } from "@/lib/projects";
 import { stats, techStack } from "@/lib/data";
 import { translations } from "@/lib/translations";
+import { useScrollRestoration } from "@/hooks/use-scroll-restoration";
 
 export default function Home() {
   const { language } = useApp();
   const t = translations[language];
+  useScrollRestoration();
   const [showImageModal, setShowImageModal] = useState(false);
   const [showContactForm, setShowContactForm] = useState(false);
   const [contactForm, setContactForm] = useState({ name: "", email: "", message: "" });

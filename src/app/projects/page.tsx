@@ -8,10 +8,12 @@ import { Navigation } from "@/components/navigation";
 import { sortedProjects } from "@/lib/projects";
 import { translations } from "@/lib/translations";
 import Link from "next/link";
+import { useScrollRestoration } from "@/hooks/use-scroll-restoration";
 
 export default function ProjectsPage() {
   const { language } = useApp();
   const t = translations[language];
+  useScrollRestoration();
 
   return (
     <div className="relative min-h-screen flex flex-col items-center bg-linear-to-br from-slate-50 via-white to-slate-100 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950">

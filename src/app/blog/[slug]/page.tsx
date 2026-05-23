@@ -8,12 +8,13 @@ import { Navigation } from "@/components/navigation";
 import { blogPosts } from "@/lib/blog-data";
 import { translations } from "@/lib/translations";
 import Link from "next/link";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 
 export default function BlogPostPage() {
   const { language } = useApp();
   const t = translations[language];
   const params = useParams();
+  const router = useRouter();
   const slug = params.slug as string;
 
   const post = blogPosts.find((p) => p.slug === slug);
@@ -33,10 +34,10 @@ export default function BlogPostPage() {
             <p className="text-sm text-slate-500 dark:text-slate-400 mb-4">
               {language === "ar" ? "لم نتمكن من العثور على هذا المقال" : "We couldn't find this blog post"}
             </p>
-            <Link href="/blog" className="inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium bg-linear-to-r from-orange-500 to-amber-500 text-white shadow-sm hover:shadow-md transition-all duration-300 hover:scale-105">
+            <button type="button" onClick={() => router.back()} className="inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium bg-linear-to-r from-orange-500 to-amber-500 text-white shadow-sm hover:shadow-md transition-all duration-300 hover:scale-105 cursor-pointer">
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={language === "ar" ? "M19 12H5m0 0l7 7m-7-7l7-7" : "M5 12h14m0 0l-7-7m7 7l-7 7"} /></svg>
               {t.backToBlog}
-            </Link>
+            </button>
           </CardContent>
         </Card>
       </div>
@@ -51,10 +52,10 @@ export default function BlogPostPage() {
 
       <section className="relative z-10 w-full max-w-md mx-auto px-4 pt-12 pb-8">
         <div className="flex items-center gap-3 mb-6">
-          <Link href="/blog" className="inline-flex items-center gap-2 text-sm text-slate-500 dark:text-slate-400 hover:text-orange-500 dark:hover:text-orange-400 transition-colors group">
+          <button type="button" onClick={() => router.back()} className="inline-flex items-center gap-2 text-sm text-slate-500 dark:text-slate-400 hover:text-orange-500 dark:hover:text-orange-400 transition-colors group cursor-pointer">
             <svg className="w-4 h-4 transition-transform group-hover:-translate-x-0.5 rtl:group-hover:translate-x-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={language === "ar" ? "M19 12H5m0 0l7 7m-7-7l7-7" : "M5 12h14m0 0l-7-7m7 7l-7 7"} /></svg>
             {t.backToBlog}
-          </Link>
+          </button>
           <span className="text-slate-300 dark:text-slate-600">|</span>
           <Link href="/" className="text-sm text-slate-500 dark:text-slate-400 hover:text-orange-500 dark:hover:text-orange-400 transition-colors">
             {t.backToHome}
