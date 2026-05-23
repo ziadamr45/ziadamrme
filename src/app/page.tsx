@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Card, CardContent } from "@/components/ui/card";
 import { useApp } from "@/components/providers";
@@ -8,6 +8,16 @@ import { Controls } from "@/components/controls";
 import { AnimatedBackground } from "@/components/animated-background";
 
 const socialLinks = [
+  {
+    key: "github",
+    url: "https://github.com/ziadamr45",
+    icon: (
+      <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+      </svg>
+    ),
+    color: "hover:bg-[#181717] hover:text-white hover:border-[#181717] dark:hover:bg-white dark:hover:text-black",
+  },
   {
     key: "facebook",
     url: "https://www.facebook.com/ziad7mr",
@@ -99,8 +109,8 @@ const projects = [
     emoji: "🕵️",
     name: { ar: "المخبر", en: "Elmokhber" },
     description: {
-      ar: "لعبة اجتماعية تفاعلية تعتمد على الذكاء والفهم والخداع الاستراتيجي بين اللاعبين في جو من الإثارة والتشويق، مع مكالمات صوتية مباشرة",
-      en: "An interactive social deduction game based on intelligence, understanding, and strategic deception among players, with live voice calls",
+      ar: "لعبة اجتماعية تفاعلية تعتمد على الذكاء والفهم والخداع الاستراتيجي بين اللاعبين، مع مكالمات صوتية مباشرة",
+      en: "An interactive social deduction game based on intelligence, understanding, and strategic deception, with live voice calls",
     },
     tech: ["Next.js", "TypeScript", "Tailwind CSS", "LiveKit", "Prisma"],
     url: "https://elmokhber.vercel.app",
@@ -125,11 +135,11 @@ const projects = [
     emoji: "📍",
     name: { ar: "طمنّي", en: "Tammeny" },
     description: {
-      ar: "تطبيق آمن بالكامل لمشاركة الموقع الجغرافي مع الأصدقاء والعائلة، يعتمد على أحدث معايير الأمان والتشفير لحماية خصوصية المستخدم",
+      ar: "تطبيق آمن بالكامل لمشاركة الموقع الجغرافي مع الأصدقاء والعائلة، يعتمد على أحدث معايير الأمان والتشفير",
       en: "A fully secure application for sharing your location with friends and family, built with the latest security standards and encryption",
     },
     tech: ["Next.js", "TypeScript", "Tailwind CSS", "Prisma", "LiveKit"],
-    url: "https://tammeny-iota.vercel.app",
+    url: "https://tammeny24.vercel.app/login",
     github: "https://github.com/ziadamr45/Tammeny",
     featured: true,
   },
@@ -139,7 +149,7 @@ const projects = [
     name: { ar: "بوابة الحدث", en: "Bawabet Elhadas" },
     description: {
       ar: "بوابة أخبار ذكية مع تلخيص تلقائي وبحث متقدم وتوصيات مخصصة حسب الدولة والفئة",
-      en: "Smart news portal with auto-summarization, advanced search, and personalized recommendations by country and category",
+      en: "Smart news portal with auto-summarization, advanced search, and personalized recommendations",
     },
     tech: ["Next.js", "TypeScript", "Tailwind CSS", "Prisma"],
     url: "https://bawabet-elhadas.vercel.app",
@@ -178,7 +188,7 @@ const projects = [
     name: { ar: "قدرة ستوديو", en: "Quadra Studio" },
     description: {
       ar: "صانع فيديوهات قرآنية احترافية لليوتيوب والتيك توك مع قوالب جاهزة وأصوات قراء مشهورين",
-      en: "Professional Quranic video maker for YouTube & TikTok with ready-made templates and famous reciter voices",
+      en: "Professional Quranic video maker for YouTube & TikTok with templates and famous reciter voices",
     },
     tech: ["Next.js", "TypeScript", "Python", "Tailwind CSS", "Prisma"],
     url: "https://quadra-studio.vercel.app",
@@ -199,19 +209,6 @@ const projects = [
     featured: false,
   },
   {
-    key: "notifications",
-    emoji: "⚙️",
-    name: { ar: "لوحة تحكم الإشعارات", en: "Notification Dashboard" },
-    description: {
-      ar: "لوحة تحكم إدارية متكاملة لإدارة إشعارات تطبيق إسمع راديو، تتضمن إحصائيات المستخدمين والاستماع وتحليلات الأجهزة",
-      en: "Comprehensive admin dashboard for managing Esma3 Radio notifications with user analytics and device insights",
-    },
-    tech: ["Next.js", "TypeScript", "Tailwind CSS", "PostgreSQL", "Prisma", "Zustand"],
-    url: null,
-    github: "https://github.com/ziadamr45/Notifications",
-    featured: false,
-  },
-  {
     key: "eleqbal",
     emoji: "🎓",
     name: { ar: "نظام الإقبال", en: "Eleqbal Form" },
@@ -226,6 +223,12 @@ const projects = [
   },
 ];
 
+const stats = [
+  { number: "3+", label: { ar: "سنوات خبرة", en: "Years Experience" }, icon: "📅" },
+  { number: "10+", label: { ar: "مشروع منجز", en: "Projects Completed" }, icon: "🚀" },
+  { number: "12+", label: { ar: "تقنية مستخدمة", en: "Technologies Used" }, icon: "🛠️" },
+];
+
 const techStack = [
   { name: "Next.js", color: "from-black/80 to-black dark:from-white/90 dark:to-white" },
   { name: "React", color: "from-cyan-500/80 to-sky-500" },
@@ -237,7 +240,14 @@ const techStack = [
   { name: "Node.js", color: "from-green-600/80 to-emerald-500" },
   { name: "Git", color: "from-orange-600/80 to-red-500" },
   { name: "Framer Motion", color: "from-pink-500/80 to-purple-500" },
+  { name: "Socket.io", color: "from-gray-700/80 to-gray-500" },
   { name: "Vercel", color: "from-gray-700/80 to-gray-600 dark:from-gray-200/80 dark:to-gray-300" },
+  { name: "shadcn/ui", color: "from-slate-600/80 to-slate-500" },
+  { name: "LiveKit", color: "from-blue-500/80 to-indigo-400" },
+  { name: "NextAuth", color: "from-red-500/80 to-orange-400" },
+  { name: "Docker", color: "from-blue-400/80 to-cyan-500" },
+  { name: "Zustand", color: "from-purple-500/80 to-violet-400" },
+  { name: "Recharts", color: "from-orange-500/80 to-red-400" },
 ];
 
 const translations = {
@@ -247,7 +257,8 @@ const translations = {
     title: "مطوِّر مواقع ويب",
     mission: "إنشاء خدمات مجانية وإتاحة التكنولوجيا الحديثة للجميع ونشر الخير والفائدة",
     aboutTitle: "نبذة عني",
-    aboutText: "مطوِّر ويب مصري بدأت رحلتي في عالم البرمجة وأنا في سن مبكرة. أعمل على بناء تطبيقات ويب حديثة ومتكاملة باستخدام أحدث التقنيات والأطر البرمجية. أؤمن بأن التقنية ليست مجرد أكواد، بل أداة لحل المشكلات وتقديم قيمة حقيقية للمستخدمين. إلى جانب شغفي بالبرمجة، أمتلك خبرة في مجال الكتابة والتأليف الأدبي الدعوي والإرشادي، وأسعى دائمًا لدمج مهاراتي المختلفة في إنتاج محتوى تقني هادف. حلمي هو التخصص في هندسة البرمجيات وعلوم الحاسب، وأن أصبح مطوِّرًا محترفًا قادرًا على المنافسة عالميًا والمساهمة في تطوير مجتمع المطورين العرب.",
+    aboutText: "مطوِّر ويب مصري بخبرة 3 سنوات بدأت رحلتي في عالم البرمجة وأنا في سن مبكرة. أعمل على بناء تطبيقات ويب حديثة ومتكاملة باستخدام أحدث التقنيات والأطر البرمجية. أؤمن بأن التقنية ليست مجرد أكواد، بل أداة لحل المشكلات وتقديم قيمة حقيقية للمستخدمين. إلى جانب شغفي بالبرمجة، أمتلك خبرة في مجال الكتابة والتأليف الأدبي الدعوي والإرشادي، وأسعى دائمًا لدمج مهاراتي المختلفة في إنتاج محتوى تقني هادف. حلمي هو التخصص في هندسة البرمجيات وعلوم الحاسب، وأن أصبح مطوِّرًا محترفًا قادرًا على المنافسة عالميًا والمساهمة في تطوير مجتمع المطورين العرب.",
+    statsTitle: "إحصائيات",
     projectsTitle: "مشاريعي",
     projectsSubtitle: "مجموعة من المشاريع التي عملت عليها",
     featuredTag: "مميز",
@@ -256,10 +267,20 @@ const translations = {
     techStackTitle: "التقنيات",
     techStackSubtitle: "الأدوات والتقنيات التي أستخدمها",
     socialLinksTitle: "روابط التواصل",
+    contactTitle: "تواصل معي",
+    contactSubtitle: "لديك مشروع أو فكرة؟ تواصل معي",
+    contactName: "الاسم",
+    contactEmail: "البريد الإلكتروني",
+    contactMessage: "رسالتك",
+    contactSend: "إرسال الرسالة",
+    contactSending: "جاري الإرسال...",
+    contactSuccess: "تم إرسال رسالتك بنجاح!",
+    contactError: "حدث خطأ، حاول مرة أخرى",
     avatarFallback: "زياد",
     ariaSendEmail: "أرسل بريد إلكتروني",
     ariaOpensNew: "يفتح في نافذة جديدة",
     socialNames: {
+      github: "جيت هب",
       facebook: "فيسبوك",
       telegram: "تليجرام",
       instagram: "انستجرام",
@@ -275,7 +296,8 @@ const translations = {
     title: "Web Developer",
     mission: "Creating free services and making modern technology accessible to everyone, spreading goodness and benefit",
     aboutTitle: "About Me",
-    aboutText: "An Egyptian web developer who started my programming journey at a young age. I build modern, integrated web applications using the latest technologies and frameworks. I believe technology is more than just code — it's a tool for solving problems and delivering real value to users. Beyond my passion for programming, I have experience in writing faith-based and educational literary content, and I constantly strive to combine my diverse skills to produce meaningful technical work. My dream is to specialize in software engineering and computer science, becoming a professional developer capable of competing globally and contributing to the growth of the Arab developer community.",
+    aboutText: "An Egyptian web developer with 3 years of experience who started my programming journey at a young age. I build modern, integrated web applications using the latest technologies and frameworks. I believe technology is more than just code — it's a tool for solving problems and delivering real value to users. Beyond my passion for programming, I have experience in writing faith-based and educational literary content, and I constantly strive to combine my diverse skills to produce meaningful technical work. My dream is to specialize in software engineering and computer science, becoming a professional developer capable of competing globally and contributing to the growth of the Arab developer community.",
+    statsTitle: "Stats",
     projectsTitle: "My Projects",
     projectsSubtitle: "A collection of projects I've worked on",
     featuredTag: "Featured",
@@ -284,10 +306,20 @@ const translations = {
     techStackTitle: "Tech Stack",
     techStackSubtitle: "Tools and technologies I work with",
     socialLinksTitle: "Social Links",
+    contactTitle: "Contact Me",
+    contactSubtitle: "Have a project or idea? Get in touch",
+    contactName: "Name",
+    contactEmail: "Email",
+    contactMessage: "Your Message",
+    contactSend: "Send Message",
+    contactSending: "Sending...",
+    contactSuccess: "Message sent successfully!",
+    contactError: "Error occurred, please try again",
     avatarFallback: "ZA",
     ariaSendEmail: "Send email",
     ariaOpensNew: "Opens in new window",
     socialNames: {
+      github: "GitHub",
       facebook: "Facebook",
       telegram: "Telegram",
       instagram: "Instagram",
@@ -303,6 +335,9 @@ export default function Home() {
   const { language } = useApp();
   const t = translations[language];
   const [showImageModal, setShowImageModal] = useState(false);
+  const [contactForm, setContactForm] = useState({ name: "", email: "", message: "" });
+  const [contactStatus, setContactStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
+  const formRef = useRef<HTMLFormElement>(null);
 
   useEffect(() => {
     if (showImageModal) {
@@ -313,82 +348,71 @@ export default function Home() {
     return () => { document.body.style.overflow = ""; };
   }, [showImageModal]);
 
+  const handleContactSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setContactStatus("sending");
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(contactForm),
+      });
+      if (res.ok) {
+        setContactStatus("success");
+        setContactForm({ name: "", email: "", message: "" });
+        setTimeout(() => setContactStatus("idle"), 4000);
+      } else {
+        setContactStatus("error");
+        setTimeout(() => setContactStatus("idle"), 4000);
+      }
+    } catch {
+      setContactStatus("error");
+      setTimeout(() => setContactStatus("idle"), 4000);
+    }
+  };
+
   return (
     <div className="relative min-h-screen flex flex-col items-center bg-linear-to-br from-slate-50 via-white to-slate-100 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950">
       <Controls />
       <AnimatedBackground />
 
       {showImageModal && (
-        <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm animate-in fade-in duration-200 cursor-zoom-out"
-          onClick={() => setShowImageModal(false)}
-          role="dialog"
-          aria-modal="true"
-          aria-label={language === "ar" ? "عرض الصورة الشخصية" : "View profile picture"}
-        >
-          <img
-            src="/profile.jpg"
-            alt="Ziad Amr"
-            className="max-w-[90vw] max-h-[85vh] rounded-2xl shadow-2xl object-contain animate-in zoom-in-95 duration-300"
-            onClick={(e) => e.stopPropagation()}
-          />
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm animate-in fade-in duration-200 cursor-zoom-out" onClick={() => setShowImageModal(false)} role="dialog" aria-modal="true">
+          <img src="/profile.jpg" alt="Ziad Amr" className="max-w-[90vw] max-h-[85vh] rounded-2xl shadow-2xl object-contain animate-in zoom-in-95 duration-300" onClick={(e) => e.stopPropagation()} />
         </div>
       )}
 
+      {/* PROFILE CARD */}
       <section className="w-full max-w-md mx-auto px-4 pt-12 pb-8">
         <Card className="relative w-full overflow-hidden border-0 shadow-2xl shadow-slate-200/50 dark:shadow-black/50 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl">
           <CardContent className="p-8">
             <div className="flex flex-col items-center text-center mb-8">
-              <button
-                type="button"
-                onClick={() => setShowImageModal(true)}
-                aria-label={language === "ar" ? "اضغط لعرض الصورة كاملة" : "Click to view full image"}
-                className="relative mb-6 group cursor-pointer focus:outline-none"
-              >
+              <button type="button" onClick={() => setShowImageModal(true)} aria-label={language === "ar" ? "اضغط لعرض الصورة كاملة" : "Click to view full image"} className="relative mb-6 group cursor-pointer focus:outline-none">
                 <Avatar className="w-28 h-28 ring-4 ring-white dark:ring-slate-800 shadow-xl transition-transform duration-300 group-hover:scale-105 group-active:scale-95">
                   <AvatarImage src="/profile.jpg" alt="Ziad Amr" />
-                  <AvatarFallback className="text-3xl font-bold bg-linear-to-br from-orange-500 to-amber-500 text-white">
-                    {t.avatarFallback}
-                  </AvatarFallback>
+                  <AvatarFallback className="text-3xl font-bold bg-linear-to-br from-orange-500 to-amber-500 text-white">{t.avatarFallback}</AvatarFallback>
                 </Avatar>
                 <div className="absolute inset-0 flex items-center justify-center rounded-full bg-black/0 group-hover:bg-black/30 transition-all duration-300">
-                  <svg className="w-8 h-8 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300 drop-shadow-lg" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m3-3H7" />
-                  </svg>
+                  <svg className="w-8 h-8 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300 drop-shadow-lg" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m3-3H7" /></svg>
                 </div>
                 <span className="absolute bottom-1 right-1 w-5 h-5 bg-green-500 border-[3px] border-white dark:border-slate-900 rounded-full" aria-hidden="true" />
               </button>
-
               <h1 className="text-2xl font-bold text-slate-900 dark:text-white mb-1">{t.name}</h1>
-              {t.subtitle && (
-                <p className="text-lg text-slate-600 dark:text-slate-400 mb-4 font-medium">{t.subtitle}</p>
-              )}
-
+              {t.subtitle && <p className="text-lg text-slate-600 dark:text-slate-400 mb-4 font-medium">{t.subtitle}</p>}
               <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-linear-to-r from-orange-500/10 to-amber-500/10 dark:from-orange-500/20 dark:to-amber-500/20 text-orange-600 dark:text-orange-400 text-sm font-medium mb-4">
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
-                </svg>
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" /></svg>
                 {t.title}
               </div>
-
               <p className="text-sm text-slate-500 dark:text-slate-400 leading-relaxed max-w-sm">{t.mission}</p>
             </div>
-
             <div className="flex items-center gap-4 mb-6">
               <div className="flex-1 h-px bg-linear-to-r from-transparent via-slate-200 dark:via-slate-700 to-transparent" />
               <span className="text-xs text-slate-400 dark:text-slate-500 font-medium">{t.socialLinksTitle}</span>
               <div className="flex-1 h-px bg-linear-to-r from-transparent via-slate-200 dark:via-slate-700 to-transparent" />
             </div>
-
             <div className="space-y-3">
               {socialLinks.map((link) => (
-                <a
-                  key={link.key}
-                  href={link.url}
-                  {...(link.url.startsWith("mailto:") ? {} : { target: "_blank", rel: "noopener noreferrer" })}
-                  aria-label={`${t.socialNames[link.key as keyof typeof t.socialNames]} — ${link.url.startsWith("mailto:") ? t.ariaSendEmail : t.ariaOpensNew}`}
-                  className={`inline-flex items-center justify-center gap-3 h-12 w-full rounded-lg border border-slate-200 dark:border-slate-700 bg-background px-4 text-sm font-medium text-slate-700 dark:text-slate-300 transition-all duration-300 ${link.color} hover:text-foreground`}
-                >
+                <a key={link.key} href={link.url} {...(link.url.startsWith("mailto:") ? {} : { target: "_blank", rel: "noopener noreferrer" })} aria-label={`${t.socialNames[link.key as keyof typeof t.socialNames]} — ${link.url.startsWith("mailto:") ? t.ariaSendEmail : t.ariaOpensNew}`} className={`inline-flex items-center justify-center gap-3 h-12 w-full rounded-lg border border-slate-200 dark:border-slate-700 bg-background px-4 text-sm font-medium text-slate-700 dark:text-slate-300 transition-all duration-300 ${link.color} hover:text-foreground`}>
                   {link.icon}
                   <span className="font-medium">{t.socialNames[link.key as keyof typeof t.socialNames]}</span>
                 </a>
@@ -398,14 +422,13 @@ export default function Home() {
         </Card>
       </section>
 
+      {/* ABOUT SECTION */}
       <section className="w-full max-w-md mx-auto px-4 pb-8">
         <Card className="relative w-full overflow-hidden border-0 shadow-xl shadow-slate-200/50 dark:shadow-black/50 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl">
           <CardContent className="p-8">
             <div className="flex items-center gap-3 mb-4">
               <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-linear-to-br from-blue-500/10 to-indigo-500/10 dark:from-blue-500/20 dark:to-indigo-500/20">
-                <svg className="w-5 h-5 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                </svg>
+                <svg className="w-5 h-5 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" /></svg>
               </div>
               <h2 className="text-lg font-bold text-slate-900 dark:text-white">{t.aboutTitle}</h2>
             </div>
@@ -414,78 +437,52 @@ export default function Home() {
         </Card>
       </section>
 
+      {/* STATS SECTION */}
+      <section className="w-full max-w-md mx-auto px-4 pb-8">
+        <div className="grid grid-cols-3 gap-3">
+          {stats.map((stat) => (
+            <Card key={stat.label.en} className="relative overflow-hidden border-0 shadow-lg shadow-slate-200/50 dark:shadow-black/30 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl">
+              <CardContent className="p-4 text-center">
+                <span className="text-2xl mb-1 block">{stat.icon}</span>
+                <p className="text-2xl font-bold text-slate-900 dark:text-white">{stat.number}</p>
+                <p className="text-xs text-slate-500 dark:text-slate-400 font-medium">{stat.label[language]}</p>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+      </section>
+
+      {/* PROJECTS SECTION */}
       <section className="w-full max-w-md mx-auto px-4 pb-8">
         <div className="flex items-center gap-3 mb-5">
           <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-linear-to-br from-purple-500/10 to-pink-500/10 dark:from-purple-500/20 dark:to-pink-500/20">
-            <svg className="w-5 h-5 text-purple-600 dark:text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
-            </svg>
+            <svg className="w-5 h-5 text-purple-600 dark:text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" /></svg>
           </div>
           <div>
             <h2 className="text-lg font-bold text-slate-900 dark:text-white">{t.projectsTitle}</h2>
             <p className="text-xs text-slate-500 dark:text-slate-500">{t.projectsSubtitle}</p>
           </div>
         </div>
-
         <div className="space-y-4">
           {projects.map((project) => (
-            <Card
-              key={project.key}
-              className={`relative w-full overflow-hidden border-0 shadow-lg shadow-slate-200/50 dark:shadow-black/30 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl transition-transform duration-300 hover:scale-[1.02] ${project.featured ? "ring-1 ring-orange-400/30 dark:ring-orange-500/20" : ""}`}
-            >
+            <Card key={project.key} className={`relative w-full overflow-hidden border-0 shadow-lg shadow-slate-200/50 dark:shadow-black/30 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl transition-transform duration-300 hover:scale-[1.02] ${project.featured ? "ring-1 ring-orange-400/30 dark:ring-orange-500/20" : ""}`}>
               <CardContent className="p-6">
                 <div className="flex items-start gap-3 mb-3">
                   <span className="text-2xl mt-0.5">{project.emoji}</span>
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2 flex-wrap">
                       <h3 className="text-base font-bold text-slate-900 dark:text-white">{project.name[language]}</h3>
-                      {project.featured && (
-                        <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-semibold bg-orange-500/10 text-orange-600 dark:text-orange-400 border border-orange-500/20">
-                          {t.featuredTag}
-                        </span>
-                      )}
+                      {project.featured && <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-semibold bg-orange-500/10 text-orange-600 dark:text-orange-400 border border-orange-500/20">{t.featuredTag}</span>}
                     </div>
                   </div>
                 </div>
-
                 <p className="text-sm text-slate-500 dark:text-slate-400 leading-relaxed mb-4">{project.description[language]}</p>
-
                 <div className="flex flex-wrap gap-1.5 mb-4">
-                  {project.tech.map((tech) => (
-                    <span
-                      key={tech}
-                      className="inline-flex items-center px-2.5 py-1 rounded-md text-[11px] font-medium bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 border border-slate-200/50 dark:border-slate-700/50"
-                    >
-                      {tech}
-                    </span>
-                  ))}
+                  {project.tech.map((tech) => (<span key={tech} className="inline-flex items-center px-2.5 py-1 rounded-md text-[11px] font-medium bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 border border-slate-200/50 dark:border-slate-700/50">{tech}</span>))}
                 </div>
-
                 <div className="flex items-center gap-2">
-                  {project.url && (
-                    <a
-                      href={project.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-medium bg-linear-to-r from-orange-500 to-amber-500 text-white shadow-sm hover:shadow-md transition-all duration-300 hover:scale-105"
-                    >
-                      <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                      </svg>
-                      {t.visitSite}
-                    </a>
-                  )}
-                  <a
-                    href={project.github}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-medium border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-all duration-300"
-                  >
-                    <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
-                    </svg>
-                    {t.viewCode}
-                  </a>
+                  {project.url && <a href={project.url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-medium bg-linear-to-r from-orange-500 to-amber-500 text-white shadow-sm hover:shadow-md transition-all duration-300 hover:scale-105"><svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>{t.visitSite}</a>}
+                  <a href={project.github} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-medium border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-all duration-300"><svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>{t.viewCode}</a>
                 </div>
               </CardContent>
             </Card>
@@ -493,35 +490,63 @@ export default function Home() {
         </div>
       </section>
 
+      {/* TECH STACK SECTION */}
       <section className="w-full max-w-md mx-auto px-4 pb-8">
         <Card className="relative w-full overflow-hidden border-0 shadow-xl shadow-slate-200/50 dark:shadow-black/50 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl">
           <CardContent className="p-8">
             <div className="flex items-center gap-3 mb-1">
               <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-linear-to-br from-emerald-500/10 to-teal-500/10 dark:from-emerald-500/20 dark:to-teal-500/20">
-                <svg className="w-5 h-5 text-emerald-600 dark:text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
-                </svg>
+                <svg className="w-5 h-5 text-emerald-600 dark:text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" /></svg>
               </div>
               <div>
                 <h2 className="text-lg font-bold text-slate-900 dark:text-white">{t.techStackTitle}</h2>
                 <p className="text-xs text-slate-500 dark:text-slate-500">{t.techStackSubtitle}</p>
               </div>
             </div>
-
             <div className="flex flex-wrap gap-2 mt-5">
-              {techStack.map((tech) => (
-                <span
-                  key={tech.name}
-                  className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-gradient-to-r ${tech.color} text-white shadow-sm`}
-                >
-                  {tech.name}
-                </span>
-              ))}
+              {techStack.map((tech) => (<span key={tech.name} className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-gradient-to-r ${tech.color} text-white shadow-sm`}>{tech.name}</span>))}
             </div>
           </CardContent>
         </Card>
       </section>
 
+      {/* CONTACT FORM SECTION */}
+      <section className="w-full max-w-md mx-auto px-4 pb-8">
+        <Card className="relative w-full overflow-hidden border-0 shadow-xl shadow-slate-200/50 dark:shadow-black/50 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl">
+          <CardContent className="p-8">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-linear-to-br from-orange-500/10 to-amber-500/10 dark:from-orange-500/20 dark:to-amber-500/20">
+                <svg className="w-5 h-5 text-orange-600 dark:text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
+              </div>
+              <div>
+                <h2 className="text-lg font-bold text-slate-900 dark:text-white">{t.contactTitle}</h2>
+                <p className="text-xs text-slate-500 dark:text-slate-500">{t.contactSubtitle}</p>
+              </div>
+            </div>
+            <form onSubmit={handleContactSubmit} className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">{t.contactName}</label>
+                <input type="text" required value={contactForm.name} onChange={(e) => setContactForm({...contactForm, name: e.target.value})} className="w-full px-4 py-2.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-sm text-slate-900 dark:text-white focus:ring-2 focus:ring-orange-500 focus:border-transparent outline-none transition-all" />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">{t.contactEmail}</label>
+                <input type="email" required value={contactForm.email} onChange={(e) => setContactForm({...contactForm, email: e.target.value})} className="w-full px-4 py-2.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-sm text-slate-900 dark:text-white focus:ring-2 focus:ring-orange-500 focus:border-transparent outline-none transition-all" />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">{t.contactMessage}</label>
+                <textarea required rows={4} value={contactForm.message} onChange={(e) => setContactForm({...contactForm, message: e.target.value})} className="w-full px-4 py-2.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-sm text-slate-900 dark:text-white focus:ring-2 focus:ring-orange-500 focus:border-transparent outline-none transition-all resize-none" />
+              </div>
+              <button type="submit" disabled={contactStatus === "sending"} className="w-full px-4 py-3 rounded-lg text-sm font-medium bg-linear-to-r from-orange-500 to-amber-500 text-white shadow-sm hover:shadow-md transition-all duration-300 hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed">
+                {contactStatus === "sending" ? t.contactSending : t.contactSend}
+              </button>
+              {contactStatus === "success" && <p className="text-sm text-emerald-600 dark:text-emerald-400 text-center font-medium">{t.contactSuccess}</p>}
+              {contactStatus === "error" && <p className="text-sm text-red-600 dark:text-red-400 text-center font-medium">{t.contactError}</p>}
+            </form>
+          </CardContent>
+        </Card>
+      </section>
+
+      {/* FOOTER */}
       <footer className="w-full pb-8 pt-4">
         <p className="text-xs text-slate-400 dark:text-slate-500 text-center">
           &copy; {new Date().getFullYear()} Ziad Amr
