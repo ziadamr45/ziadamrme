@@ -181,7 +181,7 @@ export function AnimatedBackground() {
         ref={canvasRef}
         className="absolute inset-0 w-full h-full"
         aria-hidden="true"
-        style={{ pointerEvents: "auto" }}
+        style={{ pointerEvents: "none" }}
       />
 
       {/* Animated gradient orbs */}

@@ -23,7 +23,7 @@ export function Controls() {
   }
 
   return (
-    <div className="absolute top-4 end-4 flex gap-2 z-10">
+    <div className="fixed top-4 end-4 flex gap-2 z-50">
       {/* Language Toggle */}
       <button
         onClick={toggleLanguage}

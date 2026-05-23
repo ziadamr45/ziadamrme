@@ -17,6 +17,7 @@ export default function Home() {
   const { language } = useApp();
   const t = translations[language];
   const [showImageModal, setShowImageModal] = useState(false);
+  const [showContactForm, setShowContactForm] = useState(false);
   const [contactForm, setContactForm] = useState({ name: "", email: "", message: "" });
   const [contactStatus, setContactStatus] = useState<"idle" | "sending" | "success" | "error" | "rateLimit" | "validation">("idle");
 
@@ -266,62 +267,83 @@ export default function Home() {
         </Link>
       </section>
 
-      {/* CONTACT FORM SECTION */}
+      {/* CONTACT CTA / FORM SECTION */}
       <section className="w-full max-w-md mx-auto px-4 pb-8">
-        <Card className="relative w-full overflow-hidden border-0 shadow-xl shadow-slate-200/50 dark:shadow-black/50 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl">
-          <CardContent className="p-8">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-linear-to-br from-orange-500/10 to-amber-500/10 dark:from-orange-500/20 dark:to-amber-500/20">
-                <svg className="w-5 h-5 text-orange-600 dark:text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
+        {!showContactForm ? (
+          <button
+            type="button"
+            onClick={() => setShowContactForm(true)}
+            className="relative w-full overflow-hidden border-0 shadow-xl shadow-slate-200/50 dark:shadow-black/50 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl rounded-xl p-8 text-start transition-all duration-300 hover:scale-[1.02] hover:shadow-2xl cursor-pointer group"
+          >
+            <div className="flex items-center gap-3">
+              <div className="flex items-center justify-center w-12 h-12 rounded-xl bg-linear-to-br from-orange-500/10 to-amber-500/10 dark:from-orange-500/20 dark:to-amber-500/20 group-hover:from-orange-500/20 group-hover:to-amber-500/20 transition-colors">
+                <svg className="w-6 h-6 text-orange-600 dark:text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" /></svg>
               </div>
-              <div>
-                <h2 className="text-lg font-bold text-slate-900 dark:text-white">{t.contactTitle}</h2>
-                <p className="text-xs text-slate-500 dark:text-slate-500">{t.contactSubtitle}</p>
+              <div className="flex-1">
+                <h2 className="text-lg font-bold text-slate-900 dark:text-white">{t.contactCTA}</h2>
+                <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">{t.contactCTADesc}</p>
               </div>
+              <svg className="w-5 h-5 text-slate-400 group-hover:text-orange-500 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={language === "ar" ? "M19 12H5m0 0l7 7m-7-7l7-7" : "M5 12h14m0 0l-7-7m7 7l-7 7"} /></svg>
             </div>
-            <form onSubmit={handleContactSubmit} className="space-y-4">
-              <div>
-                <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">{t.contactName}</label>
-                <input type="text" required value={contactForm.name} onChange={(e) => setContactForm({...contactForm, name: e.target.value})} className="w-full px-4 py-2.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-sm text-slate-900 dark:text-white focus:ring-2 focus:ring-orange-500 focus:border-transparent outline-none transition-all" />
+          </button>
+        ) : (
+          <Card className="relative w-full overflow-hidden border-0 shadow-xl shadow-slate-200/50 dark:shadow-black/50 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl">
+            <CardContent className="p-8">
+              <div className="flex items-center justify-between mb-4">
+                <div className="flex items-center gap-3">
+                  <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-linear-to-br from-orange-500/10 to-amber-500/10 dark:from-orange-500/20 dark:to-amber-500/20">
+                    <svg className="w-5 h-5 text-orange-600 dark:text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
+                  </div>
+                  <h2 className="text-lg font-bold text-slate-900 dark:text-white">{t.contactTitle}</h2>
+                </div>
+                <button type="button" onClick={() => setShowContactForm(false)} className="w-8 h-8 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition-all cursor-pointer">
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
+                </button>
               </div>
-              <div>
-                <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">{t.contactEmail}</label>
-                <input type="email" required value={contactForm.email} onChange={(e) => setContactForm({...contactForm, email: e.target.value})} className="w-full px-4 py-2.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-sm text-slate-900 dark:text-white focus:ring-2 focus:ring-orange-500 focus:border-transparent outline-none transition-all" />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">{t.contactMessage}</label>
-                <textarea required rows={4} value={contactForm.message} onChange={(e) => setContactForm({...contactForm, message: e.target.value})} className="w-full px-4 py-2.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-sm text-slate-900 dark:text-white focus:ring-2 focus:ring-orange-500 focus:border-transparent outline-none transition-all resize-none" />
-              </div>
-              <button type="submit" disabled={contactStatus === "sending"} className="w-full px-4 py-3 rounded-lg text-sm font-medium bg-linear-to-r from-orange-500 to-amber-500 text-white shadow-sm hover:shadow-md transition-all duration-300 hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer">
-                {contactStatus === "sending" ? t.contactSending : t.contactSend}
-              </button>
-              {contactStatus === "success" && (
-                <div className="flex items-center gap-2 justify-center p-3 rounded-lg bg-emerald-50 dark:bg-emerald-500/10 animate-in fade-in slide-in-from-bottom-2 duration-300">
-                  <svg className="w-4 h-4 text-emerald-600 dark:text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
-                  <p className="text-sm text-emerald-600 dark:text-emerald-400 font-medium">{t.contactSuccess}</p>
+              <form onSubmit={handleContactSubmit} className="space-y-4">
+                <div>
+                  <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">{t.contactName}</label>
+                  <input type="text" required value={contactForm.name} onChange={(e) => setContactForm({...contactForm, name: e.target.value})} className="w-full px-4 py-2.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-sm text-slate-900 dark:text-white focus:ring-2 focus:ring-orange-500 focus:border-transparent outline-none transition-all" />
                 </div>
-              )}
-              {contactStatus === "error" && (
-                <div className="flex items-center gap-2 justify-center p-3 rounded-lg bg-red-50 dark:bg-red-500/10 animate-in fade-in slide-in-from-bottom-2 duration-300">
-                  <svg className="w-4 h-4 text-red-600 dark:text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
-                  <p className="text-sm text-red-600 dark:text-red-400 font-medium">{t.contactError}</p>
+                <div>
+                  <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">{t.contactEmail}</label>
+                  <input type="email" required value={contactForm.email} onChange={(e) => setContactForm({...contactForm, email: e.target.value})} className="w-full px-4 py-2.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-sm text-slate-900 dark:text-white focus:ring-2 focus:ring-orange-500 focus:border-transparent outline-none transition-all" />
                 </div>
-              )}
-              {contactStatus === "rateLimit" && (
-                <div className="flex items-center gap-2 justify-center p-3 rounded-lg bg-amber-50 dark:bg-amber-500/10 animate-in fade-in slide-in-from-bottom-2 duration-300">
-                  <svg className="w-4 h-4 text-amber-600 dark:text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                  <p className="text-sm text-amber-600 dark:text-amber-400 font-medium">{t.contactRateLimit}</p>
+                <div>
+                  <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">{t.contactMessage}</label>
+                  <textarea required rows={4} value={contactForm.message} onChange={(e) => setContactForm({...contactForm, message: e.target.value})} className="w-full px-4 py-2.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-sm text-slate-900 dark:text-white focus:ring-2 focus:ring-orange-500 focus:border-transparent outline-none transition-all resize-none" />
                 </div>
-              )}
-              {contactStatus === "validation" && (
-                <div className="flex items-center gap-2 justify-center p-3 rounded-lg bg-amber-50 dark:bg-amber-500/10 animate-in fade-in slide-in-from-bottom-2 duration-300">
-                  <svg className="w-4 h-4 text-amber-600 dark:text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z" /></svg>
-                  <p className="text-sm text-amber-600 dark:text-amber-400 font-medium">{t.contactValidationError}</p>
-                </div>
-              )}
-            </form>
-          </CardContent>
-        </Card>
+                <button type="submit" disabled={contactStatus === "sending"} className="w-full px-4 py-3 rounded-lg text-sm font-medium bg-linear-to-r from-orange-500 to-amber-500 text-white shadow-sm hover:shadow-md transition-all duration-300 hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer">
+                  {contactStatus === "sending" ? t.contactSending : t.contactSend}
+                </button>
+                {contactStatus === "success" && (
+                  <div className="flex items-center gap-2 justify-center p-3 rounded-lg bg-emerald-50 dark:bg-emerald-500/10 animate-in fade-in slide-in-from-bottom-2 duration-300">
+                    <svg className="w-4 h-4 text-emerald-600 dark:text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
+                    <p className="text-sm text-emerald-600 dark:text-emerald-400 font-medium">{t.contactSuccess}</p>
+                  </div>
+                )}
+                {contactStatus === "error" && (
+                  <div className="flex items-center gap-2 justify-center p-3 rounded-lg bg-red-50 dark:bg-red-500/10 animate-in fade-in slide-in-from-bottom-2 duration-300">
+                    <svg className="w-4 h-4 text-red-600 dark:text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
+                    <p className="text-sm text-red-600 dark:text-red-400 font-medium">{t.contactError}</p>
+                  </div>
+                )}
+                {contactStatus === "rateLimit" && (
+                  <div className="flex items-center gap-2 justify-center p-3 rounded-lg bg-amber-50 dark:bg-amber-500/10 animate-in fade-in slide-in-from-bottom-2 duration-300">
+                    <svg className="w-4 h-4 text-amber-600 dark:text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                    <p className="text-sm text-amber-600 dark:text-amber-400 font-medium">{t.contactRateLimit}</p>
+                  </div>
+                )}
+                {contactStatus === "validation" && (
+                  <div className="flex items-center gap-2 justify-center p-3 rounded-lg bg-amber-50 dark:bg-amber-500/10 animate-in fade-in slide-in-from-bottom-2 duration-300">
+                    <svg className="w-4 h-4 text-amber-600 dark:text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z" /></svg>
+                    <p className="text-sm text-amber-600 dark:text-amber-400 font-medium">{t.contactValidationError}</p>
+                  </div>
+                )}
+              </form>
+            </CardContent>
+          </Card>
+        )}
       </section>
 
       {/* FOOTER */}
