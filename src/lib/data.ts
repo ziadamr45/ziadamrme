@@ -13,7 +13,7 @@ export function getStats(projectCount: number) {
 export const stats = [
   { number: "3+", label: { ar: "سنوات خبرة", en: "Years Experience" }, icon: "📅" },
   { number: "12+", label: { ar: "مشروع منجز", en: "Projects Completed" }, icon: "🚀" },
-  { number: "29+", label: { ar: "تقنية مستخدمة", en: "Technologies Used" }, icon: "🛠️" },
+  { number: "40+", label: { ar: "تقنية مستخدمة", en: "Technologies Used" }, icon: "🛠️" },
 ];
 
 export const techStack = [
@@ -46,4 +46,14 @@ export const techStack = [
   { name: "JavaScript", color: "from-yellow-400/80 to-amber-400 dark:from-yellow-500/80 dark:to-amber-500" },
   { name: "Firebase", color: "from-amber-400/80 to-yellow-400" },
   { name: "Canvas API", color: "from-red-500/80 to-rose-400" },
+  { name: "PWA", color: "from-purple-600/80 to-indigo-400" },
+  { name: "Service Worker", color: "from-orange-500/80 to-amber-400" },
+  { name: "Firestore", color: "from-amber-500/80 to-orange-400" },
+  { name: "next-intl", color: "from-blue-600/80 to-cyan-400" },
+  { name: "Sonner", color: "from-slate-500/80 to-gray-400" },
+  { name: "Railway", color: "from-purple-500/80 to-violet-400" },
+  { name: "Embla Carousel", color: "from-pink-400/80 to-rose-400" },
+  { name: "ytdl-core", color: "from-red-500/80 to-red-400" },
+  { name: "Google Fonts", color: "from-blue-400/80 to-green-400" },
+  { name: "Font Awesome", color: "from-blue-500/80 to-sky-400" },
 ];
