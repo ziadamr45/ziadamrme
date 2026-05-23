@@ -86,64 +86,142 @@ const projects = [
     emoji: "📡",
     name: { ar: "إسمع راديو", en: "Esma3 Radio" },
     description: {
-      ar: "تطبيق ويب احترافي للاستماع إلى محطات الراديو من مختلف أنحاء العالم، مدعوم بالذكاء الاصطناعي ويتضمن قسمًا للقرآن الكريم مع توصيات ذكية ونظام إشعارات متقدم",
-      en: "Professional web app for listening to radio stations worldwide, powered by AI with a Quran section, smart recommendations, and an advanced notification system",
+      ar: "تطبيق ويب احترافي للاستماع إلى محطات الراديو من مختلف أنحاء العالم، يتضمن قسمًا للقرآن الكريم مع توصيات ذكية ونظام إشعارات متقدم",
+      en: "Professional web app for listening to radio stations worldwide, with a Quran section, smart recommendations, and an advanced notification system",
     },
-    tech: ["Next.js", "React", "TypeScript", "Tailwind CSS", "PostgreSQL", "Prisma", "AI", "Anthropic Claude"],
+    tech: ["Next.js", "React", "TypeScript", "Tailwind CSS", "PostgreSQL", "Prisma", "NextAuth"],
     url: "https://esma3radio.vercel.app",
     github: "https://github.com/ziadamr45/Radio",
     featured: true,
-  },
-  {
-    key: "notifications",
-    emoji: "⚙️",
-    name: { ar: "لوحة تحكم الإشعارات", en: "Notification Dashboard" },
-    description: {
-      ar: "لوحة تحكم إدارية متكاملة لإدارة إشعارات تطبيق إسمع راديو، تتضمن إحصائيات المستخدمين والاستماع وتحليلات الأجهزة ونظام جدولة الإشعارات",
-      en: "Comprehensive admin dashboard for managing Esma3 Radio notifications with user analytics, listening stats, device analytics, and notification scheduling",
-    },
-    tech: ["Next.js", "React", "TypeScript", "Tailwind CSS", "PostgreSQL", "Prisma"],
-    url: null,
-    github: "https://github.com/ziadamr45/Notifications",
-    featured: true,
-  },
-  {
-    key: "weather",
-    emoji: "🌤️",
-    name: { ar: "تطبيق الطقس", en: "Weather App" },
-    description: {
-      ar: "تطبيق احترافي لمعرفة حالة الطقس مدعوم بالكامل بالذكاء الاصطناعي، يوفر توقعات دقيقة وتحليلات مناخية مفصلة",
-      en: "Professional weather application fully powered by AI, providing accurate forecasts and detailed climate analysis",
-    },
-    tech: ["Python", "AI"],
-    url: null,
-    github: "https://github.com/ziadamr45/Weather-",
-    featured: false,
-  },
-  {
-    key: "tammeny",
-    emoji: "📍",
-    name: { ar: "طمنّي", en: "Tamanni" },
-    description: {
-      ar: "تطبيق آمن بالكامل لمشاركة الموقع الجغرافي مع الأصدقاء والعائلة، يعتمد على أحدث معايير الأمان والتشفير لحماية خصوصية المستخدم",
-      en: "A fully secure application for sharing your location with friends and family, built with the latest security standards and encryption to protect user privacy",
-    },
-    tech: ["Next.js", "TypeScript", "Tailwind CSS"],
-    url: null,
-    github: "https://github.com/ziadamr45/Tammeny",
-    featured: false,
   },
   {
     key: "elmokhber",
     emoji: "🕵️",
     name: { ar: "المخبر", en: "Elmokhber" },
     description: {
-      ar: "لعبة اجتماعية تفاعلية تعتمد على الذكاء والفهم والخداع الاستراتيجي بين اللاعبين في جو من الإثارة والتشويق",
-      en: "An interactive social deduction game based on intelligence, understanding, and strategic deception among players in an atmosphere of excitement",
+      ar: "لعبة اجتماعية تفاعلية تعتمد على الذكاء والفهم والخداع الاستراتيجي بين اللاعبين في جو من الإثارة والتشويق، مع مكالمات صوتية مباشرة",
+      en: "An interactive social deduction game based on intelligence, understanding, and strategic deception among players, with live voice calls",
     },
-    tech: ["Next.js", "TypeScript", "Tailwind CSS"],
-    url: null,
+    tech: ["Next.js", "TypeScript", "Tailwind CSS", "LiveKit", "Prisma"],
+    url: "https://elmokhber.vercel.app",
     github: "https://github.com/ziadamr45/Elmokhber",
+    featured: true,
+  },
+  {
+    key: "battle",
+    emoji: "⚔️",
+    name: { ar: "معركة الأسئلة", en: "Battle of Questions" },
+    description: {
+      ar: "لعبة أسئلة تفاعلية متعددة اللاعبين في الوقت الحقيقي مع غرف لعب، أوضاع فرق، ونظام تسجيل نقاط مباشر",
+      en: "Multiplayer real-time quiz battle game with game rooms, team modes, and live scoring system",
+    },
+    tech: ["Next.js", "TypeScript", "Socket.io", "Tailwind CSS", "Prisma", "Docker"],
+    url: "https://motaharrer.vercel.app",
+    github: "https://github.com/ziadamr45/Battle-of-Questions",
+    featured: true,
+  },
+  {
+    key: "tammeny",
+    emoji: "📍",
+    name: { ar: "طمنّي", en: "Tammeny" },
+    description: {
+      ar: "تطبيق آمن بالكامل لمشاركة الموقع الجغرافي مع الأصدقاء والعائلة، يعتمد على أحدث معايير الأمان والتشفير لحماية خصوصية المستخدم",
+      en: "A fully secure application for sharing your location with friends and family, built with the latest security standards and encryption",
+    },
+    tech: ["Next.js", "TypeScript", "Tailwind CSS", "Prisma", "LiveKit"],
+    url: "https://tammeny-iota.vercel.app",
+    github: "https://github.com/ziadamr45/Tammeny",
+    featured: true,
+  },
+  {
+    key: "bawabet",
+    emoji: "📰",
+    name: { ar: "بوابة الحدث", en: "Bawabet Elhadas" },
+    description: {
+      ar: "بوابة أخبار ذكية مع تلخيص تلقائي وبحث متقدم وتوصيات مخصصة حسب الدولة والفئة",
+      en: "Smart news portal with auto-summarization, advanced search, and personalized recommendations by country and category",
+    },
+    tech: ["Next.js", "TypeScript", "Tailwind CSS", "Prisma"],
+    url: "https://bawabet-elhadas.vercel.app",
+    github: "https://github.com/ziadamr45/Bawabet-elhadas",
+    featured: false,
+  },
+  {
+    key: "eah-elkalam",
+    emoji: "🔥",
+    name: { ar: "إيه الكلام؟", en: "Eah ElKalam" },
+    description: {
+      ar: "رادار الترند المصري — تابع أحدث الترندات في الوقت الحقيقي مع تحليلات ذكية وخريطة مصر تفاعلية",
+      en: "Egyptian Trend Radar — track real-time trending topics with smart analysis and an interactive Egypt map",
+    },
+    tech: ["Next.js", "TypeScript", "Tailwind CSS", "Prisma"],
+    url: "https://eah-elkalam.vercel.app",
+    github: "https://github.com/ziadamr45/Eah-Elkalam",
+    featured: false,
+  },
+  {
+    key: "hammel",
+    emoji: "⬇️",
+    name: { ar: "حمّل وانجز", en: "Hammel w Engez" },
+    description: {
+      ar: "أداة تحميل ذكية من أي رابط — الصق أي رابط وحمّل فورًا مع دعم التحميل المتعدد والتحليل التلقائي",
+      en: "Smart download tool — paste any URL and download instantly with batch support and auto-analysis",
+    },
+    tech: ["Next.js", "TypeScript", "Tailwind CSS", "Prisma", "Framer Motion"],
+    url: "https://hammel-w-engez.vercel.app",
+    github: "https://github.com/ziadamr45/Hammel-w-Engez",
+    featured: false,
+  },
+  {
+    key: "quadra",
+    emoji: "🎬",
+    name: { ar: "قدرة ستوديو", en: "Quadra Studio" },
+    description: {
+      ar: "صانع فيديوهات قرآنية احترافية لليوتيوب والتيك توك مع قوالب جاهزة وأصوات قراء مشهورين",
+      en: "Professional Quranic video maker for YouTube & TikTok with ready-made templates and famous reciter voices",
+    },
+    tech: ["Next.js", "TypeScript", "Python", "Tailwind CSS", "Prisma"],
+    url: "https://quadra-studio.vercel.app",
+    github: "https://github.com/ziadamr45/quadra_studio",
+    featured: false,
+  },
+  {
+    key: "weather",
+    emoji: "🌤️",
+    name: { ar: "تطبيق الطقس", en: "Weather App" },
+    description: {
+      ar: "تطبيق طقس احترافي مع توقعات دقيقة وتحليلات مناخية مفصلة وواجهة ثنائية اللغة ومساعد طقس ذكي",
+      en: "Professional weather app with accurate forecasts, detailed climate analysis, bilingual UI, and a smart weather assistant",
+    },
+    tech: ["Next.js", "TypeScript", "Tailwind CSS", "Prisma", "Framer Motion"],
+    url: "https://weather-sand-phi.vercel.app",
+    github: "https://github.com/ziadamr45/Weather-App",
+    featured: false,
+  },
+  {
+    key: "notifications",
+    emoji: "⚙️",
+    name: { ar: "لوحة تحكم الإشعارات", en: "Notification Dashboard" },
+    description: {
+      ar: "لوحة تحكم إدارية متكاملة لإدارة إشعارات تطبيق إسمع راديو، تتضمن إحصائيات المستخدمين والاستماع وتحليلات الأجهزة",
+      en: "Comprehensive admin dashboard for managing Esma3 Radio notifications with user analytics and device insights",
+    },
+    tech: ["Next.js", "TypeScript", "Tailwind CSS", "PostgreSQL", "Prisma", "Zustand"],
+    url: null,
+    github: "https://github.com/ziadamr45/Notifications",
+    featured: false,
+  },
+  {
+    key: "eleqbal",
+    emoji: "🎓",
+    name: { ar: "نظام الإقبال", en: "Eleqbal Form" },
+    description: {
+      ar: "نظام رقمي لجمع بيانات طلاب مدرسة الإقبال مع مصادقة OTP وواجهة ثنائية اللغة والوضع الداكن",
+      en: "Digital student data collection system for Eleqbal School with OTP auth, bilingual UI, and dark mode",
+    },
+    tech: ["Next.js", "TypeScript", "Tailwind CSS", "Prisma"],
+    url: "https://eleqbal-amrsobhy.vercel.app",
+    github: "https://github.com/ziadamr45/Eleqbal-Form",
     featured: false,
   },
 ];
@@ -159,7 +237,6 @@ const techStack = [
   { name: "Node.js", color: "from-green-600/80 to-emerald-500" },
   { name: "Git", color: "from-orange-600/80 to-red-500" },
   { name: "Framer Motion", color: "from-pink-500/80 to-purple-500" },
-  { name: "AI / Claude", color: "from-amber-500/80 to-orange-400" },
   { name: "Vercel", color: "from-gray-700/80 to-gray-600 dark:from-gray-200/80 dark:to-gray-300" },
 ];
 
@@ -227,7 +304,6 @@ export default function Home() {
   const t = translations[language];
   const [showImageModal, setShowImageModal] = useState(false);
 
-  // Lock body scroll when modal is open
   useEffect(() => {
     if (showImageModal) {
       document.body.style.overflow = "hidden";
@@ -239,13 +315,9 @@ export default function Home() {
 
   return (
     <div className="relative min-h-screen flex flex-col items-center bg-linear-to-br from-slate-50 via-white to-slate-100 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950">
-      {/* Controls */}
       <Controls />
-
-      {/* Animated Background */}
       <AnimatedBackground />
 
-      {/* Image Lightbox Modal */}
       {showImageModal && (
         <div
           className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm animate-in fade-in duration-200 cursor-zoom-out"
@@ -263,13 +335,10 @@ export default function Home() {
         </div>
       )}
 
-      {/* ===== PROFILE CARD ===== */}
       <section className="w-full max-w-md mx-auto px-4 pt-12 pb-8">
         <Card className="relative w-full overflow-hidden border-0 shadow-2xl shadow-slate-200/50 dark:shadow-black/50 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl">
           <CardContent className="p-8">
-            {/* Profile Section */}
             <div className="flex flex-col items-center text-center mb-8">
-              {/* Avatar */}
               <button
                 type="button"
                 onClick={() => setShowImageModal(true)}
@@ -305,14 +374,12 @@ export default function Home() {
               <p className="text-sm text-slate-500 dark:text-slate-400 leading-relaxed max-w-sm">{t.mission}</p>
             </div>
 
-            {/* Divider */}
             <div className="flex items-center gap-4 mb-6">
               <div className="flex-1 h-px bg-linear-to-r from-transparent via-slate-200 dark:via-slate-700 to-transparent" />
               <span className="text-xs text-slate-400 dark:text-slate-500 font-medium">{t.socialLinksTitle}</span>
               <div className="flex-1 h-px bg-linear-to-r from-transparent via-slate-200 dark:via-slate-700 to-transparent" />
             </div>
 
-            {/* Social Links */}
             <div className="space-y-3">
               {socialLinks.map((link) => (
                 <a
@@ -331,7 +398,6 @@ export default function Home() {
         </Card>
       </section>
 
-      {/* ===== ABOUT SECTION ===== */}
       <section className="w-full max-w-md mx-auto px-4 pb-8">
         <Card className="relative w-full overflow-hidden border-0 shadow-xl shadow-slate-200/50 dark:shadow-black/50 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl">
           <CardContent className="p-8">
@@ -348,7 +414,6 @@ export default function Home() {
         </Card>
       </section>
 
-      {/* ===== PROJECTS SECTION ===== */}
       <section className="w-full max-w-md mx-auto px-4 pb-8">
         <div className="flex items-center gap-3 mb-5">
           <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-linear-to-br from-purple-500/10 to-pink-500/10 dark:from-purple-500/20 dark:to-pink-500/20">
@@ -369,7 +434,6 @@ export default function Home() {
               className={`relative w-full overflow-hidden border-0 shadow-lg shadow-slate-200/50 dark:shadow-black/30 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl transition-transform duration-300 hover:scale-[1.02] ${project.featured ? "ring-1 ring-orange-400/30 dark:ring-orange-500/20" : ""}`}
             >
               <CardContent className="p-6">
-                {/* Header */}
                 <div className="flex items-start gap-3 mb-3">
                   <span className="text-2xl mt-0.5">{project.emoji}</span>
                   <div className="flex-1 min-w-0">
@@ -384,10 +448,8 @@ export default function Home() {
                   </div>
                 </div>
 
-                {/* Description */}
                 <p className="text-sm text-slate-500 dark:text-slate-400 leading-relaxed mb-4">{project.description[language]}</p>
 
-                {/* Tech Tags */}
                 <div className="flex flex-wrap gap-1.5 mb-4">
                   {project.tech.map((tech) => (
                     <span
@@ -399,7 +461,6 @@ export default function Home() {
                   ))}
                 </div>
 
-                {/* Action Buttons */}
                 <div className="flex items-center gap-2">
                   {project.url && (
                     <a
@@ -432,7 +493,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ===== TECH STACK SECTION ===== */}
       <section className="w-full max-w-md mx-auto px-4 pb-8">
         <Card className="relative w-full overflow-hidden border-0 shadow-xl shadow-slate-200/50 dark:shadow-black/50 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl">
           <CardContent className="p-8">
@@ -462,7 +522,6 @@ export default function Home() {
         </Card>
       </section>
 
-      {/* ===== FOOTER ===== */}
       <footer className="w-full pb-8 pt-4">
         <p className="text-xs text-slate-400 dark:text-slate-500 text-center">
           &copy; {new Date().getFullYear()} Ziad Amr
