@@ -175,17 +175,16 @@ export function AnimatedBackground() {
   }, [theme, initParticles]);
 
   return (
-    <>
+    <div className="fixed inset-0 pointer-events-none" style={{ zIndex: 0 }}>
       {/* Canvas for particles */}
       <canvas
         ref={canvasRef}
         className="absolute inset-0 w-full h-full"
         aria-hidden="true"
-        style={{ pointerEvents: "none" }}
       />
 
       {/* Animated gradient orbs */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
+      <div className="absolute inset-0 overflow-hidden" aria-hidden="true">
         {/* Orb 1 — top right, warm orange */}
         <div className="orb orb-1" />
 
@@ -200,14 +199,14 @@ export function AnimatedBackground() {
       </div>
 
       {/* Animated aurora wave at bottom */}
-      <div className="absolute bottom-0 left-0 right-0 h-40 pointer-events-none overflow-hidden" aria-hidden="true">
+      <div className="absolute bottom-0 left-0 right-0 h-40 overflow-hidden" aria-hidden="true">
         <div className="aurora aurora-1" />
         <div className="aurora aurora-2" />
       </div>
 
       {/* Subtle grid overlay */}
       <div
-        className="absolute inset-0 pointer-events-none opacity-[0.015] dark:opacity-[0.03]"
+        className="absolute inset-0 opacity-[0.015] dark:opacity-[0.03]"
         aria-hidden="true"
         style={{
           backgroundImage: `
@@ -217,6 +216,6 @@ export function AnimatedBackground() {
           backgroundSize: "60px 60px",
         }}
       />
-    </>
+    </div>
   );
 }

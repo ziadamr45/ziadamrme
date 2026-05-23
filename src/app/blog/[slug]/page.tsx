@@ -24,7 +24,7 @@ export default function BlogPostPage() {
         <AnimatedBackground />
         <Controls />
         <Navigation />
-        <Card className="relative w-full max-w-md mx-4 overflow-hidden border-0 shadow-xl shadow-slate-200/50 dark:shadow-black/50 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl">
+        <Card className="relative z-10 w-full max-w-md mx-4 overflow-hidden border-0 shadow-xl shadow-slate-200/50 dark:shadow-black/50 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl">
           <CardContent className="p-8 text-center">
             <span className="text-5xl mb-4 block">📄</span>
             <h1 className="text-xl font-bold text-slate-900 dark:text-white mb-2">
@@ -49,7 +49,7 @@ export default function BlogPostPage() {
       <AnimatedBackground />
       <Navigation />
 
-      <section className="w-full max-w-md mx-auto px-4 pt-12 pb-8">
+      <section className="relative z-10 w-full max-w-md mx-auto px-4 pt-12 pb-8">
         <div className="flex items-center gap-3 mb-6">
           <Link href="/blog" className="inline-flex items-center gap-2 text-sm text-slate-500 dark:text-slate-400 hover:text-orange-500 dark:hover:text-orange-400 transition-colors group">
             <svg className="w-4 h-4 transition-transform group-hover:-translate-x-0.5 rtl:group-hover:translate-x-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={language === "ar" ? "M19 12H5m0 0l7 7m-7-7l7-7" : "M5 12h14m0 0l-7-7m7 7l-7 7"} /></svg>

@@ -85,7 +85,7 @@ export default function Home() {
       )}
 
       {/* PROFILE CARD */}
-      <section className="w-full max-w-md mx-auto px-4 pt-12 pb-8">
+      <section className="relative z-10 w-full max-w-md mx-auto px-4 pt-12 pb-8">
         <Card className="relative w-full overflow-hidden border-0 shadow-2xl shadow-slate-200/50 dark:shadow-black/50 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl">
           <CardContent className="p-8">
             <div className="flex flex-col items-center text-center mb-8">
@@ -125,7 +125,7 @@ export default function Home() {
       </section>
 
       {/* ABOUT SECTION */}
-      <section className="w-full max-w-md mx-auto px-4 pb-8">
+      <section className="relative z-10 w-full max-w-md mx-auto px-4 pb-8">
         <Card className="relative w-full overflow-hidden border-0 shadow-xl shadow-slate-200/50 dark:shadow-black/50 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl">
           <CardContent className="p-8">
             <div className="flex items-center gap-3 mb-4">
@@ -140,7 +140,7 @@ export default function Home() {
       </section>
 
       {/* STATS SECTION */}
-      <section className="w-full max-w-md mx-auto px-4 pb-8">
+      <section className="relative z-10 w-full max-w-md mx-auto px-4 pb-8">
         <div className="grid grid-cols-3 gap-3">
           {stats.map((stat) => (
             <Card key={stat.label.en} className="relative overflow-hidden border-0 shadow-lg shadow-slate-200/50 dark:shadow-black/30 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl">
@@ -155,7 +155,7 @@ export default function Home() {
       </section>
 
       {/* GITHUB CONTRIBUTION GRAPH */}
-      <section className="w-full max-w-md mx-auto px-4 pb-8">
+      <section className="relative z-10 w-full max-w-md mx-auto px-4 pb-8">
         <Card className="relative w-full overflow-hidden border-0 shadow-xl shadow-slate-200/50 dark:shadow-black/50 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl">
           <CardContent className="p-6">
             <div className="flex items-center gap-3 mb-4">
@@ -181,7 +181,7 @@ export default function Home() {
       </section>
 
       {/* PROJECTS SECTION */}
-      <section className="w-full max-w-md mx-auto px-4 pb-8">
+      <section className="relative z-10 w-full max-w-md mx-auto px-4 pb-8">
         <div className="flex items-center gap-3 mb-5">
           <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-linear-to-br from-purple-500/10 to-pink-500/10 dark:from-purple-500/20 dark:to-pink-500/20">
             <svg className="w-5 h-5 text-purple-600 dark:text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" /></svg>
@@ -228,7 +228,7 @@ export default function Home() {
       </section>
 
       {/* TECH STACK SECTION */}
-      <section className="w-full max-w-md mx-auto px-4 pb-8">
+      <section className="relative z-10 w-full max-w-md mx-auto px-4 pb-8">
         <Card className="relative w-full overflow-hidden border-0 shadow-xl shadow-slate-200/50 dark:shadow-black/50 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl">
           <CardContent className="p-8">
             <div className="flex items-center gap-3 mb-1">
@@ -248,7 +248,7 @@ export default function Home() {
       </section>
 
       {/* BLOG SECTION LINK */}
-      <section className="w-full max-w-md mx-auto px-4 pb-8">
+      <section className="relative z-10 w-full max-w-md mx-auto px-4 pb-8">
         <Link href="/blog">
           <Card className="relative w-full overflow-hidden border-0 shadow-xl shadow-slate-200/50 dark:shadow-black/50 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl transition-transform duration-300 hover:scale-[1.02] cursor-pointer">
             <CardContent className="p-8">
@@ -268,7 +268,7 @@ export default function Home() {
       </section>
 
       {/* CONTACT CTA / FORM SECTION */}
-      <section className="w-full max-w-md mx-auto px-4 pb-8">
+      <section className="relative z-10 w-full max-w-md mx-auto px-4 pb-8">
         {!showContactForm ? (
           <button
             type="button"
