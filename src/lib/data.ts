@@ -12,8 +12,8 @@ export function getStats(projectCount: number) {
 // Static fallback for non-dynamic usage
 export const stats = [
   { number: "3+", label: { ar: "سنوات خبرة", en: "Years Experience" }, icon: "📅" },
-  { number: "10+", label: { ar: "مشروع منجز", en: "Projects Completed" }, icon: "🚀" },
-  { number: "24+", label: { ar: "تقنية مستخدمة", en: "Technologies Used" }, icon: "🛠️" },
+  { number: "11+", label: { ar: "مشروع منجز", en: "Projects Completed" }, icon: "🚀" },
+  { number: "28+", label: { ar: "تقنية مستخدمة", en: "Technologies Used" }, icon: "🛠️" },
 ];
 
 export const techStack = [
@@ -41,4 +41,8 @@ export const techStack = [
   { name: "Web Push API", color: "from-amber-500/80 to-yellow-400" },
   { name: "dnd-kit", color: "from-rose-500/80 to-pink-400" },
   { name: "Radix UI", color: "from-red-600/80 to-rose-500" },
+  { name: "HTML5", color: "from-orange-600/80 to-red-500" },
+  { name: "CSS3", color: "from-blue-500/80 to-blue-400" },
+  { name: "JavaScript", color: "from-yellow-400/80 to-amber-400 dark:from-yellow-500/80 dark:to-amber-500" },
+  { name: "Firebase", color: "from-amber-400/80 to-yellow-400" },
 ];
