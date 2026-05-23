@@ -405,9 +405,49 @@ export const projects = [
       },
     },
   },
+  {
+    key: "zad-ziad",
+    emoji: "☪️",
+    name: { ar: "زاد زياد", en: "Zad Ziad" },
+    description: {
+      ar: "تطبيق إسلامي شامل يتضمن أذكار الصباح والمساء والنوم، تسبيح، قرآن كريم، مواقيت صلاة، راديو قرآن، أسماء الله الحسنى ٩٩، مع 7 سمات ألوان ووضع ليلي/نهاري ودعم ثنائي اللغة",
+      en: "Comprehensive Islamic app featuring morning/evening/sleep Azkar, Tasbih, Quran, prayer times, Quran radio, 99 Names of Allah, 7 color themes, dark/light mode, and bilingual support",
+    },
+    tech: ["HTML", "CSS", "JavaScript", "Firebase", "PWA"],
+    url: "https://ziadamr45.github.io/Zad-Ziad/",
+    github: "https://github.com/ziadamr45/Zad-Ziad",
+    featured: false,
+    details: {
+      ar: {
+        overview: "زاد زياد هو تطبيق إسلامي شامل يهدف إلى أن يكون صدقة جارية لنشر ذكر الله وتسهيل قراءة القرآن الكريم والأذكار في أي وقت ومكان. صُمم التطبيق بأسلوب بسيط وجذاب يناسب جميع الفئات العمرية، مع مراعاة توفير تجربة مستخدم سلسة ومريحة للعين. يتضمن التطبيق مجموعة كبيرة من الأذكار النبوية الصحيحة مع عداد تفاعلي لكل ذكر وتتبع لحالة الإتمام اليومي، بالإضافة إلى عداد تسبيح رقمي بتأثيرات صوتية واهتزاز مع 18 ذكراً مختلفاً. يدعم التطبيق 7 سمات ألوان متنوعة والوضع الليلي والنهاري، مع واجهة ثنائية اللغة عربي/إنجليزي ومزامنة بيانات عبر Firebase.",
+        features: [
+          "أذكار الصباح والمساء والنوم مع عداد تفاعلي لكل ذكر وتتبع لحالة الإتمام اليومي مع إشعارات تذكيرية",
+          "عداد تسبيح رقمي بتأثيرات صوتية واهتزاز مع 18 ذكراً مختلفاً وعداد للحسنات",
+          "تصفح القرآن الكريم والاستماع لإذاعة القرآن مباشرة من داخل التطبيق",
+          "مواقيت الصلاة وأسماء الله الحسنى ٩٩ وعداد تنازلي لشهر رمضان المبارك",
+          "7 سمات ألوان متنوعة والوضع الليلي/النهاري مع واجهة ثنائية اللغة عربي/إنجليزي",
+          "مصادقة Firebase وتخزين سحابي عبر Firestore مع دعم PWA للعمل كتطبيق ويب تقدمي",
+        ],
+        challenges: "أكبر تحدٍّ كان تنظيم كمية كبيرة من البيانات الإسلامية النصية بشكل يضمن الدقة وسهولة الوصول، خاصة مع دعم اللغتين العربية والإنجليزية في جميع المحتوى. كذلك كان تحقيق التوازن بين التصميم الجذاب والأداء السلس على الأجهزة المختلفة يتطلب تحسينات مستمرة. إدارة حالة الأذكار اليومية مع المزامنة السحابية عبر Firebase كانت تحديًا إضافيًا لضمان عدم فقدان تقدم المستخدم.",
+        howItWorks: "يعتمد التطبيق على HTML وCSS وJavaScript بدون أطر عمل خارجية، مما يضمن خفة التطبيق وسرعة تحميله. يُستخدم Firebase للمصادقة وتخزين بيانات المستخدمين سحابيًا عبر Firestore. Service Worker يوفر دعم PWA للعمل بدون اتصال وإرسال الإشعارات. الواجهة تعتمد على CSS Variables لتبديل السمات بسهولة مع localStorage لحفظ التفضيلات محليًا.",
+      },
+      en: {
+        overview: "Zad Ziad is a comprehensive Islamic application that aims to be an ongoing charity for spreading the remembrance of Allah and facilitating Quran reading and Azkar at any time and place. The app is designed with a simple and attractive style suitable for all ages, with attention to a smooth and eye-friendly user experience. It includes a large collection of authentic Prophetic Azkar with an interactive counter for each Zekr and daily completion tracking, along with a digital Tasbih counter with sound effects and vibration supporting 18 different Dhikr. The app supports 7 color themes and dark/light mode, with a bilingual Arabic/English interface and data sync via Firebase.",
+        features: [
+          "Morning, evening, and sleep Azkar with interactive counter for each Zekr and daily completion tracking with reminder notifications",
+          "Digital Tasbih counter with sound effects and vibration supporting 18 different Dhikr and a good deeds counter",
+          "Browse the Holy Quran and listen to Quran radio directly within the app",
+          "Prayer times, 99 Names of Allah, and countdown to the blessed month of Ramadan",
+          "7 diverse color themes and dark/light mode with bilingual Arabic/English interface",
+          "Firebase authentication and cloud storage via Firestore with PWA support for offline functionality",
+        ],
+        challenges: "The biggest challenge was organizing a large amount of Islamic textual data in a way that ensures accuracy and easy access, especially with bilingual Arabic/English support across all content. Balancing attractive design with smooth performance on different devices also required continuous optimization. Managing daily Azkar state with cloud sync via Firebase was an additional challenge to ensure users never lose their progress.",
+        howItWorks: "The app relies on HTML, CSS, and JavaScript without external frameworks, ensuring lightweight and fast loading. Firebase is used for authentication and cloud data storage via Firestore. Service Worker provides PWA support for offline functionality and push notifications. The interface uses CSS Variables for easy theme switching with localStorage for saving preferences locally.",
+      },
+    },
+  },
 ];
 
-// Sort: featured first
 export const sortedProjects = [...projects].sort((a, b) => {
   if (a.featured && !b.featured) return -1;
   if (!a.featured && b.featured) return 1;
