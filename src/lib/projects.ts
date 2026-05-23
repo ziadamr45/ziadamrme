@@ -446,6 +446,50 @@ export const projects = [
       },
     },
   },
+  {
+    key: "aura-escape",
+    emoji: "🏃‍♀️",
+    name: { ar: "هروب أورا", en: "Aura's Escape" },
+    description: {
+      ar: "لعبة عدّاءة لا نهائية مبنية بـ HTML5 Canvas مع قصة تفاعلية ومتاجر وتحديات يومية ومعارك زعماء",
+      en: "Endless runner game built with HTML5 Canvas featuring interactive story mode, shop system, daily challenges, and boss battles",
+    },
+    tech: ["HTML5", "CSS3", "JavaScript", "Canvas API", "PWA", "Firebase"],
+    url: "https://aura-escape.vercel.app",
+    github: "https://github.com/ziadamr45/AuraEscape",
+    featured: true,
+    details: {
+      ar: {
+        overview: "هروب أورا هي لعبة عدّاءة لا نهائية مبنية بالكامل بتقنيات الويب الأساسية HTML5 و CSS3 و JavaScript باستخدام Canvas API للرسومات. تتبع اللعبة بطلة اسمها أورا التي تهرب عبر عوالم مختلفة مليئة بالعقبات والمطاردات والألغاز. تتميز بنظام قصة تفاعلية مع 5 فصول قابلة للفت، 20 منطقة و80+ مرحلة متنوعة، متجر شامل لشراء الشخصيات والمركبات والقدرات، تحديات يومية وأسبوعية، نظام باس الموسم، معارك زعماء ملحمية، ولوحة متصدرين عالمية. اللعبة تدعم العربية والإنجليزية بالكامل مع تصميم متجاوب يعمل على جميع الأجهزة كتطبيق ويب تقدمي PWA.",
+        features: [
+          "لعبة عدّاءة لا نهائية مع تحكم بالسحب والنقر، 3 حارات، قفز وانزلاق وتغيير الحارة",
+          "20 منطقة و80+ مرحلة بتصاميم وأجواء مختلفة لكل منطقة",
+          "نظام قصة تفاعلية مع 5 فصول تُفتح تدريجياً مع تقدم اللاعب",
+          "متجر شامل لشراء شخصيات ومركبات وقدرات وعناصر تجميلية",
+          "نظام مطاردة بذكاء اصطناعي متنوع مع 4 أنواع من المطاردين",
+          "معارك زعماء ملحمية في نهايات المناطق مع نقاط صحة وهجمات خاصة",
+          "نظام قدرات مع 5 قدرات قابلة للتفعيل وسبعة أيام مكافآت تسلسلية",
+        ],
+        challenges: "أكبر تحدٍّ كان بناء محرك لعبة كامل في ملف HTML واحد مع أداء سلس على جميع الأجهزة. تنفيذ نظام التصادمات مع 4 أنواع عوائق مختلفة والمطاردات الديناميكية تطلب تحسينًا مستمرًا للأداء. كذلك كان تحقيق التوازن في صعوبة اللعبة مع نظام الصعوبة الديناميكي تحديًا حقيقيًا.",
+        howItWorks: "تعتمد اللعبة على Canvas API لرسم الرسومات والمؤثرات البصرية مع JavaScript كمحرك رئيسي للعبة. النظام يستخدم تجميع الكائنات Object Pooling للأداء، وlocalStorage لحفظ التقدم، وService Worker للعمل بدون إنترنت كتطبيق PWA.",
+      },
+      en: {
+        overview: "Aura's Escape is an endless runner game built entirely with core web technologies — HTML5, CSS3, and JavaScript — using the Canvas API for rendering. The game follows a heroine named Aura as she escapes through different worlds filled with obstacles, chasers, and puzzles. It features an interactive story system with 5 unlockable chapters, 20 zones with 80+ diverse levels, a comprehensive shop for purchasing characters, vehicles, and abilities, daily and weekly challenges, a season pass system, epic boss battles, and a global leaderboard. The game fully supports Arabic and English with a responsive design that works on all devices as a PWA.",
+        features: [
+          "Endless runner with swipe and tap controls, 3 lanes, jump, slide, and lane switching",
+          "20 zones and 80+ levels with unique designs and atmospheres for each zone",
+          "Interactive story system with 5 chapters that unlock progressively",
+          "Comprehensive shop for purchasing characters, vehicles, abilities, and cosmetics",
+          "Dynamic chaser system with 4 different AI-driven chaser types",
+          "Epic boss battles at zone endings with health bars and special attacks",
+          "Ability system with 5 activatable powers and 7-day sequential login rewards",
+        ],
+        challenges: "The biggest challenge was building a complete game engine in a single HTML file while maintaining smooth performance on all devices. Implementing the collision system with 4 different obstacle types and dynamic chasers required continuous performance optimization. Balancing game difficulty with the dynamic difficulty system was also a real challenge.",
+        howItWorks: "The game relies on the Canvas API for rendering graphics and visual effects with JavaScript as the main game engine. The system uses Object Pooling for performance, localStorage for progress saving, and a Service Worker for offline functionality as a PWA.",
+      },
+    },
+  },
+
 ];
 
 export const sortedProjects = [...projects].sort((a, b) => {
