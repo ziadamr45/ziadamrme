@@ -3,12 +3,13 @@
 import { useState, useEffect, useCallback } from "react";
 import { useApp } from "@/components/providers";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { Sun, Moon, Globe } from "lucide-react";
 
 export function Navigation() {
   const { language, theme, toggleTheme, toggleLanguage } = useApp();
   const pathname = usePathname();
+  const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [mounted, setMounted] = useState(false);
@@ -95,9 +96,9 @@ export function Navigation() {
       window.dispatchEvent(new CustomEvent("open-contact-form"));
     } else {
       sessionStorage.setItem("scrollToContact", "true");
-      window.location.href = "/";
+      router.push("/");
     }
-  }, [pathname, scrollToElement]);
+  }, [pathname, scrollToElement, router]);
 
   // Close menu and scroll to section
   const handleMobileNavClick = useCallback((sectionId?: string, crossPageHref?: string) => {
@@ -119,7 +120,7 @@ export function Navigation() {
           }
         }, 100);
       } else {
-        window.location.href = crossPageHref;
+        router.push(crossPageHref);
       }
       return;
     }
@@ -132,7 +133,7 @@ export function Navigation() {
         }
       }, 200);
     }
-  }, [scrollToElement, pathname]);
+  }, [scrollToElement, pathname, router]);
 
   return (
     <header
@@ -152,7 +153,7 @@ export function Navigation() {
                 if (pathname === "/") {
                   window.scrollTo({ top: 0, behavior: "smooth" });
                 } else {
-                  window.location.href = "/";
+                  router.push("/");
                 }
               }}
               className="relative group/img cursor-pointer focus:outline-none"
@@ -173,7 +174,7 @@ export function Navigation() {
               if (pathname === "/") {
                 window.scrollTo({ top: 0, behavior: "smooth" });
               } else {
-                window.location.href = "/";
+                router.push("/");
               }
             }}>
               <span className="font-bold text-slate-900 dark:text-white text-base sm:text-lg hidden sm:block">
@@ -204,7 +205,7 @@ export function Navigation() {
                   scrollToElement("github-activity");
                 } else {
                   sessionStorage.setItem("scrollToGithub", "true");
-                  window.location.href = "/";
+                  router.push("/");
                 }
               }}
               className="px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800/50 cursor-pointer"
@@ -218,7 +219,7 @@ export function Navigation() {
                   scrollToElement("testimonials");
                 } else {
                   sessionStorage.setItem("scrollToTestimonials", "true");
-                  window.location.href = "/";
+                  router.push("/");
                 }
               }}
               className="px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800/50 cursor-pointer"
@@ -365,7 +366,7 @@ export function Navigation() {
                       setIsOpen(false);
                       document.body.style.overflow = "";
                       sessionStorage.setItem("scrollToContact", "true");
-                      window.location.href = "/";
+                      router.push("/");
                     }}
                     className="w-full flex items-center justify-center px-4 py-3 rounded-xl text-sm font-semibold bg-linear-to-r from-orange-500 to-amber-500 text-white shadow-sm cursor-pointer"
                   >

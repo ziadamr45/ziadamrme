@@ -137,6 +137,13 @@ export default function RootLayout({
   return (
     <html lang="ar" dir="rtl" suppressHydrationWarning>
       <head>
+        {/* Blocking script to apply theme & language from localStorage BEFORE React hydrates.
+            This prevents the flash of default (light + Arabic) on page reload. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{var t=localStorage.getItem('theme');if(t==='dark'){document.documentElement.classList.add('dark')}var l=localStorage.getItem('language');if(l==='en'){document.documentElement.lang='en';document.documentElement.dir='ltr'}else{document.documentElement.lang='ar';document.documentElement.dir='rtl'}}catch(e){}})()`,
+          }}
+        />
         <link rel="icon" href="/favicon.png" sizes="any" media="(prefers-color-scheme: light)" />
         <link rel="icon" href="/favicon-dark.png" sizes="any" media="(prefers-color-scheme: dark)" />
         <link rel="apple-touch-icon" href="/icon.png" />

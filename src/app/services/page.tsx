@@ -2,6 +2,7 @@
 
 import { useEffect } from "react";
 import { useApp } from "@/components/providers";
+import { useRouter } from "next/navigation";
 import { Card, CardContent } from "@/components/ui/card";
 import { AnimatedBackground } from "@/components/animated-background";
 import { Navigation } from "@/components/navigation";
@@ -87,6 +88,7 @@ const processSteps = [
 
 export default function ServicesPage() {
   const { language } = useApp();
+  const router = useRouter();
   const t = translations[language];
   useScrollRestoration();
 
@@ -184,7 +186,7 @@ export default function ServicesPage() {
               type="button"
               onClick={() => {
                 sessionStorage.setItem("scrollToContact", "true");
-                window.location.href = "/";
+                router.push("/");
               }}
               className="inline-flex items-center gap-2 px-8 py-3.5 rounded-xl text-sm font-semibold bg-linear-to-r from-orange-500 to-amber-500 text-white shadow-lg shadow-orange-500/25 hover:shadow-orange-500/40 hover:scale-105 transition-all duration-300 cursor-pointer"
             >

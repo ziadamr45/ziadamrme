@@ -31,8 +31,16 @@ export function useApp() {
 }
 
 export function Providers({ children }: { children: React.ReactNode }) {
-  const [theme, setTheme] = useState<Theme>("light");
-  const [language, setLanguage] = useState<Language>("ar");
+  // Lazy-initialize from localStorage so React state matches the blocking <head> script
+  // and prevents a flash of default (light + Arabic) on mount.
+  const [theme, setTheme] = useState<Theme>(() => {
+    if (typeof window === "undefined") return "light";
+    return (localStorage.getItem("theme") as Theme) || "light";
+  });
+  const [language, setLanguage] = useState<Language>(() => {
+    if (typeof window === "undefined") return "ar";
+    return (localStorage.getItem("language") as Language) || "ar";
+  });
   const [mounted, setMounted] = useState(false);
 
   // Theme transition state
@@ -42,11 +50,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
   const overlayRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const savedTheme = (localStorage.getItem("theme") as Theme) || "light";
-    const savedLanguage = (localStorage.getItem("language") as Language) || "ar";
-    // eslint-disable-next-line react-hooks/set-state-in-effect -- reading from localStorage requires setState
-    setTheme(savedTheme);
-    setLanguage(savedLanguage);
+    // Mark as mounted; state is already initialized from localStorage
     setMounted(true);
   }, []);
 
