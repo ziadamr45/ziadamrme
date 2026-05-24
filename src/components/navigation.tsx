@@ -41,8 +41,7 @@ export function Navigation() {
   }, [isOpen]);
 
   const navItems = [
-    { href: "/", label: language === "ar" ? "الرئيسية" : "Home" },
-    { href: "/projects", label: language === "ar" ? "المشاريع" : "Projects" },
+    { href: "/", label: language === "ar" ? "الرئيسية (الملف الشخصي)" : "Home (Profile)" },
     { href: "/services", label: language === "ar" ? "الخدمات" : "Services" },
     { href: "/blog", label: language === "ar" ? "المدونة" : "Blog" },
     { href: "/social-feed", label: language === "ar" ? "المنشورات" : "Social Feed" },
@@ -50,12 +49,17 @@ export function Navigation() {
 
   // Section links for mobile menu (scroll to sections on home page)
   const sectionItems = [
-    { id: "profile", label: language === "ar" ? "الملف الشخصي" : "Profile" },
     { id: "why-hire-me", label: language === "ar" ? "ليه تختارني؟" : "Why Me?" },
     { id: "about", label: language === "ar" ? "نبذة عني" : "About" },
     { id: "projects-section", label: language === "ar" ? "المشاريع" : "Projects" },
     { id: "testimonials", label: language === "ar" ? "شهادات العملاء" : "Testimonials" },
     { id: "contact", label: language === "ar" ? "تواصل معي" : "Contact" },
+  ];
+
+  // Special navigation items (cross-page links)
+  const specialNavItems = [
+    { id: "github-activity", label: language === "ar" ? "نشاطي على جيت هاب" : "My GitHub Activity", href: "/" },
+    { id: "work-process", label: language === "ar" ? "طريقة العمل" : "How I Work", href: "/services" },
   ];
 
   const isActive = (href: string) => {
@@ -67,23 +71,65 @@ export function Navigation() {
     toggleTheme(e);
   };
 
+  // Scroll to element with offset for fixed header
+  const scrollToElement = useCallback((elementId: string) => {
+    const el = document.getElementById(elementId);
+    if (el) {
+      const headerOffset = 80; // Account for fixed header height
+      const elementPosition = el.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.scrollY - headerOffset;
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: "smooth"
+      });
+    }
+  }, []);
+
+  // Handle contact button click from any page
+  const handleContactClick = useCallback(() => {
+    if (pathname === "/") {
+      scrollToElement("contact");
+      window.dispatchEvent(new CustomEvent("open-contact-form"));
+    } else {
+      sessionStorage.setItem("scrollToContact", "true");
+      window.location.href = "/";
+    }
+  }, [pathname, scrollToElement]);
+
   // Close menu and scroll to section
-  const handleMobileNavClick = useCallback((sectionId?: string) => {
+  const handleMobileNavClick = useCallback((sectionId?: string, crossPageHref?: string) => {
     setIsOpen(false);
     document.body.style.overflow = "";
+    if (crossPageHref) {
+      // Navigate to another page first, then scroll to section
+      if (crossPageHref === "/services" && sectionId === "work-process") {
+        sessionStorage.setItem("scrollToProcess", "true");
+      } else if (crossPageHref === "/" && sectionId === "github-activity") {
+        sessionStorage.setItem("scrollToGithub", "true");
+      }
+      // If we're already on the target page, just scroll
+      if (pathname === crossPageHref) {
+        setTimeout(() => {
+          scrollToElement(sectionId || "");
+          if (sectionId === "contact") {
+            window.dispatchEvent(new CustomEvent("open-contact-form"));
+          }
+        }, 100);
+      } else {
+        window.location.href = crossPageHref;
+      }
+      return;
+    }
     if (sectionId) {
       setTimeout(() => {
-        const el = document.getElementById(sectionId);
-        if (el) {
-          el.scrollIntoView({ behavior: "smooth", block: "start" });
-        }
+        scrollToElement(sectionId);
         // Open contact form if scrolling to contact section
         if (sectionId === "contact") {
           window.dispatchEvent(new CustomEvent("open-contact-form"));
         }
       }, 200);
     }
-  }, []);
+  }, [scrollToElement, pathname]);
 
   return (
     <header
@@ -138,11 +184,29 @@ export function Navigation() {
                 {item.label}
               </Link>
             ))}
+            {/* GitHub Activity link on desktop */}
+            <button
+              onClick={() => {
+                if (pathname === "/") {
+                  scrollToElement("github-activity");
+                } else {
+                  sessionStorage.setItem("scrollToGithub", "true");
+                  window.location.href = "/";
+                }
+              }}
+              className="px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800/50 cursor-pointer"
+            >
+              {language === "ar" ? `نشاطي على جيت هاب` : "My GitHub Activity"}
+            </button>
             {/* Testimonials link on desktop */}
             <button
               onClick={() => {
-                const el = document.getElementById("testimonials");
-                if (el) el.scrollIntoView({ behavior: "smooth" });
+                if (pathname === "/") {
+                  scrollToElement("testimonials");
+                } else {
+                  sessionStorage.setItem("scrollToTestimonials", "true");
+                  window.location.href = "/";
+                }
               }}
               className="px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800/50 cursor-pointer"
             >
@@ -180,11 +244,7 @@ export function Navigation() {
 
             {/* Desktop CTA - scrolls to contact form */}
             <button
-              onClick={() => {
-                const el = document.getElementById("contact");
-                if (el) el.scrollIntoView({ behavior: "smooth" });
-                window.dispatchEvent(new CustomEvent("open-contact-form"));
-              }}
+              onClick={handleContactClick}
               className="hidden md:inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold bg-linear-to-r from-orange-500 to-amber-500 text-white shadow-lg shadow-orange-500/25 hover:shadow-orange-500/40 hover:scale-105 transition-all duration-300 cursor-pointer"
             >
               {language === "ar" ? "كلمني" : "Hire Me"}
@@ -229,6 +289,17 @@ export function Navigation() {
                   </Link>
                 ))}
 
+                {/* Special cross-page navigation items */}
+                {specialNavItems.map((item) => (
+                  <button
+                    key={item.id}
+                    onClick={() => handleMobileNavClick(item.id, item.href)}
+                    className="w-full flex items-center px-4 py-3 rounded-xl text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700/50 transition-all duration-200 cursor-pointer"
+                  >
+                    {item.label}
+                  </button>
+                ))}
+
                 {/* Section links (scroll on home page) */}
                 {pathname === "/" && (
                   <>
@@ -241,19 +312,7 @@ export function Navigation() {
                     {sectionItems.map((item) => (
                       <button
                         key={item.id}
-                        onClick={() => {
-                          setIsOpen(false);
-                          document.body.style.overflow = "";
-                          setTimeout(() => {
-                            const el = document.getElementById(item.id);
-                            if (el) {
-                              el.scrollIntoView({ behavior: "smooth", block: "start" });
-                            }
-                            if (item.id === "contact") {
-                              window.dispatchEvent(new CustomEvent("open-contact-form"));
-                            }
-                          }, 100);
-                        }}
+                        onClick={() => handleMobileNavClick(item.id)}
                         className="w-full flex items-center px-4 py-3 rounded-xl text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700/50 transition-all duration-200 cursor-pointer"
                       >
                         {item.label}

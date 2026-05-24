@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect } from "react";
 import { useApp } from "@/components/providers";
 import { Card, CardContent } from "@/components/ui/card";
 import { AnimatedBackground } from "@/components/animated-background";
@@ -89,6 +90,25 @@ export default function ServicesPage() {
   const t = translations[language];
   useScrollRestoration();
 
+  // Handle scroll to process section from other pages via sessionStorage
+  useEffect(() => {
+    if (sessionStorage.getItem("scrollToProcess") === "true") {
+      sessionStorage.removeItem("scrollToProcess");
+      setTimeout(() => {
+        const el = document.getElementById("process-section");
+        if (el) {
+          const headerOffset = 80;
+          const elementPosition = el.getBoundingClientRect().top;
+          const offsetPosition = elementPosition + window.scrollY - headerOffset;
+          window.scrollTo({
+            top: offsetPosition,
+            behavior: "smooth"
+          });
+        }
+      }, 500);
+    }
+  }, []);
+
   return (
     <div className="relative min-h-screen flex flex-col items-center bg-linear-to-br from-slate-50 via-white to-slate-100 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 overflow-x-hidden">
       <AnimatedBackground />
@@ -130,7 +150,7 @@ export default function ServicesPage() {
         </div>
 
         {/* Process Section */}
-        <div className="text-center mb-10">
+        <div id="process-section" className="text-center mb-10">
           <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white mb-2">{t.servicesProcessTitle}</h2>
           <p className="text-sm text-slate-500 dark:text-slate-400 max-w-2xl mx-auto">{t.servicesProcessSubtitle}</p>
         </div>
@@ -160,13 +180,17 @@ export default function ServicesPage() {
           <CardContent className="p-8 sm:p-12 text-center">
             <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white mb-3">{t.servicesCTA}</h2>
             <p className="text-sm text-slate-500 dark:text-slate-400 max-w-xl mx-auto mb-6">{t.contactCTADesc}</p>
-            <Link
-              href="/#contact"
-              className="inline-flex items-center gap-2 px-8 py-3.5 rounded-xl text-sm font-semibold bg-linear-to-r from-orange-500 to-amber-500 text-white shadow-lg shadow-orange-500/25 hover:shadow-orange-500/40 hover:scale-105 transition-all duration-300"
+            <button
+              type="button"
+              onClick={() => {
+                sessionStorage.setItem("scrollToContact", "true");
+                window.location.href = "/";
+              }}
+              className="inline-flex items-center gap-2 px-8 py-3.5 rounded-xl text-sm font-semibold bg-linear-to-r from-orange-500 to-amber-500 text-white shadow-lg shadow-orange-500/25 hover:shadow-orange-500/40 hover:scale-105 transition-all duration-300 cursor-pointer"
             >
               {t.heroCTA}
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={language === "ar" ? "M19 12H5m0 0l7 7m-7-7l7-7" : "M5 12h14m0 0l-7-7m7 7l-7 7"} /></svg>
-            </Link>
+            </button>
           </CardContent>
         </Card>
       </section>

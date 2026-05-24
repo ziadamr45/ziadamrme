@@ -56,10 +56,10 @@ export const whyHireMePoints = [
 export const testimonials = [
   {
     name: { ar: "أحمد محمد", en: "Ahmed Mohammed" },
-    role: { ar: "مؤسس تطبيق إسمع راديو", en: "Founder, Esma3 Radio" },
+    role: { ar: "صاحب متجر إلكتروني", en: "E-commerce Store Owner" },
     quote: {
-      ar: "زياد كان شريك مثالي في بناء التطبيق. سرعة التنفيذ مذهلة والتواصل كان مستمر طوال فترة المشروع. سلم المشروع قبل الموعد المتفق عليه بيومين!",
-      en: "Ziad was an ideal partner in building the app. The execution speed is amazing and communication was continuous throughout the project. He delivered two days before the agreed deadline!",
+      ar: "زياد كان شريك مثالي في بناء المتجر. سرعة التنفيذ مذهلة والتواصل كان مستمر طوال فترة المشروع. سلم المشروع قبل الموعد المتفق عليه بيومين!",
+      en: "Ziad was an ideal partner in building the store. The execution speed is amazing and communication was continuous throughout the project. He delivered two days before the agreed deadline!",
     },
     avatar: "أم",
     avatarBg: "from-blue-500 to-indigo-500",

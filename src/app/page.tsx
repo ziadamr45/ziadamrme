@@ -37,14 +37,41 @@ export default function Home() {
     return () => window.removeEventListener("open-profile-image", handler);
   }, []);
 
+  // Scroll to element with offset for fixed header
+  const scrollToElementWithOffset = (elementId: string) => {
+    const el = document.getElementById(elementId);
+    if (el) {
+      const headerOffset = 80;
+      const elementPosition = el.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.scrollY - headerOffset;
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: "smooth"
+      });
+    }
+  };
+
   // Handle scroll to contact from other pages via sessionStorage
   useEffect(() => {
-    if (sessionStorage.getItem("scrollToContact") === "true") {
+    const scrollToContact = sessionStorage.getItem("scrollToContact");
+    const scrollToGithub = sessionStorage.getItem("scrollToGithub");
+    const scrollToTestimonials = sessionStorage.getItem("scrollToTestimonials");
+
+    if (scrollToContact === "true") {
       sessionStorage.removeItem("scrollToContact");
       setTimeout(() => {
-        const el = document.getElementById("contact");
-        if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+        scrollToElementWithOffset("contact");
         setShowContactForm(true);
+      }, 500);
+    } else if (scrollToGithub === "true") {
+      sessionStorage.removeItem("scrollToGithub");
+      setTimeout(() => {
+        scrollToElementWithOffset("github-activity");
+      }, 500);
+    } else if (scrollToTestimonials === "true") {
+      sessionStorage.removeItem("scrollToTestimonials");
+      setTimeout(() => {
+        scrollToElementWithOffset("testimonials");
       }, 500);
     }
   }, []);
@@ -154,8 +181,7 @@ export default function Home() {
               <button
                 type="button"
                 onClick={() => {
-                  const el = document.getElementById("contact");
-                  if (el) el.scrollIntoView({ behavior: "smooth" });
+                  scrollToElementWithOffset("contact");
                   setShowContactForm(true);
                 }}
                 className="inline-flex items-center gap-2 px-6 py-3 rounded-xl text-sm font-semibold bg-linear-to-r from-orange-500 to-amber-500 text-white shadow-lg shadow-orange-500/25 hover:shadow-orange-500/40 hover:scale-105 transition-all duration-300 cursor-pointer"
@@ -272,9 +298,9 @@ export default function Home() {
 
       {/* GITHUB CONTRIBUTION GRAPH */}
       <ScrollReveal animation="slide-up" delay={100}>
-      <section className="relative z-10 w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">
+      <section id="github-activity" className="relative z-10 w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">
         <Card className="relative w-full overflow-hidden border-0 shadow-xl shadow-slate-200/50 dark:shadow-black/50 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl">
-          <CardContent className="p-6">
+          <CardContent className="p-4 sm:p-6">
             <div className="flex items-center gap-3 mb-4">
               <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-linear-to-br from-green-500/10 to-emerald-500/10 dark:from-green-500/20 dark:to-emerald-500/20">
                 <svg className="w-5 h-5 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" /></svg>
@@ -289,7 +315,7 @@ export default function Home() {
               <img
                 src="https://ghchart.rshah.org/ziadamr45"
                 alt="GitHub Contribution Graph"
-                className="w-auto h-auto min-w-[600px] sm:min-w-[800px] rounded-lg"
+                className="w-auto h-[80px] sm:h-auto min-w-[600px] sm:min-w-[800px] rounded-lg"
                 loading="lazy"
               />
               <p className="text-[10px] text-slate-400 dark:text-slate-500 text-center mt-1 sm:hidden">{language === "ar" ? "← اسحب لمشاهدة المزيد →" : "← Swipe to see more →"}</p>
@@ -439,6 +465,28 @@ export default function Home() {
       </section>
       </ScrollReveal>
 
+      {/* SERVICES SECTION LINK */}
+      <ScrollReveal animation="slide-up" delay={100}>
+      <section className="relative z-10 w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pb-4">
+        <Link href="/services">
+          <Card className="relative w-full overflow-hidden border-0 shadow-xl shadow-slate-200/50 dark:shadow-black/50 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl transition-transform duration-300 hover:scale-[1.02] cursor-pointer">
+            <CardContent className="p-8">
+              <div className="flex items-center gap-3">
+                <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-linear-to-br from-orange-500/10 to-amber-500/10 dark:from-orange-500/20 dark:to-amber-500/20">
+                  <svg className="w-5 h-5 text-orange-600 dark:text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" /></svg>
+                </div>
+                <div className="flex-1">
+                  <h2 className="text-lg font-bold text-slate-900 dark:text-white">{t.servicesTitle}</h2>
+                  <p className="text-xs text-slate-500 dark:text-slate-400">{t.servicesSubtitle}</p>
+                </div>
+                <svg className="w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={language === "ar" ? "M19 12H5m0 0l7 7m-7-7l7-7" : "M5 12h14m0 0l-7-7m7 7l-7 7"} /></svg>
+              </div>
+            </CardContent>
+          </Card>
+        </Link>
+      </section>
+      </ScrollReveal>
+
       {/* BLOG SECTION LINK */}
       <ScrollReveal animation="slide-up" delay={100}>
       <section className="relative z-10 w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">
@@ -514,7 +562,7 @@ export default function Home() {
                 </div>
                 <div className="flex flex-col gap-2 p-3 rounded-lg bg-amber-50/80 dark:bg-amber-500/10 border border-amber-200/50 dark:border-amber-500/20">
                   <p className="text-xs text-amber-700 dark:text-amber-300 font-medium leading-relaxed">{t.contactReplyNotice}</p>
-                  <button type="button" onClick={() => document.getElementById('hero-social-links')?.scrollIntoView({ behavior: 'smooth', block: 'center' })} className="inline-flex items-center gap-1.5 text-xs font-semibold text-orange-600 dark:text-orange-400 hover:text-orange-700 dark:hover:text-orange-300 transition-colors cursor-pointer w-fit">
+                  <button type="button" onClick={() => { const el = document.getElementById('hero-social-links'); if (el) { const headerOffset = 80; const y = el.getBoundingClientRect().top + window.scrollY - headerOffset; window.scrollTo({ top: y, behavior: 'smooth' }); } }} className="inline-flex items-center gap-1.5 text-xs font-semibold text-orange-600 dark:text-orange-400 hover:text-orange-700 dark:hover:text-orange-300 transition-colors cursor-pointer w-fit">
                     <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" /></svg>
                     {t.contactSocialLink}
                   </button>
@@ -583,8 +631,7 @@ export default function Home() {
               <button
                 type="button"
                 onClick={() => {
-                  const el = document.getElementById("contact");
-                  if (el) el.scrollIntoView({ behavior: "smooth" });
+                  scrollToElementWithOffset("contact");
                   setShowContactForm(true);
                 }}
                 className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold bg-linear-to-r from-orange-500 to-amber-500 text-white shadow-lg shadow-orange-500/25 hover:shadow-orange-500/40 hover:scale-105 transition-all duration-300 cursor-pointer"
