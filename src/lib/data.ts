@@ -149,5 +149,7 @@ export const techStack = [
   { name: "Google Fonts", color: "#4285F4", logo: "googlefonts" },
   { name: "Font Awesome", color: "#528DD7", logo: "fontawesome" },
   { name: "Lucide", color: "#64748B", logo: "lucide" },
-  { name: "View Transitions API", color: "#0D9488", logo: "viewtransitions" },
+  { name: "Bun", color: "#FBF0DF", logo: "bun" },
+  { name: "next-intl", color: "#2563EB", logo: "nextintl" },
+  { name: "next-themes", color: "#6366F1", logo: "nextthemes" },
 ];
