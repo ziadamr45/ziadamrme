@@ -19,7 +19,7 @@ If you find my projects useful, consider supporting me! / لو لقيت مشار
 
 ---
 
-## 🙏 Thank You / شكراً لكم
+## 🙏 Thank You / شكرًا لكم
 
 Every contribution helps me continue building open-source projects for the Arabic community. / كل مساهمة بتساعدني أكمل بناء مشاريع مفتوحة المصدر للمجتمع العربي.
 

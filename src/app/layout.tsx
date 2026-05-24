@@ -106,7 +106,7 @@ export default function RootLayout({
       "https://www.instagram.com/ziadamr455/",
       "https://t.me/ziadamr",
       "https://www.threads.com/@ziadamr455",
-      "https://youtube.com/@alhayat_ala_eltarek",
+      "https://youtube.com/@alhayat_ala_eltarek?si=pcsc_31Kcv3Jym14",
     ],
     knowsAbout: [
       "Next.js",
@@ -130,6 +130,7 @@ export default function RootLayout({
         <link rel="icon" href="/favicon.png" sizes="any" media="(prefers-color-scheme: light)" />
         <link rel="icon" href="/favicon-dark.png" sizes="any" media="(prefers-color-scheme: dark)" />
         <link rel="apple-touch-icon" href="/icon.png" />
+        <link rel="preload" as="image" href="/profile.jpg" />
         <meta name="theme-color" content="#f97316" media="(prefers-color-scheme: light)" />
         <meta name="theme-color" content="#0f172a" media="(prefers-color-scheme: dark)" />
         <meta name="google-site-verification" content="" />

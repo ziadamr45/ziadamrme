@@ -1,6 +1,6 @@
 # المساهمة في المشروع | Contributing
 
-شكراً لاهتمامك بالمساهمة! هذا المشروع مفتوح للاقتراحات والتحسينات.
+شكرًا لاهتمامك بالمساهمة! هذا المشروع مفتوح للاقتراحات والتحسينات.
 Thank you for your interest in contributing! This project is open to suggestions and improvements.
 
 ## كيف تساهم | How to Contribute

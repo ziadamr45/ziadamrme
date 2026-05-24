@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useApp } from "@/components/providers";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -47,6 +47,18 @@ export function Navigation() {
     toggleTheme(e);
   };
 
+  // Close menu and scroll to section
+  const handleMobileNavClick = useCallback((sectionId?: string) => {
+    setIsOpen(false);
+    if (sectionId) {
+      // Small delay to allow menu to close and DOM to update
+      setTimeout(() => {
+        const el = document.getElementById(sectionId);
+        if (el) el.scrollIntoView({ behavior: "smooth" });
+      }, 100);
+    }
+  }, []);
+
   return (
     <header
       className={`fixed top-0 inset-x-0 z-50 transition-all duration-300 ${
@@ -57,11 +69,16 @@ export function Navigation() {
     >
       <nav className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
-          {/* Logo */}
-          <Link href="/" className="flex items-center gap-2.5 group">
-            <div className="w-9 h-9 rounded-xl bg-linear-to-br from-orange-500 to-amber-500 flex items-center justify-center shadow-lg shadow-orange-500/20 group-hover:shadow-orange-500/40 transition-shadow duration-300">
-              <span className="text-white font-bold text-sm">ZA</span>
-            </div>
+          {/* Logo - with profile picture */}
+          <Link href="/" className="flex items-center gap-2.5 group" onClick={() => handleMobileNavClick()}>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/profile.jpg"
+              alt="Ziad Amr"
+              width={36}
+              height={36}
+              className="w-9 h-9 rounded-xl object-cover shadow-lg shadow-orange-500/20 group-hover:shadow-orange-500/40 transition-shadow duration-300 ring-2 ring-orange-500/20"
+            />
             <span className="font-bold text-slate-900 dark:text-white text-lg hidden sm:block">
               {language === "ar" ? "زياد عمرو" : "Ziad Amr"}
             </span>
@@ -82,6 +99,16 @@ export function Navigation() {
                 {item.label}
               </Link>
             ))}
+            {/* Testimonials link on desktop */}
+            <button
+              onClick={() => {
+                const el = document.getElementById("testimonials");
+                if (el) el.scrollIntoView({ behavior: "smooth" });
+              }}
+              className="px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800/50 cursor-pointer"
+            >
+              {language === "ar" ? "شهادات العملاء" : "Testimonials"}
+            </button>
           </div>
 
           {/* Desktop Controls: Language + Theme + CTA */}
@@ -112,13 +139,18 @@ export function Navigation() {
               </button>
             )}
 
-            {/* Desktop CTA */}
-            <Link
-              href="/#contact"
-              className="hidden md:inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold bg-linear-to-r from-orange-500 to-amber-500 text-white shadow-lg shadow-orange-500/25 hover:shadow-orange-500/40 hover:scale-105 transition-all duration-300"
+            {/* Desktop CTA - scrolls to contact form */}
+            <button
+              onClick={() => {
+                const el = document.getElementById("contact");
+                if (el) el.scrollIntoView({ behavior: "smooth" });
+                // Dispatch custom event to open contact form
+                window.dispatchEvent(new CustomEvent("open-contact-form"));
+              }}
+              className="hidden md:inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold bg-linear-to-r from-orange-500 to-amber-500 text-white shadow-lg shadow-orange-500/25 hover:shadow-orange-500/40 hover:scale-105 transition-all duration-300 cursor-pointer"
             >
               {language === "ar" ? "كلمني" : "Hire Me"}
-            </Link>
+            </button>
 
             {/* Mobile hamburger */}
             <button
@@ -138,7 +170,7 @@ export function Navigation() {
         {/* Mobile Menu */}
         <div
           className={`md:hidden overflow-hidden transition-all duration-300 ${
-            isOpen ? "max-h-[500px] opacity-100 pb-4" : "max-h-0 opacity-0"
+            isOpen ? "max-h-[600px] opacity-100 pb-4" : "max-h-0 opacity-0"
           }`}
         >
           <div className="bg-white/95 dark:bg-slate-800/95 backdrop-blur-xl rounded-2xl border border-slate-200 dark:border-slate-700 shadow-xl p-3 space-y-1">
@@ -146,6 +178,7 @@ export function Navigation() {
               <Link
                 key={item.href}
                 href={item.href}
+                onClick={() => setIsOpen(false)}
                 className={`flex items-center px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200 ${
                   isActive(item.href)
                     ? "bg-orange-500/10 text-orange-600 dark:text-orange-400"
@@ -156,13 +189,26 @@ export function Navigation() {
               </Link>
             ))}
             {/* Testimonials link in mobile menu */}
-            <Link
-              href="/#testimonials"
-              onClick={() => setIsOpen(false)}
-              className="flex items-center px-4 py-3 rounded-xl text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700/50 transition-all duration-200 cursor-pointer"
+            <button
+              onClick={() => handleMobileNavClick("testimonials")}
+              className="w-full flex items-center px-4 py-3 rounded-xl text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700/50 transition-all duration-200 cursor-pointer"
             >
               {language === "ar" ? "شهادات العملاء" : "Testimonials"}
-            </Link>
+            </button>
+            {/* Contact link in mobile menu */}
+            <button
+              onClick={() => {
+                setIsOpen(false);
+                setTimeout(() => {
+                  const el = document.getElementById("contact");
+                  if (el) el.scrollIntoView({ behavior: "smooth" });
+                  window.dispatchEvent(new CustomEvent("open-contact-form"));
+                }, 150);
+              }}
+              className="w-full flex items-center px-4 py-3 rounded-xl text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700/50 transition-all duration-200 cursor-pointer"
+            >
+              {language === "ar" ? "كلمني" : "Contact Me"}
+            </button>
             {/* Mobile toggles row */}
             <div className="flex items-center gap-2 px-4 py-2">
               {mounted && (
@@ -184,12 +230,6 @@ export function Navigation() {
                 </>
               )}
             </div>
-            <Link
-              href="/#contact"
-              className="flex items-center justify-center gap-2 px-4 py-3 rounded-xl text-sm font-semibold bg-linear-to-r from-orange-500 to-amber-500 text-white shadow-lg shadow-orange-500/25 mt-2"
-            >
-              {language === "ar" ? "كلمني" : "Hire Me"}
-            </Link>
           </div>
         </div>
       </nav>

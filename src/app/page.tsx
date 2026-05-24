@@ -22,6 +22,13 @@ export default function Home() {
   const stats = getStats(sortedProjects.length);
   const [showImageModal, setShowImageModal] = useState(false);
   const [showContactForm, setShowContactForm] = useState(false);
+
+  // Listen for open-contact-form custom event (from navigation)
+  useEffect(() => {
+    const handler = () => setShowContactForm(true);
+    window.addEventListener("open-contact-form", handler);
+    return () => window.removeEventListener("open-contact-form", handler);
+  }, []);
   const [contactForm, setContactForm] = useState({ name: "", email: "", message: "" });
   const [contactStatus, setContactStatus] = useState<"idle" | "sending" | "success" | "error" | "rateLimit" | "validation">("idle");
 
@@ -112,7 +119,9 @@ export default function Home() {
           {/* Left side - Text */}
           <div className="lg:col-span-3 text-center lg:text-start">
             <p className="text-sm font-medium text-orange-600 dark:text-orange-400 mb-2">{t.heroGreeting}</p>
-            <h1 className="text-4xl sm:text-5xl font-bold text-slate-900 dark:text-white mb-3">{t.name}</h1>
+            <h1 className="text-4xl sm:text-5xl font-bold mb-3">
+              <span className="bg-clip-text text-transparent bg-linear-to-r from-orange-500 via-amber-500 to-orange-600 dark:from-orange-400 dark:via-amber-400 dark:to-orange-500" style={{ fontFamily: "'Cairo', 'Noto Sans SC', sans-serif" }}>{t.name}</span>
+            </h1>
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-linear-to-r from-orange-500/10 to-amber-500/10 dark:from-orange-500/20 dark:to-amber-500/20 text-orange-600 dark:text-orange-400 text-sm font-medium mb-4">
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" /></svg>
               {t.title}
@@ -162,7 +171,7 @@ export default function Home() {
                   <span className="text-xs text-slate-400 dark:text-slate-500 font-medium">{t.socialLinksTitle}</span>
                   <div className="flex-1 h-px bg-linear-to-r from-transparent via-slate-200 dark:via-slate-700 to-transparent" />
                 </div>
-                <div className="grid grid-cols-4 gap-2 w-full">
+                <div id="social-links" className="grid grid-cols-4 gap-2 w-full">
                   {socialLinks.slice(0, 8).map((link) => (
                     <a
                       key={link.key}
@@ -481,8 +490,8 @@ export default function Home() {
                 </div>
                 <div className="flex flex-col gap-2 p-3 rounded-lg bg-amber-50/80 dark:bg-amber-500/10 border border-amber-200/50 dark:border-amber-500/20">
                   <p className="text-xs text-amber-700 dark:text-amber-300 font-medium leading-relaxed">{t.contactReplyNotice}</p>
-                  <button type="button" onClick={() => document.getElementById('profile')?.scrollIntoView({ behavior: 'smooth' })} className="inline-flex items-center gap-1.5 text-xs font-semibold text-orange-600 dark:text-orange-400 hover:text-orange-700 dark:hover:text-orange-300 transition-colors cursor-pointer w-fit">
-                    <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 10l7-7m0 0l7 7m-7-7v18" /></svg>
+                  <button type="button" onClick={() => document.getElementById('social-links')?.scrollIntoView({ behavior: 'smooth' })} className="inline-flex items-center gap-1.5 text-xs font-semibold text-orange-600 dark:text-orange-400 hover:text-orange-700 dark:hover:text-orange-300 transition-colors cursor-pointer w-fit">
+                    <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" /></svg>
                     {t.contactSocialLink}
                   </button>
                 </div>
@@ -526,9 +535,14 @@ export default function Home() {
             {/* Brand */}
             <div className="lg:col-span-2">
               <div className="flex items-center gap-2.5 mb-3">
-                <div className="w-9 h-9 rounded-xl bg-linear-to-br from-orange-500 to-amber-500 flex items-center justify-center">
-                  <span className="text-white font-bold text-sm">ZA</span>
-                </div>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src="/profile.jpg"
+                  alt="Ziad Amr"
+                  width={36}
+                  height={36}
+                  className="w-9 h-9 rounded-xl object-cover ring-2 ring-orange-500/20"
+                />
                 <span className="font-bold text-slate-900 dark:text-white text-lg">{language === "ar" ? "زياد عمرو" : "Ziad Amr"}</span>
               </div>
               <p className="text-sm text-slate-500 dark:text-slate-400 leading-relaxed mb-4 max-w-sm">{t.footerTagline}</p>
