@@ -12,6 +12,7 @@ import { socialLinks } from "@/lib/social-links";
 import { sortedProjects } from "@/lib/projects";
 import { getStats, techStack } from "@/lib/data";
 import { translations } from "@/lib/translations";
+import { SocialFeedSection } from "@/components/social-feed";
 import { useScrollRestoration } from "@/hooks/use-scroll-restoration";
 
 export default function Home() {
@@ -269,6 +270,9 @@ export default function Home() {
           </Card>
         </Link>
       </section>
+
+      {/* LATEST SOCIAL POSTS SECTION */}
+      <SocialFeedSection />
 
       {/* CONTACT CTA / FORM SECTION */}
       <section className="relative z-10 w-full max-w-md mx-auto px-4 pb-8">

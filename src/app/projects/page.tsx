@@ -1,11 +1,12 @@
 "use client";
 
+import { useState, useMemo } from "react";
 import { useApp } from "@/components/providers";
 import { Card, CardContent } from "@/components/ui/card";
 import { AnimatedBackground } from "@/components/animated-background";
 import { Controls } from "@/components/controls";
 import { Navigation } from "@/components/navigation";
-import { sortedProjects } from "@/lib/projects";
+import { sortedProjects, projects } from "@/lib/projects";
 import { translations } from "@/lib/translations";
 import Link from "next/link";
 import { useScrollRestoration } from "@/hooks/use-scroll-restoration";
@@ -14,6 +15,22 @@ export default function ProjectsPage() {
   const { language } = useApp();
   const t = translations[language];
   useScrollRestoration();
+  const [selectedTech, setSelectedTech] = useState<string | null>(null);
+
+  // Extract all unique tech tags
+  const allTechs = useMemo(() => {
+    const techSet = new Set<string>();
+    projects.forEach((project) => {
+      project.tech.forEach((tech) => techSet.add(tech));
+    });
+    return Array.from(techSet).sort();
+  }, []);
+
+  // Filter projects by selected tech
+  const filteredProjects = useMemo(() => {
+    if (!selectedTech) return sortedProjects;
+    return sortedProjects.filter((project) => project.tech.includes(selectedTech));
+  }, [selectedTech]);
 
   return (
     <div className="relative min-h-screen flex flex-col items-center bg-linear-to-br from-slate-50 via-white to-slate-100 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950">
@@ -37,33 +54,82 @@ export default function ProjectsPage() {
           </div>
         </div>
 
+        {/* Tech Filter Chips */}
+        <div className="mb-5">
+          <p className="text-xs text-slate-500 dark:text-slate-400 font-medium mb-2">{t.filterByTech}</p>
+          <div className="flex flex-wrap gap-1.5">
+            <button
+              type="button"
+              onClick={() => setSelectedTech(null)}
+              className={`inline-flex items-center px-2.5 py-1 rounded-md text-[11px] font-medium border transition-all duration-200 cursor-pointer ${
+                selectedTech === null
+                  ? "bg-orange-500/10 text-orange-600 dark:text-orange-400 border-orange-500/30 dark:border-orange-500/20"
+                  : "bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 border-slate-200/50 dark:border-slate-700/50 hover:bg-slate-200 dark:hover:bg-slate-700"
+              }`}
+            >
+              {t.filterAll}
+            </button>
+            {allTechs.map((tech) => (
+              <button
+                key={tech}
+                type="button"
+                onClick={() => setSelectedTech(selectedTech === tech ? null : tech)}
+                className={`inline-flex items-center px-2.5 py-1 rounded-md text-[11px] font-medium border transition-all duration-200 cursor-pointer ${
+                  selectedTech === tech
+                    ? "bg-orange-500/10 text-orange-600 dark:text-orange-400 border-orange-500/30 dark:border-orange-500/20"
+                    : "bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 border-slate-200/50 dark:border-slate-700/50 hover:bg-slate-200 dark:hover:bg-slate-700"
+                }`}
+              >
+                {tech}
+              </button>
+            ))}
+          </div>
+        </div>
+
         <div className="space-y-4">
-          {sortedProjects.map((project) => (
-            <Link key={project.key} href={`/projects/${project.key}`}>
-              <Card className={`relative w-full overflow-hidden border-0 shadow-lg shadow-slate-200/50 dark:shadow-black/30 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl transition-transform duration-300 hover:scale-[1.02] cursor-pointer mb-4 ${project.featured ? "ring-1 ring-orange-400/30 dark:ring-orange-500/20" : ""}`}>
-                <CardContent className="p-6">
-                  <div className="flex items-start gap-3 mb-3">
-                    <span className="text-2xl mt-0.5">{project.emoji}</span>
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-2 flex-wrap">
-                        <h3 className="text-base font-bold text-slate-900 dark:text-white">{project.name[language]}</h3>
-                        {project.featured && <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-semibold bg-orange-500/10 text-orange-600 dark:text-orange-400 border border-orange-500/20">{t.featuredTag}</span>}
+          {filteredProjects.length === 0 ? (
+            <p className="text-sm text-slate-400 dark:text-slate-500 text-center py-8">
+              {language === "ar" ? "لا توجد مشاريع بهذه التقنية" : "No projects with this technology"}
+            </p>
+          ) : (
+            filteredProjects.map((project) => (
+              <Link key={project.key} href={`/projects/${project.key}`}>
+                <Card className={`relative w-full overflow-hidden border-0 shadow-lg shadow-slate-200/50 dark:shadow-black/30 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl transition-transform duration-300 hover:scale-[1.02] cursor-pointer mb-4 ${project.featured ? "ring-1 ring-orange-400/30 dark:ring-orange-500/20" : ""}`}>
+                  <CardContent className="p-6">
+                    <div className="flex items-start gap-3 mb-3">
+                      <span className="text-2xl mt-0.5">{project.emoji}</span>
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center gap-2 flex-wrap">
+                          <h3 className="text-base font-bold text-slate-900 dark:text-white">{project.name[language]}</h3>
+                          {project.featured && <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-semibold bg-orange-500/10 text-orange-600 dark:text-orange-400 border border-orange-500/20">{t.featuredTag}</span>}
+                        </div>
                       </div>
                     </div>
-                  </div>
-                  <p className="text-sm text-slate-500 dark:text-slate-400 leading-relaxed mb-4 line-clamp-2">{project.description[language]}</p>
-                  <div className="flex flex-wrap gap-1.5 mb-4">
-                    {project.tech.slice(0, 4).map((tech) => (<span key={tech} className="inline-flex items-center px-2.5 py-1 rounded-md text-[11px] font-medium bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 border border-slate-200/50 dark:border-slate-700/50">{tech}</span>))}
-                    {project.tech.length > 4 && <span className="inline-flex items-center px-2.5 py-1 rounded-md text-[11px] font-medium bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 border border-slate-200/50 dark:border-slate-700/50">+{project.tech.length - 4}</span>}
-                  </div>
-                  <span className="inline-flex items-center gap-2 text-xs font-medium text-orange-600 dark:text-orange-400">
-                    {t.viewProject}
-                    <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={language === "ar" ? "M19 12H5m0 0l7 7m-7-7l7-7" : "M5 12h14m0 0l-7-7m7 7l-7 7"} /></svg>
-                  </span>
-                </CardContent>
-              </Card>
-            </Link>
-          ))}
+                    <p className="text-sm text-slate-500 dark:text-slate-400 leading-relaxed mb-4 line-clamp-2">{project.description[language]}</p>
+                    <div className="flex flex-wrap gap-1.5 mb-4">
+                      {project.tech.slice(0, 4).map((tech) => (
+                        <span
+                          key={tech}
+                          className={`inline-flex items-center px-2.5 py-1 rounded-md text-[11px] font-medium border ${
+                            selectedTech === tech
+                              ? "bg-orange-500/10 text-orange-600 dark:text-orange-400 border-orange-500/20"
+                              : "bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 border-slate-200/50 dark:border-slate-700/50"
+                          }`}
+                        >
+                          {tech}
+                        </span>
+                      ))}
+                      {project.tech.length > 4 && <span className="inline-flex items-center px-2.5 py-1 rounded-md text-[11px] font-medium bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 border border-slate-200/50 dark:border-slate-700/50">+{project.tech.length - 4}</span>}
+                    </div>
+                    <span className="inline-flex items-center gap-2 text-xs font-medium text-orange-600 dark:text-orange-400">
+                      {t.viewProject}
+                      <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={language === "ar" ? "M19 12H5m0 0l7 7m-7-7l7-7" : "M5 12h14m0 0l-7-7m7 7l-7 7"} /></svg>
+                    </span>
+                  </CardContent>
+                </Card>
+              </Link>
+            ))
+          )}
         </div>
       </section>
 
