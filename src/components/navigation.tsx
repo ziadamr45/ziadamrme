@@ -103,6 +103,7 @@ export function Navigation() {
               alt="Ziad Amr"
               width={32}
               height={32}
+              fetchPriority="high"
               className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl object-cover shadow-lg shadow-orange-500/20 group-hover:shadow-orange-500/40 transition-shadow duration-300 ring-2 ring-orange-500/20"
             />
             <span className="font-bold text-slate-900 dark:text-white text-base sm:text-lg hidden sm:block">

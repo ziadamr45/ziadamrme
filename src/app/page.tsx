@@ -134,7 +134,8 @@ export default function Home() {
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-3">
               <span className="relative inline-block">
                 <span className="relative z-10 bg-clip-text text-transparent bg-linear-to-r from-orange-500 via-amber-500 to-orange-600 dark:from-orange-400 dark:via-amber-400 dark:to-orange-500" style={{ fontFamily: "'Cairo', 'Noto Sans SC', sans-serif" }}>{t.name}</span>
-                <span className="absolute inset-0 bg-linear-to-r from-orange-500/10 via-amber-500/10 to-orange-500/10 dark:from-orange-500/20 dark:via-amber-500/20 dark:to-orange-500/20 blur-xl rounded-lg" aria-hidden="true" />
+                <span className="absolute inset-0 bg-linear-to-r from-orange-500/20 via-amber-500/20 to-orange-500/20 dark:from-orange-500/30 dark:via-amber-500/30 dark:to-orange-500/30 blur-xl rounded-2xl" aria-hidden="true" />
+                <span className="absolute -inset-4 bg-linear-to-r from-orange-500/5 via-amber-500/5 to-orange-500/5 dark:from-orange-500/10 dark:via-amber-500/10 dark:to-orange-500/10 rounded-3xl" aria-hidden="true" />
               </span>
             </h1>
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-linear-to-r from-orange-500/10 to-amber-500/10 dark:from-orange-500/20 dark:to-amber-500/20 text-orange-600 dark:text-orange-400 text-sm font-medium mb-4">
@@ -505,7 +506,7 @@ export default function Home() {
                 </div>
                 <div className="flex flex-col gap-2 p-3 rounded-lg bg-amber-50/80 dark:bg-amber-500/10 border border-amber-200/50 dark:border-amber-500/20">
                   <p className="text-xs text-amber-700 dark:text-amber-300 font-medium leading-relaxed">{t.contactReplyNotice}</p>
-                  <button type="button" onClick={() => document.getElementById('footer-social-links')?.scrollIntoView({ behavior: 'smooth' })} className="inline-flex items-center gap-1.5 text-xs font-semibold text-orange-600 dark:text-orange-400 hover:text-orange-700 dark:hover:text-orange-300 transition-colors cursor-pointer w-fit">
+                  <button type="button" onClick={() => document.getElementById('hero-social-links')?.scrollIntoView({ behavior: 'smooth', block: 'center' })} className="inline-flex items-center gap-1.5 text-xs font-semibold text-orange-600 dark:text-orange-400 hover:text-orange-700 dark:hover:text-orange-300 transition-colors cursor-pointer w-fit">
                     <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" /></svg>
                     {t.contactSocialLink}
                   </button>
