@@ -162,13 +162,13 @@ export function Navigation() {
               aria-label={language === "ar" ? "العودة للرئيسية" : "Back to Home"}
             >
               <picture>
-                <source srcSet="/profile.webp" type="image/webp" />
+                <source srcSet="/profile-avatar.webp" type="image/webp" />
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
-                  src="/profile.jpg"
+                  src="/profile-avatar.jpg"
                   alt="Ziad Amr"
-                  width={32}
-                  height={32}
+                  width={36}
+                  height={36}
                   fetchPriority="high"
                   draggable={false}
                   onContextMenu={(e) => e.preventDefault()}

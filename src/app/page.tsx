@@ -231,7 +231,7 @@ export default function Home() {
               <CardContent className="p-8 flex flex-col items-center text-center">
                 <button type="button" onClick={() => setShowImageModal(true)} aria-label={language === "ar" ? "اضغط لعرض الصورة كاملة" : "Click to view full image"} className="relative mb-5 group cursor-pointer focus:outline-none">
                   <Avatar className="w-28 h-28 ring-4 ring-white dark:ring-slate-800 shadow-xl transition-transform duration-300 group-hover:scale-105 group-active:scale-95">
-                    <AvatarImage src="/profile.jpg" alt="Ziad Amr" />
+                    <AvatarImage src="/profile-avatar.webp" alt="Ziad Amr" />
                     <AvatarFallback className="text-3xl font-bold bg-linear-to-br from-orange-500 to-amber-500 text-white">{t.avatarFallback}</AvatarFallback>
                   </Avatar>
                   <div className="absolute inset-0 flex items-center justify-center rounded-full bg-black/0 group-hover:bg-black/30 transition-all duration-300">
@@ -642,10 +642,10 @@ export default function Home() {
                   aria-label={language === "ar" ? "اضغط لعرض الصورة كاملة" : "Click to view full image"}
                 >
                   <picture>
-                    <source srcSet="/profile.webp" type="image/webp" />
+                    <source srcSet="/profile-avatar.webp" type="image/webp" />
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
-                      src="/profile.jpg"
+                      src="/profile-avatar.jpg"
                       alt="Ziad Amr"
                       width={36}
                       height={36}
