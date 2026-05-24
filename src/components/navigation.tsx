@@ -14,6 +14,7 @@ export function Navigation() {
     { href: "/", label: language === "ar" ? "الرئيسية" : "Home", icon: "🏠" },
     { href: "/projects", label: language === "ar" ? "المشاريع" : "Projects", icon: "🚀" },
     { href: "/blog", label: language === "ar" ? "المدونة" : "Blog", icon: "📝" },
+    { href: "/social-feed", label: language === "ar" ? "المنشورات" : "Social Feed", icon: "📱" },
   ];
 
   return (

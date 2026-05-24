@@ -1,32 +1,33 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Link from "next/link";
 import { Card, CardContent } from "@/components/ui/card";
 import { useApp } from "@/components/providers";
 import { translations } from "@/lib/translations";
-import type { SocialPost } from "@/app/api/social-feed/route";
+import type { SocialFeedEntry } from "@/app/api/social-feed/route";
 
 export function SocialFeedSection() {
   const { language } = useApp();
   const t = translations[language];
-  const [posts, setPosts] = useState<SocialPost[]>([]);
+  const [entries, setEntries] = useState<SocialFeedEntry[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
 
   useEffect(() => {
-    async function fetchPosts() {
+    async function fetchEntries() {
       try {
         const res = await fetch("/api/social-feed");
         if (!res.ok) throw new Error("Failed to fetch");
         const data = await res.json();
-        setPosts(data.posts || []);
+        setEntries(data.entries || []);
       } catch {
         setError(true);
       } finally {
         setLoading(false);
       }
     }
-    fetchPosts();
+    fetchEntries();
   }, []);
 
   // Platform icon component
@@ -91,12 +92,8 @@ export function SocialFeedSection() {
     telegram: "bg-[#0088cc]/10 dark:bg-[#0088cc]/20",
   };
 
-  // Group posts by platform
-  const platformOrder = ["youtube", "facebook", "instagram", "threads", "x", "linkedin", "telegram"] as const;
-  const groupedPosts = platformOrder.map((platform) => ({
-    platform,
-    posts: posts.filter((p) => p.platform === platform).slice(0, 2),
-  })).filter((group) => group.posts.length > 0);
+  // Separate YouTube posts (real data) and profile entries
+  const youtubePosts = entries.filter((e): e is Extract<SocialFeedEntry, { type: "post" }> => e.type === "post" && e.platform === "youtube").slice(0, 2);
 
   if (error) {
     return (
@@ -148,43 +145,101 @@ export function SocialFeedSection() {
           ))}
         </div>
       ) : (
-        <div className="space-y-3 max-h-96 overflow-y-auto scrollbar-thin scrollbar-thumb-slate-300 dark:scrollbar-thumb-slate-600 scrollbar-track-transparent">
-          {groupedPosts.map((group) => (
-            group.posts.map((post, idx) => (
-              <a
-                key={`${group.platform}-${idx}`}
-                href={post.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="block"
-              >
-                <Card className="w-full border-0 shadow-lg shadow-slate-200/50 dark:shadow-black/30 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl transition-transform duration-300 hover:scale-[1.02] cursor-pointer">
-                  <CardContent className="p-4">
-                    <div className="flex items-center gap-2 mb-2.5">
-                      <div className={`flex items-center justify-center w-6 h-6 rounded-full ${platformBg[group.platform]}`}>
-                        <span className={platformTextColor[group.platform]}>
-                          <PlatformIcon platform={group.platform} />
+        <div className="space-y-3">
+          {/* YouTube real videos */}
+          {youtubePosts.length > 0 && (
+            <div className="space-y-3 mb-4">
+              <p className="text-xs font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wider">{t.latestVideos}</p>
+              {youtubePosts.map((post, idx) => (
+                <a
+                  key={`yt-${idx}`}
+                  href={post.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block"
+                >
+                  <Card className="w-full border-0 shadow-lg shadow-slate-200/50 dark:shadow-black/30 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl transition-transform duration-300 hover:scale-[1.02] cursor-pointer overflow-hidden">
+                    {post.thumbnail && (
+                      <div className="relative w-full aspect-video bg-slate-100 dark:bg-slate-800">
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img
+                          src={post.thumbnail}
+                          alt={post.content}
+                          className="w-full h-full object-cover"
+                          loading="lazy"
+                        />
+                        <div className="absolute inset-0 flex items-center justify-center">
+                          <div className="w-10 h-10 rounded-full bg-red-600/90 flex items-center justify-center shadow-lg">
+                            <svg className="w-4 h-4 text-white ms-0.5" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                    <CardContent className="p-4">
+                      <div className="flex items-center gap-2 mb-2">
+                        <div className="flex items-center justify-center w-6 h-6 rounded-full bg-[#FF0000]/10 dark:bg-[#FF0000]/20">
+                          <span className="text-[#FF0000]"><PlatformIcon platform="youtube" /></span>
+                        </div>
+                        <span className="text-xs font-semibold text-slate-700 dark:text-slate-300">
+                          {t.platformNames.youtube}
+                        </span>
+                        <span className="text-[10px] text-slate-400 dark:text-slate-500 ms-auto">
+                          {post.date}
                         </span>
                       </div>
-                      <span className="text-xs font-semibold text-slate-700 dark:text-slate-300">
-                        {t.platformNames[group.platform as keyof typeof t.platformNames]}
-                      </span>
-                      <span className="text-[10px] text-slate-400 dark:text-slate-500 ms-auto">
-                        {post.date}
-                      </span>
-                    </div>
-                    <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed line-clamp-3 mb-2.5">
-                      {post.content}
-                    </p>
-                    <span className="inline-flex items-center gap-1.5 text-[11px] font-medium text-orange-600 dark:text-orange-400">
-                      {t.viewOnPlatform}
-                      <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
-                    </span>
-                  </CardContent>
-                </Card>
-              </a>
-            ))
-          ))}
+                      <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed line-clamp-2">
+                        {post.content}
+                      </p>
+                    </CardContent>
+                  </Card>
+                </a>
+              ))}
+            </div>
+          )}
+
+          {/* Profile cards grid */}
+          <p className="text-xs font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wider">{t.myProfiles}</p>
+          <div className="grid grid-cols-2 gap-2">
+            {entries.filter((e): e is Extract<SocialFeedEntry, { type: "profile" }> => e.type === "profile").map((entry) => {
+              return (
+                <a
+                  key={entry.platform}
+                  href={entry.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block"
+                >
+                  <Card className="w-full border-0 shadow-lg shadow-slate-200/50 dark:shadow-black/30 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl transition-transform duration-300 hover:scale-[1.02] cursor-pointer">
+                    <CardContent className="p-3 text-center">
+                      <div className={`inline-flex items-center justify-center w-8 h-8 rounded-full ${platformBg[entry.platform]} mb-2`}>
+                        <span className={platformTextColor[entry.platform]}>
+                          <PlatformIcon platform={entry.platform} />
+                        </span>
+                      </div>
+                      <p className="text-xs font-semibold text-slate-700 dark:text-slate-300 mb-0.5">
+                        {t.platformNames[entry.platform as keyof typeof t.platformNames]}
+                      </p>
+                      <p className="text-[10px] text-slate-400 dark:text-slate-500 truncate">
+                        {entry.username}
+                      </p>
+                    </CardContent>
+                  </Card>
+                </a>
+              );
+            })}
+          </div>
+
+          {/* View All Posts link */}
+          <Link href="/social-feed" className="block mt-3">
+            <Card className="w-full border-0 shadow-lg shadow-slate-200/50 dark:shadow-black/30 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl transition-transform duration-300 hover:scale-[1.02] cursor-pointer">
+              <CardContent className="p-4 flex items-center justify-center gap-2">
+                <span className="inline-flex items-center gap-1.5 text-sm font-medium text-orange-600 dark:text-orange-400">
+                  {t.viewAllPosts}
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={language === "ar" ? "M19 12H5m0 0l7 7m-7-7l7-7" : "M5 12h14m0 0l-7-7m7 7l-7 7"} /></svg>
+                </span>
+              </CardContent>
+            </Card>
+          </Link>
         </div>
       )}
     </section>

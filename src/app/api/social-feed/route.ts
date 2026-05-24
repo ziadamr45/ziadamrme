@@ -9,15 +9,25 @@ interface CacheEntry {
 let cache: CacheEntry | null = null;
 const CACHE_TTL = 24 * 60 * 60 * 1000; // 24 hours in ms
 
-export interface SocialPost {
-  platform: string;
-  content: string;
-  date: string;
-  url: string;
-}
+export type SocialFeedEntry =
+  | {
+      type: "post";
+      platform: string;
+      content: string;
+      date: string;
+      url: string;
+      thumbnail?: string;
+    }
+  | {
+      type: "profile";
+      platform: string;
+      username: string;
+      url: string;
+      description?: string;
+    };
 
 export interface SocialFeedResponse {
-  posts: SocialPost[];
+  entries: SocialFeedEntry[];
   lastUpdated: string;
 }
 
@@ -53,122 +63,88 @@ export const platformBgColors: Record<string, string> = {
   telegram: "bg-[#0088cc]/10 dark:bg-[#0088cc]/20",
 };
 
-// Fallback sample data (used when APIs are unavailable or during development)
-function getSamplePosts(): SocialPost[] {
+// Profile data for platforms without public APIs
+function getProfileEntries(): SocialFeedEntry[] {
   return [
     {
-      platform: "youtube",
-      content: "الحياة على الطريق — قناة عن الرحلات والتجارب الحقيقية. فيديو جديد كل أسبوع عن رحلاتي وتجاربي في الحياة.",
-      date: "2026-05-22",
-      url: "https://youtube.com/@alhayat_ala_eltarek",
-    },
-    {
-      platform: "youtube",
-      content: "شاركت تجربتي في بناء تطبيق ويب كامل من الصفر — من التخطيط للنشر. شوف الفيديو على القناة!",
-      date: "2026-05-15",
-      url: "https://youtube.com/@alhayat_ala_eltarek",
-    },
-    {
+      type: "profile",
       platform: "facebook",
-      content: "الحمد لله، خلصت مشروع جديد! إسمع راديو — تطبيق ويب للاستماع للراديو من كل أنحاء العالم مع قسم للقرآن الكريم. جربوه وقولولي رأيكم! 📻",
-      date: "2026-05-20",
+      username: "ziad7mr",
       url: "https://www.facebook.com/ziad7mr",
+      description: "Latest news and projects",
     },
     {
-      platform: "facebook",
-      content: "عملت مقال جديد عن إزاي تبني تطبيقات ويب حقيقية بـ Next.js مع أمثلة من مشاريعي الشخصية. اقرأوه على المدونة!",
-      date: "2026-05-10",
-      url: "https://www.facebook.com/ziad7mr",
-    },
-    {
+      type: "profile",
       platform: "instagram",
-      content: "خلف الكواليس 🖥️ — شوية صور من بيئة العمل بتاعتي. كل مشروع بيبدأ بفكرة وكوباية شاي ☕",
-      date: "2026-05-18",
+      username: "@ziadamr455",
       url: "https://www.instagram.com/ziadamr455/",
+      description: "Behind-the-scenes photos and stories",
     },
     {
-      platform: "instagram",
-      content: "إسمع راديو — من الفكرة للتطبيق! 📻⚡ سعيد بالنتيجة النهائية. جربوه على esma3radio.vercel.app",
-      date: "2026-05-08",
-      url: "https://www.instagram.com/ziadamr455/",
-    },
-    {
+      type: "profile",
       platform: "threads",
-      content: "أنا مؤمن إن التقنية مش مجرد أكواد — دي أداة لحل مشاكل حقيقية. كل مشروع ببنية بفكر: إيه المشكلة اللي بحلها؟",
-      date: "2026-05-21",
+      username: "@ziadamr455",
       url: "https://www.threads.com/@ziadamr455",
+      description: "Tech thoughts and discussions",
     },
     {
-      platform: "threads",
-      content: "أكتر حاجة تعلمتها من بناء 10+ مشروع ويب: ابدأ صغير، حل مشكلة حقيقية، واعمل iteration بناءً على feedback المستخدمين.",
-      date: "2026-05-12",
-      url: "https://www.threads.com/@ziadamr455",
-    },
-    {
+      type: "profile",
       platform: "x",
-      content: "Just shipped a new feature for Esma3 Radio — smart recommendations based on listening history. The algorithm analyzes user patterns and suggests stations you'll love! 📻🚀",
-      date: "2026-05-19",
+      username: "@ziad90216",
       url: "https://x.com/ziad90216",
+      description: "Tech tweets and thoughts",
     },
     {
-      platform: "x",
-      content: "Building real-time apps with Socket.io taught me one thing: the server must be the single source of truth. Never trust client state in multiplayer games 🎮⚡",
-      date: "2026-05-09",
-      url: "https://x.com/ziad90216",
-    },
-    {
+      type: "profile",
       platform: "linkedin",
-      content: "Excited to share my latest project — Bawabet Elhadas, a smart news portal with AI-powered summarization and personalized feeds. Built with Next.js, PostgreSQL, and Prisma. Always learning, always building! 💡",
-      date: "2026-05-17",
+      username: "Ziad Amr",
       url: "https://www.linkedin.com/in/ziad-amr-44633a411",
+      description: "My career journey and network",
     },
     {
-      platform: "linkedin",
-      content: "I just published a new blog post about database systems — my journey from SQLite to PostgreSQL, and why Prisma ORM changed how I work with data. Check it out on my website!",
-      date: "2026-05-07",
-      url: "https://www.linkedin.com/in/ziad-amr-44633a411",
-    },
-    {
+      type: "profile",
       platform: "telegram",
-      content: "📢 مشروع جديد: المخبر — لعبة اجتماعية تفاعلية بمكالمات صوتية حية! استخدمت LiveKit للصوت وNext.js للواجهة. جربوه على elmokhber.vercel.app 🕵️",
-      date: "2026-05-16",
+      username: "@ziadamr",
       url: "https://t.me/ziadamr",
-    },
-    {
-      platform: "telegram",
-      content: "مقال جديد عن الأمان في تطبيقات الويب — دروس تعلمتها بالطريقة الصعبة. من XSS لCSRF لإدارة المفاتيح. اقرأوه على ziadamr.me/blog 🔒",
-      date: "2026-05-06",
-      url: "https://t.me/ziadamr",
+      description: "Updates and developer community",
     },
   ];
 }
 
-// Fetch YouTube RSS feed
-async function fetchYouTubePosts(): Promise<SocialPost[]> {
+// Fetch YouTube RSS feed with the correct channel ID
+async function fetchYouTubePosts(): Promise<SocialFeedEntry[]> {
   try {
     const res = await fetch(
-      "https://www.youtube.com/feeds/videos.xml?channel_id=UCalhayat_ala_eltarek",
+      "https://www.youtube.com/feeds/videos.xml?channel_id=UCSs9VNyQqdxtNSdRabZic8w",
       { next: { revalidate: 86400 } }
     );
     if (!res.ok) throw new Error("YouTube RSS fetch failed");
     const text = await res.text();
 
-    const posts: SocialPost[] = [];
+    const posts: SocialFeedEntry[] = [];
     const entryRegex = /<entry>([\s\S]*?)<\/entry>/g;
     let match: RegExpExecArray | null;
 
-    while ((match = entryRegex.exec(text)) !== null && posts.length < 2) {
+    while ((match = entryRegex.exec(text)) !== null && posts.length < 6) {
       const entry = match[1];
       const titleMatch = entry.match(/<title>([\s\S]*?)<\/title>/);
       const linkMatch = entry.match(/<link[^>]*href="([^"]*)"/);
       const publishedMatch = entry.match(/<published>([\s\S]*?)<\/published>/);
+      // Extract video ID from both regular (?v=ID) and Shorts (/shorts/ID) URLs
+      const videoIdFromQuery = linkMatch ? linkMatch[1].match(/[?&]v=([^&]+)/) : null;
+      const videoIdFromShorts = linkMatch ? linkMatch[1].match(/\/shorts\/([^?&/]+)/) : null;
+      const videoIdFromEmbed = linkMatch ? linkMatch[1].match(/\/embed\/([^?&/]+)/) : null;
+      const videoIdMatch = videoIdFromQuery || videoIdFromShorts || videoIdFromEmbed;
 
       if (titleMatch && linkMatch) {
+        const videoId = videoIdMatch ? videoIdMatch[1] : "";
         posts.push({
+          type: "post",
           platform: "youtube",
           content: titleMatch[1],
           date: publishedMatch ? publishedMatch[1].split("T")[0] : new Date().toISOString().split("T")[0],
           url: linkMatch[1],
+          thumbnail: videoId ? `https://i1.ytimg.com/vi/${videoId}/hqdefault.jpg` : undefined,
         });
       }
     }
@@ -178,29 +154,12 @@ async function fetchYouTubePosts(): Promise<SocialPost[]> {
   }
 }
 
-async function fetchAllPosts(): Promise<SocialPost[]> {
+async function fetchAllEntries(): Promise<SocialFeedEntry[]> {
   const youtubePosts = await fetchYouTubePosts();
+  const profileEntries = getProfileEntries();
 
-  const samplePosts = getSamplePosts();
-
-  // Merge: use real YouTube data if available, otherwise fallback to sample
-  const posts: SocialPost[] = [];
-
-  // Group by platform, take 2 each
-  const platforms = ["youtube", "facebook", "instagram", "threads", "x", "linkedin", "telegram"] as const;
-
-  for (const platform of platforms) {
-    const realPosts = youtubePosts.filter((p) => p.platform === platform);
-    const sampleForPlatform = samplePosts.filter((p) => p.platform === platform);
-
-    if (realPosts.length > 0) {
-      posts.push(...realPosts.slice(0, 2));
-    } else {
-      posts.push(...sampleForPlatform.slice(0, 2));
-    }
-  }
-
-  return posts;
+  // YouTube posts first (real data), then profile cards
+  return [...youtubePosts, ...profileEntries];
 }
 
 export async function GET() {
@@ -210,9 +169,9 @@ export async function GET() {
   }
 
   try {
-    const posts = await fetchAllPosts();
+    const entries = await fetchAllEntries();
     const data: SocialFeedResponse = {
-      posts,
+      entries,
       lastUpdated: new Date().toISOString(),
     };
 
@@ -221,10 +180,10 @@ export async function GET() {
 
     return NextResponse.json(data);
   } catch {
-    // Return sample data on error
-    const posts = getSamplePosts();
+    // Return just profile entries on error
+    const entries = getProfileEntries();
     const data: SocialFeedResponse = {
-      posts,
+      entries,
       lastUpdated: new Date().toISOString(),
     };
 

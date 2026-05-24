@@ -196,16 +196,16 @@ export default function Home() {
           </div>
         </div>
         <div className="space-y-4">
-          {sortedProjects.map((project) => (
+          {sortedProjects.filter((project) => project.featured).map((project) => (
             <Link key={project.key} href={`/projects/${project.key}`}>
-              <Card className={`relative w-full overflow-hidden border-0 shadow-lg shadow-slate-200/50 dark:shadow-black/30 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl transition-transform duration-300 hover:scale-[1.02] cursor-pointer ${project.featured ? "ring-1 ring-orange-400/30 dark:ring-orange-500/20" : ""}`}>
+              <Card className={`relative w-full overflow-hidden border-0 shadow-lg shadow-slate-200/50 dark:shadow-black/30 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl transition-transform duration-300 hover:scale-[1.02] cursor-pointer ring-1 ring-orange-400/30 dark:ring-orange-500/20`}>
                 <CardContent className="p-6">
                   <div className="flex items-start gap-3 mb-3">
                     <span className="text-2xl mt-0.5">{project.emoji}</span>
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-2 flex-wrap">
                         <h3 className="text-base font-bold text-slate-900 dark:text-white">{project.name[language]}</h3>
-                        {project.featured && <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-semibold bg-orange-500/10 text-orange-600 dark:text-orange-400 border border-orange-500/20">{t.featuredTag}</span>}
+                        <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-semibold bg-orange-500/10 text-orange-600 dark:text-orange-400 border border-orange-500/20">{t.featuredTag}</span>
                       </div>
                     </div>
                   </div>
@@ -228,6 +228,17 @@ export default function Home() {
               </Card>
             </Link>
           ))}
+          {/* View All Projects Card */}
+          <Link href="/projects">
+            <Card className="relative w-full overflow-hidden border-0 shadow-lg shadow-slate-200/50 dark:shadow-black/30 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl transition-transform duration-300 hover:scale-[1.02] cursor-pointer">
+              <CardContent className="p-6 flex items-center justify-center gap-3">
+                <span className="inline-flex items-center gap-2 text-sm font-medium text-orange-600 dark:text-orange-400">
+                  {t.viewAllProjects}
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={language === "ar" ? "M19 12H5m0 0l7 7m-7-7l7-7" : "M5 12h14m0 0l-7-7m7 7l-7 7"} /></svg>
+                </span>
+              </CardContent>
+            </Card>
+          </Link>
         </div>
       </section>
 
@@ -245,7 +256,7 @@ export default function Home() {
               </div>
             </div>
             <div className="flex flex-wrap gap-2 mt-5">
-              {techStack.map((tech) => (<span key={tech.name} className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-gradient-to-r ${tech.color} text-white shadow-sm`}>{tech.name}</span>))}
+              {techStack.map((tech) => (<span key={tech.name} className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-medium bg-slate-50 dark:bg-slate-800/50 text-slate-700 dark:text-slate-300 border border-slate-200/60 dark:border-slate-700/40"><span className="w-2 h-2 rounded-full" style={{ backgroundColor: tech.color }} />{tech.name}</span>))}
             </div>
           </CardContent>
         </Card>
