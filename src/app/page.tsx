@@ -567,7 +567,7 @@ export default function Home() {
                 >
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
-                    src="/profile-thumb.jpg"
+                    src="/profile.jpg"
                     alt="Ziad Amr"
                     width={36}
                     height={36}
