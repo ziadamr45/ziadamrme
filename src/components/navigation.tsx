@@ -162,10 +162,10 @@ export function Navigation() {
               aria-label={language === "ar" ? "العودة للرئيسية" : "Back to Home"}
             >
               <picture>
-                <source srcSet="/profile-avatar.webp" type="image/webp" />
+                <source srcSet="/profile.webp" type="image/webp" />
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
-                  src="/profile-avatar.jpg"
+                  src="/profile.jpg"
                   alt="Ziad Amr"
                   width={36}
                   height={36}
