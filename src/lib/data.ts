@@ -13,7 +13,7 @@ export function getStats(projectCount: number) {
 export const stats = [
   { number: "3+", label: { ar: "سنوات خبرة", en: "Years Experience" }, icon: "📅" },
   { number: "12+", label: { ar: "مشروع منجز", en: "Projects Completed" }, icon: "🚀" },
-  { number: "44+", label: { ar: "تقنية مستخدمة", en: "Technologies Used" }, icon: "🛠️" },
+  { number: "52+", label: { ar: "تقنية مستخدمة", en: "Technologies Used" }, icon: "🛠️" },
 ];
 
 // Why Hire Me data
@@ -109,7 +109,6 @@ export function getTechWithUsage(projectTechArrays: string[][]) {
 
 // Tech stack with GitHub-style badge data
 // Each tech has: name, color (brand color), logo (simple identifier for badge display)
-// Only includes technologies actually used in at least one project
 export const techStack = [
   { name: "Next.js", color: "#000000", logo: "nextjs" },
   { name: "React", color: "#61DAFB", logo: "react" },
@@ -132,6 +131,7 @@ export const techStack = [
   { name: "Zod", color: "#7C3AED", logo: "zod" },
   { name: "Nodemailer", color: "#10B981", logo: "nodemailer" },
   { name: "Web Push API", color: "#F59E0B", logo: "webpush" },
+  { name: "dnd-kit", color: "#F43F5E", logo: "dndkit" },
   { name: "Radix UI", color: "#DC2626", logo: "radixui" },
   { name: "HTML5", color: "#E34F26", logo: "html5" },
   { name: "CSS3", color: "#1572B6", logo: "css3" },
@@ -143,17 +143,24 @@ export const techStack = [
   { name: "Firestore", color: "#FFA000", logo: "firestore" },
   { name: "Sonner", color: "#64748B", logo: "sonner" },
   { name: "Railway", color: "#8B5CF6", logo: "railway" },
+  { name: "Embla Carousel", color: "#EC4899", logo: "embla" },
   { name: "ytdl-core", color: "#EF4444", logo: "ytdl" },
   { name: "Google Fonts", color: "#4285F4", logo: "googlefonts" },
   { name: "Font Awesome", color: "#528DD7", logo: "fontawesome" },
   { name: "Lucide", color: "#64748B", logo: "lucide" },
   { name: "Bun", color: "#FBF0DF", logo: "bun" },
+  { name: "next-intl", color: "#2563EB", logo: "nextintl" },
   { name: "next-themes", color: "#6366F1", logo: "nextthemes" },
   { name: "ESLint", color: "#4B32C3", logo: "eslint" },
+  { name: "React Query", color: "#FF4154", logo: "reactquery" },
   { name: "Remotion", color: "#00D4FF", logo: "remotion" },
   { name: "Leaflet", color: "#199900", logo: "leaflet" },
   { name: "Sharp", color: "#99CC00", logo: "sharp" },
   { name: "jsPDF", color: "#F8DC75", logo: "jspdf" },
   { name: "Ably", color: "#FF5C5C", logo: "ably" },
+  { name: "cmdk", color: "#111111", logo: "cmdk" },
   { name: "date-fns", color: "#770C56", logo: "date-fns" },
+  { name: "TanStack Table", color: "#FF4154", logo: "tanstack" },
+  { name: "MDX Editor", color: "#5B57D1", logo: "mdx" },
+  { name: "React Markdown", color: "#000000", logo: "reactmarkdown" },
 ];
