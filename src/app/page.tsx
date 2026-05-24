@@ -284,14 +284,15 @@ export default function Home() {
                 <p className="text-xs text-slate-500 dark:text-slate-400">{t.contributionSubtitle}</p>
               </div>
             </div>
-            <div className="w-full overflow-x-auto -mx-2 px-2">
+            <div className="w-full overflow-x-auto -mx-2 px-2 scroll-smooth" style={{ WebkitOverflowScrolling: 'touch' }}>
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src="https://ghchart.rshah.org/ziadamr45"
                 alt="GitHub Contribution Graph"
-                className="w-full h-auto min-w-[480px] sm:min-w-[600px] rounded-lg"
+                className="w-auto h-auto min-w-[600px] sm:min-w-[800px] rounded-lg"
                 loading="lazy"
               />
+              <p className="text-[10px] text-slate-400 dark:text-slate-500 text-center mt-1 sm:hidden">{language === "ar" ? "← اسحب لمشاهدة المزيد →" : "← Swipe to see more →"}</p>
             </div>
           </CardContent>
         </Card>

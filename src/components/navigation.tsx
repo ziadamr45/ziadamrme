@@ -208,7 +208,7 @@ export function Navigation() {
         {/* Mobile Menu Overlay */}
         {isOpen && (
           <div
-            className="md:hidden fixed inset-0 top-14 bg-black/20 dark:bg-black/40 backdrop-blur-sm z-40"
+            className="md:hidden fixed inset-0 top-14 bg-black/10 z-40"
             onClick={() => setIsOpen(false)}
             aria-hidden="true"
           />
@@ -217,10 +217,10 @@ export function Navigation() {
         {/* Mobile Menu */}
         <div
           className={`md:hidden overflow-hidden transition-all duration-300 ${
-            isOpen ? "max-h-[calc(100vh-4rem)] opacity-100 pb-4" : "max-h-0 opacity-0"
+            isOpen ? "max-h-[calc(100vh-4rem)] opacity-100 pb-3" : "max-h-0 opacity-0"
           }`}
         >
-          <div className="bg-white/95 dark:bg-slate-800/95 backdrop-blur-xl rounded-2xl border border-slate-200 dark:border-slate-700 shadow-xl p-3 space-y-1 max-h-[calc(100vh-5rem)] overflow-y-auto">
+          <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-2xl p-3 space-y-1 max-h-[calc(100vh-5rem)] overflow-y-auto">
             {/* Page navigation */}
             {navItems.map((item) => (
               <Link
