@@ -30,6 +30,13 @@ export default function Home() {
     return () => window.removeEventListener("open-contact-form", handler);
   }, []);
 
+  // Listen for open-profile-image custom event (from navigation)
+  useEffect(() => {
+    const handler = () => setShowImageModal(true);
+    window.addEventListener("open-profile-image", handler);
+    return () => window.removeEventListener("open-profile-image", handler);
+  }, []);
+
   // Handle scroll to contact from other pages via sessionStorage
   useEffect(() => {
     if (sessionStorage.getItem("scrollToContact") === "true") {
@@ -551,14 +558,24 @@ export default function Home() {
             {/* Brand */}
             <div className="sm:col-span-2 lg:col-span-2">
               <div className="flex items-center gap-2.5 mb-3">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src="/profile-thumb.jpg"
-                  alt="Ziad Amr"
-                  width={36}
-                  height={36}
-                  className="w-9 h-9 rounded-xl object-cover ring-2 ring-orange-500/20"
-                />
+                <button
+                  type="button"
+                  onClick={() => setShowImageModal(true)}
+                  className="relative group/footer-img cursor-pointer focus:outline-none"
+                  aria-label={language === "ar" ? "اضغط لعرض الصورة كاملة" : "Click to view full image"}
+                >
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src="/profile-thumb.jpg"
+                    alt="Ziad Amr"
+                    width={36}
+                    height={36}
+                    className="w-9 h-9 rounded-xl object-cover ring-2 ring-orange-500/20 transition-all duration-300 group-hover/footer-img:ring-orange-500/40 group-hover/footer-img:scale-105"
+                  />
+                  <div className="absolute inset-0 flex items-center justify-center rounded-xl bg-black/0 group-hover/footer-img:bg-black/30 transition-all duration-300">
+                    <svg className="w-4 h-4 text-white opacity-0 group-hover/footer-img:opacity-100 transition-opacity duration-300 drop-shadow-lg" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m3-3H7" /></svg>
+                  </div>
+                </button>
                 <span className="font-bold text-slate-900 dark:text-white text-lg">{language === "ar" ? "زياد عمرو" : "Ziad Amr"}</span>
               </div>
               <p className="text-sm text-slate-500 dark:text-slate-400 leading-relaxed mb-4 max-w-sm">{t.footerTagline}</p>
