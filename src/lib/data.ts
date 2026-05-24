@@ -13,7 +13,7 @@ export function getStats(projectCount: number) {
 export const stats = [
   { number: "3+", label: { ar: "سنوات خبرة", en: "Years Experience" }, icon: "📅" },
   { number: "12+", label: { ar: "مشروع منجز", en: "Projects Completed" }, icon: "🚀" },
-  { number: "42+", label: { ar: "تقنية مستخدمة", en: "Technologies Used" }, icon: "🛠️" },
+  { number: "53+", label: { ar: "تقنية مستخدمة", en: "Technologies Used" }, icon: "🛠️" },
 ];
 
 // Why Hire Me data
@@ -152,4 +152,16 @@ export const techStack = [
   { name: "Bun", color: "#FBF0DF", logo: "bun" },
   { name: "next-intl", color: "#2563EB", logo: "nextintl" },
   { name: "next-themes", color: "#6366F1", logo: "nextthemes" },
+  { name: "ESLint", color: "#4B32C3", logo: "eslint" },
+  { name: "React Query", color: "#FF4154", logo: "reactquery" },
+  { name: "Remotion", color: "#00D4FF", logo: "remotion" },
+  { name: "Leaflet", color: "#199900", logo: "leaflet" },
+  { name: "Sharp", color: "#99CC00", logo: "sharp" },
+  { name: "jsPDF", color: "#F8DC75", logo: "jspdf" },
+  { name: "Ably", color: "#FF5C5C", logo: "ably" },
+  { name: "cmdk", color: "#111111", logo: "cmdk" },
+  { name: "date-fns", color: "#770C56", logo: "date-fns" },
+  { name: "TanStack Table", color: "#FF4154", logo: "tanstack" },
+  { name: "MDX Editor", color: "#5B57D1", logo: "mdx" },
+  { name: "React Markdown", color: "#000000", logo: "reactmarkdown" },
 ];

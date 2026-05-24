@@ -383,7 +383,7 @@ export default function Home() {
               <p className="text-xs text-slate-500 dark:text-slate-400">{t.projectsSubtitle}</p>
             </div>
           </div>
-          <Link href="/projects" className="text-sm font-medium text-orange-600 dark:text-orange-400 hover:text-orange-700 dark:hover:text-orange-300 transition-colors hidden sm:block">
+          <Link href="/projects" onClick={() => sessionStorage.setItem('scroll:/', String(window.scrollY))} className="text-sm font-medium text-orange-600 dark:text-orange-400 hover:text-orange-700 dark:hover:text-orange-300 transition-colors hidden sm:block">
             {t.viewAllProjects} →
           </Link>
         </div>
@@ -441,7 +441,7 @@ export default function Home() {
           ))}
         </div>
         {/* Mobile view all */}
-        <Link href="/projects" className="block sm:hidden mt-4">
+        <Link href="/projects" onClick={() => sessionStorage.setItem('scroll:/', String(window.scrollY))} className="block sm:hidden mt-4">
           <Card className="w-full border-0 shadow-lg shadow-slate-200/50 dark:shadow-black/30 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl transition-transform duration-300 hover:scale-[1.02] cursor-pointer">
             <CardContent className="p-6 flex items-center justify-center gap-3">
               <span className="inline-flex items-center gap-2 text-sm font-medium text-orange-600 dark:text-orange-400">
@@ -469,7 +469,7 @@ export default function Home() {
                   <p className="text-xs text-slate-500 dark:text-slate-400">{t.techStackSubtitle}</p>
                 </div>
               </div>
-              <Link href="/tech" className="text-sm font-medium text-orange-600 dark:text-orange-400 hover:text-orange-700 dark:hover:text-orange-300 transition-colors hidden sm:block">
+              <Link href="/tech" onClick={() => sessionStorage.setItem('scroll:/', String(window.scrollY))} className="text-sm font-medium text-orange-600 dark:text-orange-400 hover:text-orange-700 dark:hover:text-orange-300 transition-colors hidden sm:block">
                 {t.techViewAll} &rarr;
               </Link>
             </div>
@@ -479,7 +479,7 @@ export default function Home() {
               ))}
             </div>
             {/* Mobile view all link */}
-            <Link href="/tech" className="sm:hidden mt-4 flex items-center justify-center gap-2 text-sm font-medium text-orange-600 dark:text-orange-400 hover:text-orange-700 dark:hover:text-orange-300 transition-colors">
+            <Link href="/tech" onClick={() => sessionStorage.setItem('scroll:/', String(window.scrollY))} className="sm:hidden mt-4 flex items-center justify-center gap-2 text-sm font-medium text-orange-600 dark:text-orange-400 hover:text-orange-700 dark:hover:text-orange-300 transition-colors">
               {t.techViewAll}
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={language === "ar" ? "M19 12H5m0 0l7 7m-7-7l7-7" : "M5 12h14m0 0l-7-7m7 7l-7 7"} /></svg>
             </Link>

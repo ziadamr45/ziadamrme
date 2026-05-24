@@ -165,7 +165,14 @@ export function Navigation() {
                 <svg className="w-4 h-4 text-white opacity-0 group-hover/img:opacity-100 transition-opacity duration-300 drop-shadow-lg" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m3-3H7" /></svg>
               </div>
             </button>
-            <Link href="/" className="flex items-center" onClick={() => handleMobileNavClick()}>
+            <Link href="/" className="flex items-center" onClick={(e) => {
+              e.preventDefault();
+              if (pathname === "/") {
+                window.scrollTo({ top: 0, behavior: "smooth" });
+              } else {
+                window.location.href = "/";
+              }
+            }}>
               <span className="font-bold text-slate-900 dark:text-white text-base sm:text-lg hidden sm:block">
                 {language === "ar" ? "زياد عمرو" : "Ziad Amr"}
               </span>
