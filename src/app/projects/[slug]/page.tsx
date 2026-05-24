@@ -6,6 +6,7 @@ import { AnimatedBackground } from "@/components/animated-background";
 import { Controls } from "@/components/controls";
 import { Navigation } from "@/components/navigation";
 import { projects } from "@/lib/projects";
+import { techStack } from "@/lib/data";
 import { translations } from "@/lib/translations";
 import { useParams, useRouter } from "next/navigation";
 
@@ -52,14 +53,14 @@ export default function ProjectPage() {
       <Navigation />
 
       {/* PROJECT DETAIL */}
-      <section className="relative z-10 w-full max-w-md mx-auto px-4 pt-12 pb-8">
+      <section className="relative z-10 w-full max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-8">
         <button type="button" onClick={() => router.back()} className="inline-flex items-center gap-2 text-sm text-slate-500 dark:text-slate-400 hover:text-orange-500 dark:hover:text-orange-400 transition-colors mb-6 group cursor-pointer">
           <svg className="w-4 h-4 transition-transform group-hover:-translate-x-0.5 rtl:group-hover:translate-x-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={language === "ar" ? "M19 12H5m0 0l7 7m-7-7l7-7" : "M5 12h14m0 0l-7-7m7 7l-7 7"} /></svg>
-          {t.backToHome}
+          {t.backToProjects}
         </button>
 
         <Card className="relative w-full overflow-hidden border-0 shadow-2xl shadow-slate-200/50 dark:shadow-black/50 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl">
-          <CardContent className="p-8">
+          <CardContent className="p-8 sm:p-10">
             {/* Header */}
             <div className="flex items-start gap-4 mb-6">
               <span className="text-5xl">{project.emoji}</span>
@@ -133,17 +134,32 @@ export default function ProjectPage() {
               </div>
             )}
 
-            {/* Tech Stack */}
+            {/* Tech Stack - GitHub-style badges */}
             <div className="mb-6">
               <h3 className="text-sm font-semibold text-slate-900 dark:text-white mb-3">
                 {language === "ar" ? "التقنيات المستخدمة" : "Technologies Used"}
               </h3>
               <div className="flex flex-wrap gap-2">
-                {project.tech.map((tech) => (
-                  <span key={tech} className="inline-flex items-center px-3 py-1.5 rounded-lg text-xs font-medium bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 border border-slate-200/50 dark:border-slate-700/50">
-                    {tech}
-                  </span>
-                ))}
+                {project.tech.map((tech) => {
+                  const techData = techStack.find((t) => t.name === tech);
+                  return (
+                    <span
+                      key={tech}
+                      className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-medium border transition-all duration-200 hover:scale-105 cursor-default"
+                      style={{
+                        borderColor: techData ? `${techData.color}30` : "rgba(148,163,184,0.3)",
+                        backgroundColor: techData ? `${techData.color}10` : "rgba(241,245,249,1)",
+                        color: techData && techData.color !== "#000000" ? techData.color : undefined,
+                      }}
+                    >
+                      <span
+                        className="w-2.5 h-2.5 rounded-full flex-shrink-0 ring-1 ring-white/20"
+                        style={{ backgroundColor: techData ? techData.color : "#94a3b8" }}
+                      />
+                      {tech}
+                    </span>
+                  );
+                })}
               </div>
             </div>
 

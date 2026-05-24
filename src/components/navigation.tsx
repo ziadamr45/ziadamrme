@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useApp } from "@/components/providers";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -9,58 +9,121 @@ export function Navigation() {
   const { language } = useApp();
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => setScrolled(window.scrollY > 20);
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  // Close mobile menu on route change
+  useEffect(() => {
+    setIsOpen(false);
+  }, [pathname]);
 
   const navItems = [
-    { href: "/", label: language === "ar" ? "الرئيسية" : "Home", icon: "🏠" },
-    { href: "/projects", label: language === "ar" ? "المشاريع" : "Projects", icon: "🚀" },
-    { href: "/blog", label: language === "ar" ? "المدونة" : "Blog", icon: "📝" },
-    { href: "/social-feed", label: language === "ar" ? "المنشورات" : "Social Feed", icon: "📱" },
+    { href: "/", label: language === "ar" ? "الرئيسية" : "Home" },
+    { href: "/projects", label: language === "ar" ? "المشاريع" : "Projects" },
+    { href: "/blog", label: language === "ar" ? "المدونة" : "Blog" },
+    { href: "/social-feed", label: language === "ar" ? "المنشورات" : "Social Feed" },
   ];
 
+  const isActive = (href: string) => {
+    if (href === "/") return pathname === "/";
+    return pathname.startsWith(href);
+  };
+
   return (
-    <>
-      {/* Floating hamburger button */}
-      <button
-        onClick={() => setIsOpen(!isOpen)}
-        aria-label={isOpen ? (language === "ar" ? "إغلاق القائمة" : "Close menu") : (language === "ar" ? "فتح القائمة" : "Open menu")}
-        className="fixed bottom-6 end-6 z-40 w-12 h-12 rounded-full bg-white/90 dark:bg-slate-800/90 backdrop-blur-md border border-slate-200 dark:border-slate-700 shadow-lg flex items-center justify-center text-slate-700 dark:text-slate-300 hover:text-orange-500 dark:hover:text-orange-400 hover:border-orange-300 dark:hover:border-orange-500/50 transition-all duration-300 hover:shadow-xl cursor-pointer"
-      >
-        {isOpen ? (
-          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
-        ) : (
-          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" /></svg>
-        )}
-      </button>
+    <header
+      className={`fixed top-0 inset-x-0 z-50 transition-all duration-300 ${
+        scrolled
+          ? "bg-white/90 dark:bg-slate-900/90 backdrop-blur-xl shadow-lg shadow-slate-200/20 dark:shadow-black/20 border-b border-slate-200/50 dark:border-slate-700/50"
+          : "bg-transparent"
+      }`}
+    >
+      <nav className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between h-16">
+          {/* Logo */}
+          <Link href="/" className="flex items-center gap-2.5 group">
+            <div className="w-9 h-9 rounded-xl bg-linear-to-br from-orange-500 to-amber-500 flex items-center justify-center shadow-lg shadow-orange-500/20 group-hover:shadow-orange-500/40 transition-shadow duration-300">
+              <span className="text-white font-bold text-sm">ZA</span>
+            </div>
+            <span className="font-bold text-slate-900 dark:text-white text-lg hidden sm:block">
+              {language === "ar" ? "زياد عمرو" : "Ziad Amr"}
+            </span>
+          </Link>
 
-      {/* Menu overlay */}
-      {isOpen && (
-        <div className="fixed inset-0 z-30 bg-black/20 backdrop-blur-sm" onClick={() => setIsOpen(false)} />
-      )}
-
-      {/* Menu panel */}
-      <div className={`fixed bottom-20 end-6 z-40 transition-all duration-300 ${isOpen ? "opacity-100 translate-y-0 pointer-events-auto" : "opacity-0 translate-y-4 pointer-events-none"}`}>
-        <nav className="bg-white/95 dark:bg-slate-800/95 backdrop-blur-xl rounded-2xl border border-slate-200 dark:border-slate-700 shadow-2xl p-3 min-w-[180px]" role="navigation">
-          {navItems.map((item) => {
-            const isActive = pathname === item.href || (item.href !== "/" && pathname.startsWith(item.href));
-            return (
+          {/* Desktop Navigation */}
+          <div className="hidden md:flex items-center gap-1">
+            {navItems.map((item) => (
               <Link
                 key={item.href}
                 href={item.href}
-                onClick={() => setIsOpen(false)}
-                className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200 ${
-                  isActive
+                className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
+                  isActive(item.href)
+                    ? "bg-orange-500/10 text-orange-600 dark:text-orange-400"
+                    : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800/50"
+                }`}
+              >
+                {item.label}
+              </Link>
+            ))}
+          </div>
+
+          {/* Desktop CTA + Mobile Menu Button */}
+          <div className="flex items-center gap-3">
+            <Link
+              href="/#contact"
+              className="hidden md:inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold bg-linear-to-r from-orange-500 to-amber-500 text-white shadow-lg shadow-orange-500/25 hover:shadow-orange-500/40 hover:scale-105 transition-all duration-300"
+            >
+              {language === "ar" ? "كلمني" : "Hire Me"}
+            </Link>
+
+            {/* Mobile hamburger */}
+            <button
+              onClick={() => setIsOpen(!isOpen)}
+              aria-label={isOpen ? (language === "ar" ? "إغلاق القائمة" : "Close menu") : (language === "ar" ? "فتح القائمة" : "Open menu")}
+              className="md:hidden w-10 h-10 rounded-xl bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors cursor-pointer"
+            >
+              {isOpen ? (
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
+              ) : (
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" /></svg>
+              )}
+            </button>
+          </div>
+        </div>
+
+        {/* Mobile Menu */}
+        <div
+          className={`md:hidden overflow-hidden transition-all duration-300 ${
+            isOpen ? "max-h-80 opacity-100 pb-4" : "max-h-0 opacity-0"
+          }`}
+        >
+          <div className="bg-white/95 dark:bg-slate-800/95 backdrop-blur-xl rounded-2xl border border-slate-200 dark:border-slate-700 shadow-xl p-3 space-y-1">
+            {navItems.map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                className={`flex items-center px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200 ${
+                  isActive(item.href)
                     ? "bg-orange-500/10 text-orange-600 dark:text-orange-400"
                     : "text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700/50"
                 }`}
               >
-                <span className="text-base">{item.icon}</span>
-                <span>{item.label}</span>
-                {isActive && <div className="w-1.5 h-1.5 rounded-full bg-orange-500 ms-auto" />}
+                {item.label}
               </Link>
-            );
-          })}
-        </nav>
-      </div>
-    </>
+            ))}
+            <Link
+              href="/#contact"
+              className="flex items-center justify-center gap-2 px-4 py-3 rounded-xl text-sm font-semibold bg-linear-to-r from-orange-500 to-amber-500 text-white shadow-lg shadow-orange-500/25 mt-2"
+            >
+              {language === "ar" ? "كلمني" : "Hire Me"}
+            </Link>
+          </div>
+        </div>
+      </nav>
+    </header>
   );
 }

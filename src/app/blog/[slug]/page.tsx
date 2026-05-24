@@ -51,7 +51,7 @@ export default function BlogPostPage() {
       <AnimatedBackground />
       <Navigation />
 
-      <section className="relative z-10 w-full max-w-md mx-auto px-4 pt-12 pb-8">
+      <section className="relative z-10 w-full max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-8">
         <div className="flex items-center gap-3 mb-6">
           <button type="button" onClick={() => router.back()} className="inline-flex items-center gap-2 text-sm text-slate-500 dark:text-slate-400 hover:text-orange-500 dark:hover:text-orange-400 transition-colors group cursor-pointer">
             <svg className="w-4 h-4 transition-transform group-hover:-translate-x-0.5 rtl:group-hover:translate-x-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={language === "ar" ? "M19 12H5m0 0l7 7m-7-7l7-7" : "M5 12h14m0 0l-7-7m7 7l-7 7"} /></svg>
@@ -64,13 +64,13 @@ export default function BlogPostPage() {
         </div>
 
         <Card className="relative w-full overflow-hidden border-0 shadow-2xl shadow-slate-200/50 dark:shadow-black/50 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl">
-          <CardContent className="p-8">
+          <CardContent className="p-8 sm:p-10">
             <div className="flex items-center gap-2 mb-4">
               <span className="text-xs text-slate-400 dark:text-slate-500 font-medium">
                 {formatDate(post.date, language)}
               </span>
             </div>
-            <h1 className="text-2xl font-bold text-slate-900 dark:text-white mb-4">{post.title[language]}</h1>
+            <h1 className="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white mb-4">{post.title[language]}</h1>
 
             <div className="flex flex-wrap gap-1.5 mb-6">
               {post.tags.map((tag) => (

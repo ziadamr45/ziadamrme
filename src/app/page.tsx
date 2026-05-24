@@ -10,7 +10,7 @@ import { AnimatedBackground } from "@/components/animated-background";
 import { Navigation } from "@/components/navigation";
 import { socialLinks } from "@/lib/social-links";
 import { sortedProjects } from "@/lib/projects";
-import { getStats, techStack } from "@/lib/data";
+import { getStats, techStack, whyHireMePoints, testimonials } from "@/lib/data";
 import { translations } from "@/lib/translations";
 import { SocialFeedSection } from "@/components/social-feed";
 import { useScrollRestoration } from "@/hooks/use-scroll-restoration";
@@ -37,7 +37,6 @@ export default function Home() {
   const handleContactSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Client-side validation
     if (!contactForm.name.trim() || !contactForm.email.trim() || !contactForm.message.trim()) {
       setContactStatus("validation");
       setTimeout(() => setContactStatus("idle"), 4000);
@@ -75,6 +74,26 @@ export default function Home() {
     }
   };
 
+  // GitHub-style tech badge component
+  function TechBadge({ tech }: { tech: typeof techStack[number] }) {
+    return (
+      <span
+        className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-medium border transition-all duration-200 hover:scale-105 hover:shadow-md cursor-default bg-slate-100 dark:bg-slate-800/50 text-slate-700 dark:text-slate-300 border-slate-200/60 dark:border-slate-700/40"
+        style={{
+          borderColor: `${tech.color}30`,
+          backgroundColor: `${tech.color}10`,
+          color: tech.color === "#000000" ? undefined : tech.color,
+        }}
+      >
+        <span
+          className="w-2.5 h-2.5 rounded-full flex-shrink-0 ring-1 ring-white/20"
+          style={{ backgroundColor: tech.color === "#000000" ? "#1e293b" : tech.color }}
+        />
+        {tech.name}
+      </span>
+    );
+  }
+
   return (
     <div className="relative min-h-screen flex flex-col items-center bg-linear-to-br from-slate-50 via-white to-slate-100 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950">
       <Controls />
@@ -88,48 +107,118 @@ export default function Home() {
         </div>
       )}
 
-      {/* PROFILE CARD */}
-      <section id="profile" className="relative z-10 w-full max-w-md mx-auto px-4 pt-12 pb-8">
-        <Card className="relative w-full overflow-hidden border-0 shadow-2xl shadow-slate-200/50 dark:shadow-black/50 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl">
-          <CardContent className="p-8">
-            <div className="flex flex-col items-center text-center mb-8">
-              <button type="button" onClick={() => setShowImageModal(true)} aria-label={language === "ar" ? "اضغط لعرض الصورة كاملة" : "Click to view full image"} className="relative mb-6 group cursor-pointer focus:outline-none">
-                <Avatar className="w-28 h-28 ring-4 ring-white dark:ring-slate-800 shadow-xl transition-transform duration-300 group-hover:scale-105 group-active:scale-95">
-                  <AvatarImage src="/profile.jpg" alt="Ziad Amr" />
-                  <AvatarFallback className="text-3xl font-bold bg-linear-to-br from-orange-500 to-amber-500 text-white">{t.avatarFallback}</AvatarFallback>
-                </Avatar>
-                <div className="absolute inset-0 flex items-center justify-center rounded-full bg-black/0 group-hover:bg-black/30 transition-all duration-300">
-                  <svg className="w-8 h-8 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300 drop-shadow-lg" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m3-3H7" /></svg>
-                </div>
-                <span className="absolute bottom-1 right-1 w-5 h-5 bg-green-500 border-[3px] border-white dark:border-slate-900 rounded-full" aria-hidden="true" />
+      {/* HERO SECTION */}
+      <section id="profile" className="relative z-10 w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-12">
+        <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 items-center">
+          {/* Left side - Text */}
+          <div className="lg:col-span-3 text-center lg:text-start">
+            <p className="text-sm font-medium text-orange-600 dark:text-orange-400 mb-2">{t.heroGreeting}</p>
+            <h1 className="text-4xl sm:text-5xl font-bold text-slate-900 dark:text-white mb-3">{t.name}</h1>
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-linear-to-r from-orange-500/10 to-amber-500/10 dark:from-orange-500/20 dark:to-amber-500/20 text-orange-600 dark:text-orange-400 text-sm font-medium mb-4">
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" /></svg>
+              {t.title}
+            </div>
+            <p className="text-base text-slate-600 dark:text-slate-400 leading-relaxed mb-6 max-w-xl mx-auto lg:mx-0">{t.heroDescription}</p>
+            <div className="flex flex-col sm:flex-row items-center gap-3 justify-center lg:justify-start">
+              <button
+                type="button"
+                onClick={() => {
+                  const el = document.getElementById("contact");
+                  if (el) el.scrollIntoView({ behavior: "smooth" });
+                  setShowContactForm(true);
+                }}
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl text-sm font-semibold bg-linear-to-r from-orange-500 to-amber-500 text-white shadow-lg shadow-orange-500/25 hover:shadow-orange-500/40 hover:scale-105 transition-all duration-300 cursor-pointer"
+              >
+                {t.heroCTA}
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={language === "ar" ? "M19 12H5m0 0l7 7m-7-7l7-7" : "M5 12h14m0 0l-7-7m7 7l-7 7"} /></svg>
               </button>
-              <h1 className="text-2xl font-bold text-slate-900 dark:text-white mb-1">{t.name}</h1>
-              {t.subtitle && <p className="text-lg text-slate-600 dark:text-slate-400 mb-4 font-medium">{t.subtitle}</p>}
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-linear-to-r from-orange-500/10 to-amber-500/10 dark:from-orange-500/20 dark:to-amber-500/20 text-orange-600 dark:text-orange-400 text-sm font-medium mb-4">
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" /></svg>
-                {t.title}
-              </div>
-              <p className="text-sm text-slate-500 dark:text-slate-400 leading-relaxed max-w-sm">{t.mission}</p>
+              <Link
+                href="/projects"
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl text-sm font-semibold border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-all duration-300"
+              >
+                {t.heroSecondaryCTA}
+              </Link>
             </div>
-            <div className="flex items-center gap-4 mb-6">
-              <div className="flex-1 h-px bg-linear-to-r from-transparent via-slate-200 dark:via-slate-700 to-transparent" />
-              <span className="text-xs text-slate-400 dark:text-slate-500 font-medium">{t.socialLinksTitle}</span>
-              <div className="flex-1 h-px bg-linear-to-r from-transparent via-slate-200 dark:via-slate-700 to-transparent" />
-            </div>
-            <div className="space-y-3">
-              {socialLinks.map((link) => (
-                <a key={link.key} href={link.url} {...(link.url.startsWith("mailto:") ? {} : { target: "_blank", rel: "noopener noreferrer" })} aria-label={`${t.socialNames[link.key as keyof typeof t.socialNames]} — ${link.url.startsWith("mailto:") ? t.ariaSendEmail : t.ariaOpensNew}`} className={`inline-flex items-center justify-center gap-3 h-12 w-full rounded-lg border border-slate-200 dark:border-slate-700 bg-background px-4 text-sm font-medium text-slate-700 dark:text-slate-300 transition-all duration-300 ${link.color} hover:text-foreground`}>
-                  {link.icon}
-                  <span className="font-medium">{t.socialNames[link.key as keyof typeof t.socialNames]}</span>
-                </a>
-              ))}
-            </div>
-          </CardContent>
-        </Card>
+          </div>
+
+          {/* Right side - Profile card */}
+          <div className="lg:col-span-2 flex justify-center">
+            <Card className="relative w-full max-w-xs overflow-hidden border-0 shadow-2xl shadow-slate-200/50 dark:shadow-black/50 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl">
+              <CardContent className="p-8 flex flex-col items-center text-center">
+                <button type="button" onClick={() => setShowImageModal(true)} aria-label={language === "ar" ? "اضغط لعرض الصورة كاملة" : "Click to view full image"} className="relative mb-5 group cursor-pointer focus:outline-none">
+                  <Avatar className="w-28 h-28 ring-4 ring-white dark:ring-slate-800 shadow-xl transition-transform duration-300 group-hover:scale-105 group-active:scale-95">
+                    <AvatarImage src="/profile.jpg" alt="Ziad Amr" />
+                    <AvatarFallback className="text-3xl font-bold bg-linear-to-br from-orange-500 to-amber-500 text-white">{t.avatarFallback}</AvatarFallback>
+                  </Avatar>
+                  <div className="absolute inset-0 flex items-center justify-center rounded-full bg-black/0 group-hover:bg-black/30 transition-all duration-300">
+                    <svg className="w-8 h-8 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300 drop-shadow-lg" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m3-3H7" /></svg>
+                  </div>
+                  <span className="absolute bottom-1 right-1 w-5 h-5 bg-green-500 border-[3px] border-white dark:border-slate-900 rounded-full" aria-hidden="true" />
+                </button>
+                <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-1">{t.name}</h2>
+                {t.subtitle && <p className="text-sm text-slate-500 dark:text-slate-400 font-medium mb-3">{t.subtitle}</p>}
+                <div className="flex items-center gap-4 mb-4 w-full">
+                  <div className="flex-1 h-px bg-linear-to-r from-transparent via-slate-200 dark:via-slate-700 to-transparent" />
+                  <span className="text-xs text-slate-400 dark:text-slate-500 font-medium">{t.socialLinksTitle}</span>
+                  <div className="flex-1 h-px bg-linear-to-r from-transparent via-slate-200 dark:via-slate-700 to-transparent" />
+                </div>
+                <div className="grid grid-cols-4 gap-2 w-full">
+                  {socialLinks.slice(0, 8).map((link) => (
+                    <a
+                      key={link.key}
+                      href={link.url}
+                      {...(link.url.startsWith("mailto:") ? {} : { target: "_blank", rel: "noopener noreferrer" })}
+                      aria-label={t.socialNames[link.key as keyof typeof t.socialNames]}
+                      className={`inline-flex items-center justify-center w-full h-10 rounded-lg border border-slate-200 dark:border-slate-700 bg-background text-slate-500 dark:text-slate-400 transition-all duration-300 hover:text-foreground hover:border-slate-300 dark:hover:border-slate-600 ${link.color}`}
+                    >
+                      {link.icon}
+                    </a>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </section>
+
+      {/* STATS SECTION */}
+      <section className="relative z-10 w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">
+        <div className="grid grid-cols-3 gap-3 sm:gap-4">
+          {stats.map((stat) => (
+            <Card key={stat.label.en} className="relative overflow-hidden border-0 shadow-lg shadow-slate-200/50 dark:shadow-black/30 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl">
+              <CardContent className="p-4 sm:p-6 text-center">
+                <span className="text-2xl sm:text-3xl mb-1 block">{stat.icon}</span>
+                <p className="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white">{stat.number}</p>
+                <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 font-medium">{stat.label[language]}</p>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+      </section>
+
+      {/* WHY HIRE ME SECTION */}
+      <section className="relative z-10 w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">
+        <div className="text-center mb-8">
+          <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white mb-2">{t.whyHireMeTitle}</h2>
+          <p className="text-sm text-slate-500 dark:text-slate-400 max-w-2xl mx-auto">{t.whyHireMeSubtitle}</p>
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          {whyHireMePoints.map((point) => (
+            <Card key={point.titleKey} className="relative overflow-hidden border-0 shadow-lg shadow-slate-200/50 dark:shadow-black/30 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl hover:shadow-xl transition-shadow duration-300">
+              <CardContent className="p-6">
+                <div className={`flex items-center justify-center w-12 h-12 rounded-xl bg-linear-to-br ${point.bgColor} mb-4`}>
+                  <span className="text-2xl">{point.icon}</span>
+                </div>
+                <h3 className={`text-base font-bold mb-2 ${point.iconColor}`}>{String(t[point.titleKey as keyof typeof t])}</h3>
+                <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">{String(t[point.descKey as keyof typeof t])}</p>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
       </section>
 
       {/* ABOUT SECTION */}
-      <section className="relative z-10 w-full max-w-md mx-auto px-4 pb-8">
+      <section className="relative z-10 w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">
         <Card className="relative w-full overflow-hidden border-0 shadow-xl shadow-slate-200/50 dark:shadow-black/50 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl">
           <CardContent className="p-8">
             <div className="flex items-center gap-3 mb-4">
@@ -143,23 +232,8 @@ export default function Home() {
         </Card>
       </section>
 
-      {/* STATS SECTION */}
-      <section className="relative z-10 w-full max-w-md mx-auto px-4 pb-8">
-        <div className="grid grid-cols-3 gap-3">
-          {stats.map((stat) => (
-            <Card key={stat.label.en} className="relative overflow-hidden border-0 shadow-lg shadow-slate-200/50 dark:shadow-black/30 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl">
-              <CardContent className="p-4 text-center">
-                <span className="text-2xl mb-1 block">{stat.icon}</span>
-                <p className="text-2xl font-bold text-slate-900 dark:text-white">{stat.number}</p>
-                <p className="text-xs text-slate-500 dark:text-slate-400 font-medium">{stat.label[language]}</p>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-      </section>
-
       {/* GITHUB CONTRIBUTION GRAPH */}
-      <section className="relative z-10 w-full max-w-md mx-auto px-4 pb-8">
+      <section className="relative z-10 w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">
         <Card className="relative w-full overflow-hidden border-0 shadow-xl shadow-slate-200/50 dark:shadow-black/50 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl">
           <CardContent className="p-6">
             <div className="flex items-center gap-3 mb-4">
@@ -168,7 +242,7 @@ export default function Home() {
               </div>
               <div>
                 <h2 className="text-lg font-bold text-slate-900 dark:text-white">{t.contributionTitle}</h2>
-                <p className="text-xs text-slate-500 dark:text-slate-500">{t.contributionSubtitle}</p>
+                <p className="text-xs text-slate-500 dark:text-slate-400">{t.contributionSubtitle}</p>
               </div>
             </div>
             <div className="w-full overflow-x-auto">
@@ -185,20 +259,25 @@ export default function Home() {
       </section>
 
       {/* PROJECTS SECTION */}
-      <section className="relative z-10 w-full max-w-md mx-auto px-4 pb-8">
-        <div className="flex items-center gap-3 mb-5">
-          <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-linear-to-br from-purple-500/10 to-pink-500/10 dark:from-purple-500/20 dark:to-pink-500/20">
-            <svg className="w-5 h-5 text-purple-600 dark:text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" /></svg>
+      <section className="relative z-10 w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">
+        <div className="flex items-center justify-between mb-6">
+          <div className="flex items-center gap-3">
+            <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-linear-to-br from-purple-500/10 to-pink-500/10 dark:from-purple-500/20 dark:to-pink-500/20">
+              <svg className="w-5 h-5 text-purple-600 dark:text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" /></svg>
+            </div>
+            <div>
+              <h2 className="text-lg font-bold text-slate-900 dark:text-white">{t.projectsTitle}</h2>
+              <p className="text-xs text-slate-500 dark:text-slate-400">{t.projectsSubtitle}</p>
+            </div>
           </div>
-          <div>
-            <h2 className="text-lg font-bold text-slate-900 dark:text-white">{t.projectsTitle}</h2>
-            <p className="text-xs text-slate-500 dark:text-slate-500">{t.projectsSubtitle}</p>
-          </div>
+          <Link href="/projects" className="text-sm font-medium text-orange-600 dark:text-orange-400 hover:text-orange-700 dark:hover:text-orange-300 transition-colors hidden sm:block">
+            {t.viewAllProjects} →
+          </Link>
         </div>
-        <div className="space-y-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           {sortedProjects.filter((project) => project.featured).map((project) => (
             <Link key={project.key} href={`/projects/${project.key}`}>
-              <Card className={`relative w-full overflow-hidden border-0 shadow-lg shadow-slate-200/50 dark:shadow-black/30 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl transition-transform duration-300 hover:scale-[1.02] cursor-pointer ring-1 ring-orange-400/30 dark:ring-orange-500/20`}>
+              <Card className="relative w-full overflow-hidden border-0 shadow-lg shadow-slate-200/50 dark:shadow-black/30 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl transition-all duration-300 hover:scale-[1.02] cursor-pointer ring-1 ring-orange-400/30 dark:ring-orange-500/20 h-full">
                 <CardContent className="p-6">
                   <div className="flex items-start gap-3 mb-3">
                     <span className="text-2xl mt-0.5">{project.emoji}</span>
@@ -211,8 +290,27 @@ export default function Home() {
                   </div>
                   <p className="text-sm text-slate-500 dark:text-slate-400 leading-relaxed mb-4 line-clamp-2">{project.description[language]}</p>
                   <div className="flex flex-wrap gap-1.5 mb-4">
-                    {project.tech.slice(0, 4).map((tech) => (<span key={tech} className="inline-flex items-center px-2.5 py-1 rounded-md text-[11px] font-medium bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 border border-slate-200/50 dark:border-slate-700/50">{tech}</span>))}
-                    {project.tech.length > 4 && <span className="inline-flex items-center px-2.5 py-1 rounded-md text-[11px] font-medium bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 border border-slate-200/50 dark:border-slate-700/50">+{project.tech.length - 4}</span>}
+                    {project.tech.slice(0, 4).map((tech) => {
+                      const techData = techStack.find((t) => t.name === tech);
+                      return (
+                        <span
+                          key={tech}
+                          className="inline-flex items-center gap-1.5 px-2 py-1 rounded-md text-[11px] font-medium border"
+                          style={{
+                            borderColor: techData ? `${techData.color}30` : "rgba(148,163,184,0.3)",
+                            backgroundColor: techData ? `${techData.color}08` : "rgba(241,245,249,1)",
+                            color: techData && techData.color !== "#000000" ? techData.color : undefined,
+                          }}
+                        >
+                          <span
+                            className="w-1.5 h-1.5 rounded-full flex-shrink-0"
+                            style={{ backgroundColor: techData ? techData.color : "#94a3b8" }}
+                          />
+                          {tech}
+                        </span>
+                      );
+                    })}
+                    {project.tech.length > 4 && <span className="inline-flex items-center px-2 py-1 rounded-md text-[11px] font-medium bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 border border-slate-200/50 dark:border-slate-700/50">+{project.tech.length - 4}</span>}
                   </div>
                   <div className="flex items-center justify-between">
                     <span className="inline-flex items-center gap-2 text-xs font-medium text-orange-600 dark:text-orange-400">
@@ -228,42 +326,74 @@ export default function Home() {
               </Card>
             </Link>
           ))}
-          {/* View All Projects Card */}
-          <Link href="/projects">
-            <Card className="relative w-full overflow-hidden border-0 shadow-lg shadow-slate-200/50 dark:shadow-black/30 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl transition-transform duration-300 hover:scale-[1.02] cursor-pointer">
-              <CardContent className="p-6 flex items-center justify-center gap-3">
-                <span className="inline-flex items-center gap-2 text-sm font-medium text-orange-600 dark:text-orange-400">
-                  {t.viewAllProjects}
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={language === "ar" ? "M19 12H5m0 0l7 7m-7-7l7-7" : "M5 12h14m0 0l-7-7m7 7l-7 7"} /></svg>
-                </span>
-              </CardContent>
-            </Card>
-          </Link>
         </div>
+        {/* Mobile view all */}
+        <Link href="/projects" className="block sm:hidden mt-4">
+          <Card className="w-full border-0 shadow-lg shadow-slate-200/50 dark:shadow-black/30 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl transition-transform duration-300 hover:scale-[1.02] cursor-pointer">
+            <CardContent className="p-6 flex items-center justify-center gap-3">
+              <span className="inline-flex items-center gap-2 text-sm font-medium text-orange-600 dark:text-orange-400">
+                {t.viewAllProjects}
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={language === "ar" ? "M19 12H5m0 0l7 7m-7-7l7-7" : "M5 12h14m0 0l-7-7m7 7l-7 7"} /></svg>
+              </span>
+            </CardContent>
+          </Card>
+        </Link>
       </section>
 
-      {/* TECH STACK SECTION */}
-      <section className="relative z-10 w-full max-w-md mx-auto px-4 pb-8">
+      {/* TECH STACK SECTION - GitHub-style badges */}
+      <section className="relative z-10 w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">
         <Card className="relative w-full overflow-hidden border-0 shadow-xl shadow-slate-200/50 dark:shadow-black/50 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl">
           <CardContent className="p-8">
-            <div className="flex items-center gap-3 mb-1">
+            <div className="flex items-center gap-3 mb-6">
               <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-linear-to-br from-emerald-500/10 to-teal-500/10 dark:from-emerald-500/20 dark:to-teal-500/20">
                 <svg className="w-5 h-5 text-emerald-600 dark:text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" /></svg>
               </div>
               <div>
                 <h2 className="text-lg font-bold text-slate-900 dark:text-white">{t.techStackTitle}</h2>
-                <p className="text-xs text-slate-500 dark:text-slate-500">{t.techStackSubtitle}</p>
+                <p className="text-xs text-slate-500 dark:text-slate-400">{t.techStackSubtitle}</p>
               </div>
             </div>
-            <div className="flex flex-wrap gap-2 mt-5">
-              {techStack.map((tech) => (<span key={tech.name} className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-medium bg-slate-50 dark:bg-slate-800/50 text-slate-700 dark:text-slate-300 border border-slate-200/60 dark:border-slate-700/40"><span className="w-2 h-2 rounded-full" style={{ backgroundColor: tech.color }} />{tech.name}</span>))}
+            <div className="flex flex-wrap gap-2">
+              {techStack.map((tech) => (
+                <TechBadge key={tech.name} tech={tech} />
+              ))}
             </div>
           </CardContent>
         </Card>
       </section>
 
+      {/* TESTIMONIALS SECTION */}
+      <section className="relative z-10 w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">
+        <div className="text-center mb-8">
+          <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white mb-2">{t.testimonialsTitle}</h2>
+          <p className="text-sm text-slate-500 dark:text-slate-400 max-w-2xl mx-auto">{t.testimonialsSubtitle}</p>
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          {testimonials.map((testimonial, idx) => (
+            <Card key={idx} className="relative overflow-hidden border-0 shadow-lg shadow-slate-200/50 dark:shadow-black/30 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl">
+              <CardContent className="p-6">
+                {/* Quote icon */}
+                <svg className="w-8 h-8 text-orange-500/20 dark:text-orange-400/20 mb-3" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10H14.017zM0 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151C7.546 6.068 5.983 8.789 5.983 11h4v10H0z" />
+                </svg>
+                <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-5">{testimonial.quote[language]}</p>
+                <div className="flex items-center gap-3">
+                  <div className={`w-10 h-10 rounded-full bg-linear-to-br ${testimonial.avatarBg} flex items-center justify-center text-white text-xs font-bold`}>
+                    {testimonial.avatar}
+                  </div>
+                  <div>
+                    <p className="text-sm font-semibold text-slate-900 dark:text-white">{testimonial.name[language]}</p>
+                    <p className="text-xs text-slate-500 dark:text-slate-400">{testimonial.role[language]}</p>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+      </section>
+
       {/* BLOG SECTION LINK */}
-      <section className="relative z-10 w-full max-w-md mx-auto px-4 pb-8">
+      <section className="relative z-10 w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">
         <Link href="/blog">
           <Card className="relative w-full overflow-hidden border-0 shadow-xl shadow-slate-200/50 dark:shadow-black/50 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl transition-transform duration-300 hover:scale-[1.02] cursor-pointer">
             <CardContent className="p-8">
@@ -273,7 +403,7 @@ export default function Home() {
                 </div>
                 <div className="flex-1">
                   <h2 className="text-lg font-bold text-slate-900 dark:text-white">{t.blogTitle}</h2>
-                  <p className="text-xs text-slate-500 dark:text-slate-500">{t.blogSubtitle}</p>
+                  <p className="text-xs text-slate-500 dark:text-slate-400">{t.blogSubtitle}</p>
                 </div>
                 <svg className="w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={language === "ar" ? "M19 12H5m0 0l7 7m-7-7l7-7" : "M5 12h14m0 0l-7-7m7 7l-7 7"} /></svg>
               </div>
@@ -282,11 +412,11 @@ export default function Home() {
         </Link>
       </section>
 
-      {/* LATEST SOCIAL POSTS SECTION */}
+      {/* LATEST SOCIAL POSTS SECTION - YouTube only */}
       <SocialFeedSection />
 
       {/* CONTACT CTA / FORM SECTION */}
-      <section className="relative z-10 w-full max-w-md mx-auto px-4 pb-8">
+      <section id="contact" className="relative z-10 w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">
         {!showContactForm ? (
           <button
             type="button"
@@ -319,13 +449,15 @@ export default function Home() {
                 </button>
               </div>
               <form onSubmit={handleContactSubmit} className="space-y-4">
-                <div>
-                  <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">{t.contactName}</label>
-                  <input type="text" required value={contactForm.name} onChange={(e) => setContactForm({...contactForm, name: e.target.value})} className="w-full px-4 py-2.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-sm text-slate-900 dark:text-white focus:ring-2 focus:ring-orange-500 focus:border-transparent outline-none transition-all" />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">{t.contactEmail}</label>
-                  <input type="email" required value={contactForm.email} onChange={(e) => setContactForm({...contactForm, email: e.target.value})} className="w-full px-4 py-2.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-sm text-slate-900 dark:text-white focus:ring-2 focus:ring-orange-500 focus:border-transparent outline-none transition-all" />
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">{t.contactName}</label>
+                    <input type="text" required value={contactForm.name} onChange={(e) => setContactForm({...contactForm, name: e.target.value})} className="w-full px-4 py-2.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-sm text-slate-900 dark:text-white focus:ring-2 focus:ring-orange-500 focus:border-transparent outline-none transition-all" />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">{t.contactEmail}</label>
+                    <input type="email" required value={contactForm.email} onChange={(e) => setContactForm({...contactForm, email: e.target.value})} className="w-full px-4 py-2.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-sm text-slate-900 dark:text-white focus:ring-2 focus:ring-orange-500 focus:border-transparent outline-none transition-all" />
+                  </div>
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">{t.contactMessage}</label>
@@ -372,10 +504,65 @@ export default function Home() {
       </section>
 
       {/* FOOTER */}
-      <footer className="w-full pb-8 pt-4">
-        <p className="text-xs text-slate-400 dark:text-slate-500 text-center">
-          &copy; {new Date().getFullYear()} Ziad Amr
-        </p>
+      <footer className="relative z-10 w-full bg-white/50 dark:bg-slate-900/50 border-t border-slate-200/50 dark:border-slate-700/50 mt-auto">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+            {/* Brand */}
+            <div className="lg:col-span-2">
+              <div className="flex items-center gap-2.5 mb-3">
+                <div className="w-9 h-9 rounded-xl bg-linear-to-br from-orange-500 to-amber-500 flex items-center justify-center">
+                  <span className="text-white font-bold text-sm">ZA</span>
+                </div>
+                <span className="font-bold text-slate-900 dark:text-white text-lg">{language === "ar" ? "زياد عمرو" : "Ziad Amr"}</span>
+              </div>
+              <p className="text-sm text-slate-500 dark:text-slate-400 leading-relaxed mb-4 max-w-sm">{t.footerTagline}</p>
+              <button
+                type="button"
+                onClick={() => {
+                  const el = document.getElementById("contact");
+                  if (el) el.scrollIntoView({ behavior: "smooth" });
+                  setShowContactForm(true);
+                }}
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold bg-linear-to-r from-orange-500 to-amber-500 text-white shadow-lg shadow-orange-500/25 hover:shadow-orange-500/40 hover:scale-105 transition-all duration-300 cursor-pointer"
+              >
+                {t.footerCTA}
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={language === "ar" ? "M19 12H5m0 0l7 7m-7-7l7-7" : "M5 12h14m0 0l-7-7m7 7l-7 7"} /></svg>
+              </button>
+            </div>
+            {/* Quick Links */}
+            <div>
+              <h3 className="text-sm font-semibold text-slate-900 dark:text-white mb-3">{t.footerQuickLinks}</h3>
+              <ul className="space-y-2">
+                <li><Link href="/" className="text-sm text-slate-500 dark:text-slate-400 hover:text-orange-500 dark:hover:text-orange-400 transition-colors">{t.navHome}</Link></li>
+                <li><Link href="/projects" className="text-sm text-slate-500 dark:text-slate-400 hover:text-orange-500 dark:hover:text-orange-400 transition-colors">{t.navProjects}</Link></li>
+                <li><Link href="/blog" className="text-sm text-slate-500 dark:text-slate-400 hover:text-orange-500 dark:hover:text-orange-400 transition-colors">{t.navBlog}</Link></li>
+                <li><Link href="/social-feed" className="text-sm text-slate-500 dark:text-slate-400 hover:text-orange-500 dark:hover:text-orange-400 transition-colors">{t.navSocialFeed}</Link></li>
+              </ul>
+            </div>
+            {/* Social */}
+            <div>
+              <h3 className="text-sm font-semibold text-slate-900 dark:text-white mb-3">{t.footerContact}</h3>
+              <div className="flex flex-wrap gap-2">
+                {socialLinks.slice(0, 6).map((link) => (
+                  <a
+                    key={link.key}
+                    href={link.url}
+                    {...(link.url.startsWith("mailto:") ? {} : { target: "_blank", rel: "noopener noreferrer" })}
+                    aria-label={t.socialNames[link.key as keyof typeof t.socialNames]}
+                    className={`inline-flex items-center justify-center w-9 h-9 rounded-lg border border-slate-200 dark:border-slate-700 text-slate-500 dark:text-slate-400 transition-all duration-300 hover:text-foreground hover:border-slate-300 dark:hover:border-slate-600 ${link.color}`}
+                  >
+                    {link.icon}
+                  </a>
+                ))}
+              </div>
+            </div>
+          </div>
+          <div className="border-t border-slate-200/50 dark:border-slate-700/50 mt-8 pt-6">
+            <p className="text-xs text-slate-400 dark:text-slate-500 text-center">
+              &copy; {new Date().getFullYear()} {t.name}. {language === "ar" ? "جميع الحقوق محفوظة" : "All rights reserved"}.
+            </p>
+          </div>
+        </div>
       </footer>
     </div>
   );
