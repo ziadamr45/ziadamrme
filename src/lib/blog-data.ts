@@ -305,4 +305,196 @@ My advice for beginners: start with SQLite for development speed, but plan the t
     },
     tags: ["Database", "PostgreSQL", "Prisma"],
   },
+  {
+    slug: "pwa-journey",
+    title: { ar: "تطبيقات الويب التقدمية: من المتصفح لشاشة الهاتف", en: "Progressive Web Apps: From Browser to Home Screen" },
+    date: "2026-05-24",
+    excerpt: {
+      ar: "كيف حوّلت تطبيقات الويب بتاعتي لتطبيقات قابلة للتثبيت على الهاتف — تجربتي العملية مع PWA في إسمع راديو وتطبيق الطقس.",
+      en: "How I turned my web apps into installable phone applications — my practical experience with PWA in Esma3 Radio and Weather App.",
+    },
+    content: {
+      ar: `التطبيقات التقدمية للويب (PWA) غيرت نظرتي لإزاي تطبيق الويب يقدر يوصل للمستخدم. قبل ما أتعامل مع PWA، كنت شايف إن تطبيقات الويب محدودة مقارنة بتطبيقات الموبايل الأصلية — مفيش وصول أوفلاين، مفيش إشعارات، ومفيش أيقونة على شاشة الهاتف. بس مع PWA، قدرت أقرب الفجوة دي بشكل كبير. في المقال ده هشارك تجربتي العملية مع PWA في إسمع راديو وتطبيق الطقس.
+
+أول حاجة عملتها كانت في إسمع راديو. التطبيق ده بيتستخدم أساسًا على الموبايل — الناس بتسمع راديو وهي راكبة أو في الجيم أو بتمشي. فكان منطقي إني أخليه يشتغل كتطبيق قابل للتثبيت. بدأت بملف manifest.json اللي بيوفر للمتصفح كل المعلومات اللي محتاجها: اسم التطبيق، الأيقونات بأحجام مختلفة، لون الثيم، واتجاه الشاشة. لما المستخدم بيدخل الموقع أول مرة، المتصفح بيقترح عليه يثبت التطبيق على شاشة الهاتف. نسبة التثبيت كانت حوالي 30٪ من المستخدمين — رقم محترم قوي.
+
+الـ Service Worker كان العنصر الأساسي. ده سكريبت بيشتغل في الخلفية وبيتحكم في كل طلبات الشبكة. في إسمع راديو، استخدمت استراتيجية Cache First لملفات الـ CSS والـ JavaScript والخطوط — يعني أول مرة بيتحملوا من الإنترنت وبعدين يتخزنوا في الـ Cache وكل مرة تانية بيتخدموا من هناك. ده خلى التطبيق يفتح بشكل فوري بعد أول زيارة. أما بيانات المحطات فاستخدمت Network First — يعني بيحاول يجيبها من الإنترنت الأول، ولو ماقدرش، بيرجع للـ Cache.
+
+دعم الأوفلاين في إسمع راديو كان تحدي خاص. لما المستخدم بيكون أوفلاين، مش هيسمع راديو حي طبعًا، بس قدرت أعرض له رسالة واضحة "أنت مش متصل بالإنترنت" مع المحطات اللي اتحملت قبل كده كمرجع. كمان قدرت أخلي أيقونة التطبيق وشاشة البداية تظهر حتى لو مفيش إنترنت — ده بيخلي المستخدم يحس إن التطبيق حقيقي مش مجرد موقع.
+
+في تطبيق الطقس، التحدي كان مختلف. بيانات الطقس بتتغير كل ساعة تقريبًا، فاستراتيجية Caching لازم تكون ذكية. استخدمت Stale-While-Revalidate — يعني أعرض البيانات القديمة من الـ Cache فورًا، وفي نفس الوقت بطلب البيانات الجديدة من الإنترنت. لما البيانات الجديدة توصل، بأحدث الشاشة. ده بيدي إحساس بالسرعة لأن المستخدم بيشوف حاجة فورًا، وفي نفس الوقت البيانات بتكون أحدث ما يمكن.
+
+أكبر مشكلة واجهتها كانت تحديث الـ Service Worker نفسه. لما بنزّع نسخة جديدة من التطبيق، الـ Service Worker القديم بيستمر يشتغل حتى المستخدم يقفل كل التبويبات ويفتح التطبيق تاني. ده معناه إن المستخدم ممكن يفضل يشوف النسخة القديمة لأيام! الحل كان إني أستخدم skipWaiting وclientsClaim عشان الـ Service Worker الجديد يشتغل فورًا. بس ده بيجيب مشكلة تانية — لو كان في طلب جاري شغال، ممكن يتقاطع مع الـ Cache الجديد. عشان كده بعرض رسالة "تحديث متاح — اضغط هنا للتحديث" بدل ما أجبر المستخدم على التحديث.
+
+تجربة التثبيت (Install Prompt) كانت نقطة مهمة. المتصفح بيقترح التثبيت تلقائيًا بس ده بيحصل في وقت مش مثالي أحيانًا. استخدمت الحدث beforeinstallprompt عشان أتدخل وأعرض رسالة تثبيت مخصصة في الوقت المناسب — مثلاً بعد ما المستخدم يسمع راديو لمدة 5 دقائق، أعرض له "ثبّت إسمع راديو على هاتفك للوصول السريع". الرسالة المخصصة دي زادت نسبة التثبيت بنسبة 40٪ مقارنة بالاقتراح الافتراضي من المتصفح.
+
+الفروق بين PWA والتطبيقات الأصلية لسه موجودة — مفيش وصول كامل لكل APIs بتاعة النظام، والأداء مش زي التطبيق الأصلي بالضبط. بس للمستخدم العربي اللي أغلب استخدامه على الموبايل، PWA بتوفر تجربة ممتازة بدون ما يحتاج يحمل تطبيق من المتجر. في إسمع راديو، 60٪ من الاستخدام بيكون من الموبايل، وPWA خلت التجربة أقرب كتير لتطبيق أصلي.
+
+نصيحتي لأي حد عايز يضيف PWA لتطبيقه: ابدأ بالأساسيات — manifest.json وService Worker بسيط يخزن الملفات الثابتة. بعدين ضيف استراتيجيات Caching متقدمة تدريجيًا. متحاولش تعمل كل حاجة مرة واحدة. واختبر على أجهزة حقيقية — المحاكي مش بيمثل تجربة المستخدم الحقيقي. كمان اهتم بتجربة التثبيت — الرسالة المخصصة بتفرق جدًا.`,
+      en: `Progressive Web Apps (PWA) changed my perspective on how a web app can reach users. Before working with PWA, I saw web apps as limited compared to native mobile apps — no offline access, no notifications, no home screen icon. But with PWA, I was able to significantly close that gap. In this article, I'll share my practical experience with PWA in Esma3 Radio and Weather App.
+
+The first thing I did was in Esma3 Radio. This app is primarily used on mobile — people listen to radio while commuting, at the gym, or walking. So it made sense to make it work as an installable app. I started with a manifest.json file that provides the browser with all the information it needs: app name, icons in various sizes, theme color, and screen orientation. When a user visits the site for the first time, the browser suggests installing the app on their home screen. The install rate was around 30% of users — a pretty solid number.
+
+The Service Worker was the fundamental element. This is a script that runs in the background and controls all network requests. In Esma3 Radio, I used a Cache First strategy for CSS, JavaScript, and font files — meaning they're fetched from the internet the first time, then stored in the cache and served from there every subsequent time. This made the app load almost instantly after the first visit. For station data, I used Network First — it tries to fetch from the internet first, and if that fails, it falls back to the cache.
+
+Offline support in Esma3 Radio was a unique challenge. When the user is offline, they obviously can't listen to live radio, but I was able to display a clear "You're not connected to the internet" message along with previously loaded stations as reference. I also made sure the app icon and splash screen appear even without internet — this makes the user feel it's a real app, not just a website.
+
+In the Weather App, the challenge was different. Weather data changes roughly every hour, so the caching strategy needs to be smart. I used Stale-While-Revalidate — I display the old data from the cache immediately, while simultaneously requesting fresh data from the internet. When the new data arrives, I update the screen. This gives a sense of speed because the user sees something instantly, while the data is as fresh as possible.
+
+The biggest problem I faced was updating the Service Worker itself. When I deploy a new version of the app, the old Service Worker continues running until the user closes all tabs and reopens the app. This means a user might see the old version for days! The solution was to use skipWaiting and clientsClaim so the new Service Worker takes effect immediately. But this introduces another problem — if there's an ongoing request, it might conflict with the new cache. That's why I show an "Update available — click here to update" message instead of forcing the update on users.
+
+The install prompt experience was a key point. The browser suggests installation automatically, but this sometimes happens at a non-ideal time. I used the beforeinstallprompt event to intervene and show a custom install message at the right moment — for example, after a user has been listening to radio for 5 minutes, I show "Install Esma3 Radio on your phone for quick access." This custom message increased the install rate by 40% compared to the browser's default prompt.
+
+The differences between PWA and native apps still exist — no full access to all system APIs, and performance isn't exactly like a native app. But for Arabic users whose usage is predominantly mobile, PWA provides an excellent experience without needing to download an app from the store. In Esma3 Radio, 60% of usage is from mobile, and PWA made the experience much closer to a native app.
+
+My advice for anyone wanting to add PWA to their app: start with the basics — manifest.json and a simple Service Worker that caches static files. Then gradually add advanced caching strategies. Don't try to do everything at once. And test on real devices — the emulator doesn't represent the real user experience. Also, pay attention to the install experience — a custom prompt makes a real difference.`,
+    },
+    tags: ["PWA", "Web Development", "Mobile"],
+  },
+  {
+    slug: "web-push-notifications",
+    title: { ar: "إشعارات الويب: تواصل مع مستخدميك في أي وقت", en: "Web Push Notifications: Reaching Users Anytime" },
+    date: "2026-05-24",
+    excerpt: {
+      ar: "رحلتي في بناء نظام إشعارات ويب متكامل — من مفاتيح VAPID لتجربة المستخدم، مع أمثلة من لوحة الإشعارات وإسمع راديو.",
+      en: "My journey building a complete web push notification system — from VAPID keys to user experience, with examples from Notifications dashboard and Esma3 Radio.",
+    },
+    content: {
+      ar: `الإشعارات من أقوى الطرق اللي تقدر توصل بيها لمستخدميك. بس برضه من أكتر الحاجات اللي ممكن تزعجهم لو اتعاملت معاها غلط. بنيت لوحة الإشعارات كمشروع متكامل، وأضفت إشعارات ويب لإسمع راديو، واتعلمت دروس كتير عن Web Push API وتجربة المستخدم. في المقال ده هشارك الرحلة دي من أول مفاتيح VAPID لحد الإشعارات اللي بتوصل فعلاً.
+
+أول خطوة كانت فهم إزاي Web Push بيشتغل. النظام بيحتاج تلاتة أطراف: التطبيق بتاعك (الـ Client)، الـ Push Service (الوسيط اللي بيوصّل الإشعار)، والـ Service Worker (اللي بيستقبل الإشعار وبيعرضه). لما المستخدم بيوافق على الإشعارات، التطبيق بيتواصل مع الـ Push Service وبيعمل Subscription — ده بيرجع كائن فيه Endpoint وKeys. الكائن ده بتبعته لسيرفرك عشان تستخدمه بعد كده تبعت إشعارات.
+
+مفاتيح VAPID كانت من أكتر الحاجات اللي اتعبني في البداية. VAPID (Voluntary Application Server Identification) هي طريقة المصادقة اللي بتأكد للـ Push Service إنك أنت المرسل الحقيقي. لازم تولّد زوج مفاتيح — المفتاح العام اللي بتسجله في الـ Push Service والمفتاح الخاص اللي بتحفظه على السيرفر. لو المفتاح الخاص اتسرب، أي حد يقدر يبعت إشعارات باسمك. في لوحة الإشعارات، حفظت المفتاح الخاص في Environment Variables وعملت Rotation كل فترة.
+
+إدارة الـ Subscriptions كانت تحدي لوحده. كل مستخدم ليه Subscription مختلف، وده معناه إنك محتاج تخزن كل الـ Subscriptions في قاعدة البيانات. بس المشكلة إن الـ Subscriptions ممكن تنتهي — المتصفح بيحدث الـ Endpoint أحيانًا، أو المستخدم بيلغي الصلاحية، أو بيمسح الـ Service Worker. عشان كده عملت نظام تنظيف بيمسح الـ Subscriptions الغير صالحة كل يوم. لما ببعت إشعار ويرجع خطأ 410 (Gone)، بحذف الـ Subscription ده من قاعدة البيانات.
+
+في لوحة الإشعارات، بنيت واجهة إدارية كاملة تسمح بإرسال إشعارات مخصصة. الأدمن يقدر يختار الفئة المستهدفة (كل المستخدمين، مستخدمين محددين، أو اللي اشتروا منتج معين)، يكتب العنوان والمحتوى، ويحدد وقت الإرسال. كمان أضفت جدولة (Scheduling) — يعني تقدر تكتب الإشعار دلوقتي وتحدد يتبعت بكرة الساعة 10 الصبح. النظام بيستخدم Cron Jobs عشان يفحص الإشعارات المجدولة كل دقيقة ويبعت اللي وقتها وصل.
+
+في إسمع راديو، استخدمت الإشعارات بطريقة مختلفة. بدل ما أبعت إشعارات تسويقية، ببعت إشعارات ليها قيمة حقيقية: لما محطة جديدة بتتضاف، لما فيه عرض خاص على اشتراك، أو لما في تحديث مهم. الخدمة بتاعتنا بتسمح للمستخدم يختار إيه نوع إشعارات عايزه — محطات جديدة بس، أو تحديثات فقط، أو كل حاجة. التخصيص ده زود نسبة التفاعل مع الإشعارات بشكل ملحوظ.
+
+أكبر تحدي كان إقناع المستخدمين يوافقوا على الإشعارات. نسبة الموافقة على الإشعارات على الويب أقل بكتير من التطبيقات الأصلية — حوالي 10-15٪ بس. عشان أزوّد النسبة دي، استخدمت استراتيجية "الطلب المتأخر" — مابطلبش صلاحية الإشعارات أول ما المستخدم يدخل الموقع. بدل كده، باستنى لحد ما المستخدم يعمل حاجة تظهر اهتمامه، وبعدين أطلب الصلاحية. مثلاً في إسمع راديو، بعد ما المستخدم يسمع راديو 3 مرات، بعرض له رسالة "عايز تتوصلك إشعارات لما محطات جديدة تتضاف؟". النسبة زادت لـ 35٪ بالاستراتيجية دي.
+
+إشعار التعب (Notification Fatigue) مشكلة حقيقية. لو بعت إشعارات كتير، المستخدم هيلغي الصلاحية أو هيحظر الموقع. عملت قاعدة: مابعتش أكتر من إشعارين في اليوم للمستخدم الواحد. كمان بختار الأوقات المناسبة — مابعتش إشعارات في وسط الليل! استخدمت التوقيت المحلي للمستخدم عشان أضمن إن الإشعار بيوصل في وقت مناسب. في لوحة الإشعارات، أضفت تحليلات بسيطة: عدد الإشعارات المرسلة، نسبة الضغط عليها (Click Rate)، وعدد المستخدمين اللي لغوا الاشتراك. البيانات دي بتساعدني أحسن الإشعارات بمرور الوقت.
+
+الفرق بين Web Push والإشعارات داخل التطبيق (In-App) مهم. Web Push بتوصل للمستخدم حتى لو الموقع مقفول — ده قوتها الأساسية. بس الإشعارات داخل التطبيق أوضح وأسهل في التفاعل. في مشاريعي، باستخدم الاتنين مع بعض: Web Push للأحداث المهمة اللي محتاج اهتمام فوري، وإشعارات داخل التطبيق للتحديثات العادية اللي المستخدم يشوفها لما يفتح التطبيق.
+
+نصيحتي: لو هتضيف إشعارات ويب، فكر في تجربة المستخدم الأول. متطلبش الصلاحية من أول زيارة — ده بيخوف الناس. اختار الأوقات الصح للإرسال، وقلل عدد الإشعارات لأقصى حد ممكن. كلم إشعار لازم يكون ليه قيمة حقيقية للمستخدم. ودايمًا استخدم لوحة تحكم تتابع بيها أداء الإشعارات — الـ Click Rate والـ Unsubscribe Rate هم أفضل مؤشراتك.`,
+      en: `Notifications are one of the most powerful ways to reach your users. But they're also one of the easiest ways to annoy them if handled poorly. I built the Notifications dashboard as a complete project, and added web push to Esma3 Radio, learning many lessons about the Web Push API and user experience along the way. In this article, I'll share the journey from VAPID keys to notifications that actually get through.
+
+The first step was understanding how Web Push works. The system needs three parties: your application (the Client), the Push Service (the intermediary that delivers the notification), and the Service Worker (which receives and displays the notification). When a user agrees to notifications, the app communicates with the Push Service and creates a Subscription — this returns an object containing an Endpoint and Keys. You send this object to your server so you can use it later to send notifications.
+
+VAPID keys were one of the things that gave me the most trouble initially. VAPID (Voluntary Application Server Identification) is the authentication method that assures the Push Service you're the legitimate sender. You need to generate a key pair — the public key you register with the Push Service, and the private key you keep on the server. If the private key leaks, anyone can send notifications in your name. In the Notifications dashboard, I stored the private key in Environment Variables and rotated it periodically.
+
+Managing Subscriptions was a challenge on its own. Each user has a different Subscription, which means you need to store all Subscriptions in the database. But the problem is that Subscriptions can expire — the browser sometimes updates the Endpoint, the user might revoke permission, or delete the Service Worker. That's why I built a cleanup system that removes invalid Subscriptions daily. When I send a notification and get a 410 (Gone) error, I delete that Subscription from the database.
+
+In the Notifications dashboard, I built a complete admin interface that allows sending customized notifications. The admin can choose the target audience (all users, specific users, or those who purchased a particular product), write the title and content, and set the sending time. I also added scheduling — you can write a notification now and set it to be sent tomorrow at 10 AM. The system uses Cron Jobs to check scheduled notifications every minute and send those whose time has arrived.
+
+In Esma3 Radio, I used notifications differently. Instead of sending marketing notifications, I send notifications with real value: when a new station is added, when there's a special subscription offer, or when there's an important update. Our service allows the user to choose what type of notifications they want — new stations only, updates only, or everything. This customization noticeably increased notification engagement rates.
+
+The biggest challenge was convincing users to agree to notifications. The web notification opt-in rate is much lower than native apps — only about 10-15%. To increase this, I used a "delayed ask" strategy — I don't request notification permission as soon as the user visits the site. Instead, I wait until the user does something that shows interest, then ask for permission. For example, in Esma3 Radio, after a user listens to radio 3 times, I show a message "Would you like to receive notifications when new stations are added?" The rate increased to 35% with this strategy.
+
+Notification fatigue is a real problem. If you send too many notifications, the user will revoke permission or block the site. I made a rule: no more than 2 notifications per day per user. I also choose appropriate times — I don't send notifications in the middle of the night! I use the user's local time zone to ensure the notification arrives at a suitable time. In the Notifications dashboard, I added simple analytics: number of notifications sent, click rate, and number of users who unsubscribed. This data helps me improve notifications over time.
+
+The difference between Web Push and in-app notifications is important. Web Push reaches the user even when the site is closed — that's its core strength. But in-app notifications are clearer and easier to interact with. In my projects, I use both together: Web Push for important events that need immediate attention, and in-app notifications for regular updates the user sees when they open the app.
+
+My advice: if you're adding web notifications, think about the user's first experience. Don't ask for permission on the first visit — it scares people. Choose the right times to send, and minimize the number of notifications as much as possible. Every notification must provide real value to the user. And always use a dashboard to monitor notification performance — Click Rate and Unsubscribe Rate are your best indicators.`,
+    },
+    tags: ["Notifications", "Web Push", "Web Development"],
+  },
+  {
+    slug: "building-news-aggregator",
+    title: { ar: "بناء مجمع أخبار: التحديات التقنية والحلول", en: "Building a News Aggregator: Technical Challenges and Solutions" },
+    date: "2026-05-24",
+    excerpt: {
+      ar: "ما وراء الكواليس في بناء بوابة الحدث — التعامل مع أخبار API متعددة، التخزين المؤقت، خوارزميات الترند، والتلخيص الذكي.",
+      en: "Behind the scenes of building Bawabet Elhadas — working with multiple news APIs, caching, trending algorithms, and AI summarization.",
+    },
+    content: {
+      ar: `بناء مجمع أخبار زي بوابة الحدث كان من أكتر المشاريع اللي علمتني حاجات جديدة. المشروع ده مش مجرد موقع بيعرض أخبار — ده نظام متكامل بيجيب أخبار من مصادر كتير، بيخزنها، بيصنفها، بيعملها تلخيص بالذكاء الاصطناعي، وبيعرف يعرض أكتر الأخبار ترندًا لكل مستخدم. في المقال ده هشرح التحديات التقنية اللي واجهتها والحلول اللي استخدمتها.
+
+أول تحدي كان التعامل مع أكتر من مصدر أخبار API. استخدمت GNews وNewsData كمصادر أساسية. كل API ليها شكل بيانات مختلف (Schema)، وحدود استخدام مختلفة (Rate Limits)، وأسعار مختلفة. عشان أتعامل مع التنوع ده، عملت طبقة تجريد (Abstraction Layer) بتحوّل بيانات كل API لصيغة موحدة. يعني مهما كان المصدر، البيانات بتدخل بنفس الشكل في النظام. ده وفر عليّ إني أضيف مصادر جديدة بسهولة بعد كده من غير ما أغير الكود الأساسي.
+
+إدارة حصص الـ API (API Quota Management) كانت مشكلة حقيقية. GNews بيسمح بـ 100 طلب يومي على الباقة المجانية، وNewsData بيسمح بـ 200. لو استهلكت الحصة من واحد، لازم أتحول للتاني تلقائيًا. عملت نظام توجيه (Routing System) بيتابع استهلاك كل API ويحول الطلبات للمصدر المتاح. كمان عملت Caching ذكي — الأخبار مش بتتغير كل ثانية، فهعمل طلب كل 30 دقيقة وأخزن النتائج. ده قلل استهلاك الـ API بنسبة 90٪.
+
+التخزين المؤقت في PostgreSQL مع Prisma كان عمود النظام. كل خبر بيتخزن في قاعدة البيانات مع البيانات الأساسية: العنوان، الوصف، المصدر، الرابط، الصورة، تاريخ النشر، والتصنيف. استخدمت UUID كـ Primary Key وضفت Indexes على تاريخ النشر والتصنيف عشان البحث يكون سريع. كمان أضفت حقل فريد (Unique) على رابط الخبر عشان أمنع التكرار — أحيانًا نفس الخبر بيجي من أكتر من مصدر.
+
+التلخيص بالذكاء الاصطناعي كان من أمتع الأجزاء. استخدمت OpenRouter للوصول لنماذج لغة مختلفة بسعر معقول. لما خبر جديد بيدخل النظام، ببعته للـ API مع Prompt مخصص: "لخص الخبر ده في 3 جمل بالعربي بطريقة واضحة وموجزة". التلخيص بيخلي المستخدم يقرأ الأخبار بسرعة بدون ما يحتاج يفتح كل مقال. بس واجهت مشكلة — التلخيص بيأخذ وقت (حوالي 3-5 ثواني لكل خبر)، فخليته غير متزامن (Asynchronous) — الخبر بيتخزن أولاً وبعدين التلخيص بيضاف لما يخلص.
+
+خوارزمية الترند (Trending Score) كانت التحدي الذكي. إزاي أحدد إيه الأخبار الأهم؟ عملت خوارزمية بتحسب Score بناءً على عدة عوامل: حداثة الخبر (أخبار آخر ساعة أعلى من أخبار من 3 ساعات)، عدد المصادر اللي نشرت نفس الخبر (لو 3 مصادر نشرت نفس الموضوع ده يعني مهم)، وعدد القراء (كل ما أكثر الناس تقرأه كل ما يرتفع). المعادلة بسيطة بس فعالة: Trending Score = Freshness × 0.4 + Source Count × 0.3 + Read Count × 0.3.
+
+التخصيص بناءً على تاريخ القراءة كان ميزة متقدمة. لما المستخدم بيسجل دخول (عبر NextAuth)، النظام بيتابع إيه التصنيفات اللي بيتابعها أكتر — سياسة، رياضة، تكنولوجيا، إلخ. وبعدين بيعرض له الأخبار في التصنيفات المفضلة أولاً. كمان بيتابع إيه المصادر اللي بيفضلها، فأخبار من المصادر دي بتظهر أعلى. التخصيص ده بيخلي كل مستخدم يشوف واجهة مختلفة مخصصة لاهتماماته.
+
+تحديث الأخبار في الوقت الحقيقي بدون WebSocket كان تحدي. ماكنتش عايز أضيف تعقيد WebSocket عشان الأخبار مش محتاجة تحديث كل ثانية. بدل كده استخدمت فحص دوري (Polling) من جهة العميل — كل دقيقة العميل بيسأل السيرفر "في أخبار جديدة؟". السيرفر بيرجع آخر ID للخبر، ولو اختلف عن اللي عند العميل، يجيب الأخبار الجديدة. من جهة السيرفر، استخدمت Cron Jobs بتشغل كل 15 دقيقة وتجلب أخبار جديدة من كل المصادر.
+
+نصيحتي لأي حد عايز يبني مجمع أخبار: ابدأ بمصدر واحد بس وافهم البيانات كويس قبل ما تضيف مصادر تانية. الـ Caching مش رفاهية — ده ضرورة عشان ماتستهلكش حصتك في أول ساعة. والتلخيص بالذكاء الاصطناعي بيضيف قيمة كبيرة بس خليه Asynchronous عشان ميبطّش النظام. وأهم حاجة: اختبر مع مستخدمين حقيقيين عشان تفهم إيه الأخبار اللي بتهمهم وإيه اللي مش بيفرق معاهم.`,
+      en: `Building a news aggregator like Bawabet Elhadas was one of the projects that taught me the most new things. This project isn't just a website that displays news — it's a complete system that fetches news from multiple sources, stores it, categorizes it, summarizes it with AI, and knows how to display the most trending news for each user. In this article, I'll explain the technical challenges I faced and the solutions I used.
+
+The first challenge was dealing with more than one news API source. I used GNews and NewsData as primary sources. Each API has a different data schema, different rate limits, and different pricing. To handle this diversity, I created an Abstraction Layer that transforms data from each API into a unified format. This means regardless of the source, data enters the system in the same shape. This saved me from having to change core code when adding new sources later.
+
+API Quota Management was a real problem. GNews allows 100 daily requests on the free tier, and NewsData allows 200. If I exhaust one quota, I need to automatically switch to the other. I built a Routing System that tracks each API's consumption and routes requests to the available source. I also implemented smart caching — news doesn't change every second, so I make requests every 30 minutes and store the results. This reduced API consumption by 90%.
+
+Caching in PostgreSQL with Prisma was the backbone of the system. Each article is stored in the database with core data: title, description, source, link, image, publish date, and category. I used UUID as the Primary Key and added Indexes on publish date and category for fast searching. I also added a Unique constraint on the article link to prevent duplication — sometimes the same article comes from multiple sources.
+
+AI summarization was one of the most enjoyable parts. I used OpenRouter to access different language models at a reasonable price. When a new article enters the system, I send it to the API with a custom prompt: "Summarize this article in 3 sentences in Arabic in a clear and concise way." The summarization lets users read news quickly without needing to open each article. But I encountered a problem — summarization takes time (about 3-5 seconds per article), so I made it asynchronous — the article gets stored first and the summary is added when it's ready.
+
+The Trending Score algorithm was the clever challenge. How do I determine which news is most important? I created an algorithm that calculates a score based on several factors: article freshness (news from the last hour ranks higher than 3-hour-old news), the number of sources that published the same story (if 3 sources published the same topic it's probably important), and reader count (the more people read it, the higher it ranks). The formula is simple but effective: Trending Score = Freshness × 0.4 + Source Count × 0.3 + Read Count × 0.3.
+
+Personalization based on reading history was an advanced feature. When a user logs in (via NextAuth), the system tracks which categories they follow most — politics, sports, technology, etc. Then it shows news in their preferred categories first. It also tracks which sources they prefer, so articles from those sources appear higher. This personalization means each user sees a different interface tailored to their interests.
+
+Updating news in real-time without WebSocket was a challenge. I didn't want to add WebSocket complexity because news doesn't need to update every second. Instead, I used client-side polling — every minute the client asks the server "any new news?" The server returns the latest article ID, and if it differs from what the client has, it fetches the new articles. On the server side, I used Cron Jobs that run every 15 minutes to fetch fresh news from all sources.
+
+My advice for anyone building a news aggregator: start with just one source and understand the data well before adding others. Caching isn't a luxury — it's essential to avoid burning through your quota in the first hour. AI summarization adds huge value but keep it asynchronous so it doesn't slow down the system. And most importantly: test with real users to understand what news matters to them and what doesn't make a difference.`,
+    },
+    tags: ["API", "Web Development", "News"],
+  },
+  {
+    slug: "building-developer-portfolio",
+    title: { ar: "بناء موقع شخصي يمثلك كمطور: دروس من رحلتي", en: "Building a Developer Portfolio That Represents You: Lessons from My Journey" },
+    date: "2026-05-24",
+    excerpt: {
+      ar: "إزاي بنيت الموقع الشخصي اللي بيمثلني كمطور — من التصميم لقاعدة البيانات للمدونة الثنائية اللغة، وكل الدروس اللي تعلمتها.",
+      en: "How I built the personal website that represents me as a developer — from design to database to bilingual blog, and all the lessons I learned.",
+    },
+    content: {
+      ar: `الموقع الشخصي بتاعك كمطور هو بطاقتك الرقمية — أول حاجة حد يشوفها لما يبحث عنك أو حد يرشحك لفرصة. لما بدأت أبني ziadamr.me، كان هدفي أعمل مكان يجمع كل مشاريعي الـ 14، يعرض مهاراتي، ويكون فيه مدونة ثنائية اللغة بتشارك خبراتي. في المقال ده هشرح إزاي بنيت الموقع ده والدرس اللي تعلمتها في كل خطوة.
+
+أول قرار كان اختيار التقنيات. استخدمت Next.js طبعًا — ده إطار العمل اللي بستخدمه في كل مشاريعي، وكنت عارفه كويس. بس الموقع الشخصي مختلف شوية — محتاج SEO ممتاز عشان يظهر في جوجل لما حد يبحث عن اسمك، محتاج سرعة تحميل عالية عشان الانطباع الأول، ومحتاج يكون متجاوب على كل الأجهزة. Next.js بـ Server-Side Rendering وStatic Generation وفّر كل ده. استخدمت App Router عشان أستفيد من أحدث الميزات.
+
+تصميم قاعدة البيانات كان خطوة مهمة. استخدمت PostgreSQL مع Prisma كالعادة. الـ Schema كان فيه تلاتة موديلات أساسية: BlogPost للمدونة، Project للمشاريع، وUser للإدارة. موديل BlogPost كان أكتر موديل معقد — فيه حقول للعربي والإنجليزي (title_ar، title_en، content_ar، content_en)، slug فريد، تاريخ النشر، والتاجات. الفصل بين المحتوى العربي والإنجليزي في حقول مختلفة بدل ما أعمل جدول ترجمة منفصل خلى الـ Queries أبسط وأسرع.
+
+نظام المدونة الثنائية اللغة كان تحدي ممتع. كل مقال لازم يكون متاح بالعربي والإنجليزي بنفس الـ Slug. المستخدم بيقدر يبدل بين اللغات بضغطة واحدة. التصميم نفسه بيتكيف — لما تختار العربي، كل حاجة بتتحول لـ RTL: القوائم، النصوص، الأزرار. استخدمت dir="rtl" وdir="ltr" دايناميكيًا حسب اللغة المختارة. كمان الخطوط بتتغير — Cairo للعربي وInter للإنجليزي — عشان كل لغة تكون مقروءة بشكل أمثل.
+
+عرض المشاريع كان من أمتع الأجزاء. كل مشروع من الـ 14 مشروع ليهم بطاقة فيها: الاسم، الوصف المختصر، التقنيات المستخدمة، رابط الديمو الحي، ورابط الكود على GitHub. استخدمت تصنيفات (Filters) عشان الزائر يقدر يفلتر حسب التقنية — مثلاً يختار Next.js ويشوف كل المشاريع اللي اتعملت بيه. البطاقات نفسها اتعملت بـ CSS Grid المتجاوب اللي بيغير عدد الأعمدة حسب حجم الشاشة. كمان أضفت Animation بسيط لما الماوس بيمر على البطاقة — حاجة خفيفة بتخلي التجربة حية.
+
+الوضع الداكن (Dark Mode) كان مطلب أساسي. معظم المطورين بيستخدموا الوضع الداكن، وموقع بيتمثلني لازم يكون فيه. استخدمت next-themes عشان أدير الثيمات بسهولة. التحدي كان إن كل لون في التصميم لازم يكون ليه نسختين — فاتحة وداكنة. عملت نظام ألوان متكامل في tailwind.config فيه primary, secondary, accent, background, surface, وكلهم ليه نسخة dark. النتيجة كانت تصميم متناسق في الوضعين.
+
+SEO كان أولوية من الأول. كل صفحة ليها title وdescription مخصصين بالعربي والإنجليزي. استخدمت next/metadata عشان أضيف Open Graph tags — ده بيخلي الروابط لما تتهاوت في سوشيال ميديا تظهر ببطاقة حلوة فيها عنوان ووصف وصورة. كمان عملت sitemap.xml وrobots.txt تلقائيًا عبر Next.js. وأضفت Schema.org markup للمقالات عشان جوجل يفهم المحتوى أحسن. النتيجة: الموقع بيظهر في أول نتائج البحث لما حد يبحث عن اسمي.
+
+الدومين الخاص خطوة مش هتبخل عليها. داشاري ziadamr.me كان استثمار بسيط بس قيمته كبيرة. الدومين الخاص بيك بيدي انطباع احترافي، بيخلي الناس تفتكر عنوان موقعك، وبيخلي الإيميل بتاعك يبقى professional@ziadamr.me بدل ما يكون gmail. كمان استضافة Vercel كانت مثالية — مجانية للمواقع الشخصية، نشر تلقائي من GitHub، وSSL مجاني. كل مرة بدوس push على main، الموقع بيتحدث تلقائيًا.
+
+الحاجة اللي بتميز بورتفوليو عن التانيين هي المشاريع الحقيقية. مفيش حاجة بتأثر أكتر من إنك تعرض مشاريع اتعملت فعلاً واستخدمها ناس حقيقية. مواقع Tutorial وTodo App مش بتأثر. بس إسمع راديو اللي عليه مستخدمين حقيقيين، وطمني اللي بيحمي خصوصية ناس، ومعركة الأسئلة اللي الناس بتلعبها — دول اللي بيخلو الزائر يحترمك كمطور. عشان كده البورتفوليو بتاعي بيربط كل الـ 14 مشروع مع بعض، وكل واحد فيهم ليه رابط ديمو حي مش مجرد صورة.
+
+نصيحتي لأي مطور لسه ماعملش بورتفوليو: ابدأ النهاردة مش بكرة. حتى لو الموقع بسيط في الأول، وجوده على الإنترنت أهم من عدم وجوده. واعمل تحديثات مستمرة — كل مشروع جديد ضيفه، كل حاجة بتتعلمها اكتب عنها. البورتفوليو مش مشروع بتخلصه، ده كائن حي بيكبر معاك. وأهم حاجة: خليه أنت — مش نسخة من بورتفوليو حد تاني. الشخصية والأسلوب الخاص بيك هم اللي هيميزوك.`,
+      en: `Your personal website as a developer is your digital business card — the first thing someone sees when they look you up or when someone recommends you for an opportunity. When I started building ziadamr.me, my goal was to create a space that brings together all 14 of my projects, showcases my skills, and includes a bilingual blog where I share my experiences. In this article, I'll explain how I built this website and the lessons I learned at each step.
+
+The first decision was choosing the tech stack. I used Next.js of course — it's the framework I use in all my projects, and I know it well. But a personal website is a bit different — it needs excellent SEO so it appears in Google when someone searches your name, fast loading for a great first impression, and responsiveness across all devices. Next.js with Server-Side Rendering and Static Generation provided all of this. I used the App Router to take advantage of the latest features.
+
+Database design was an important step. I used PostgreSQL with Prisma as usual. The Schema had three core models: BlogPost for the blog, Project for the portfolio, and User for administration. The BlogPost model was the most complex — it has fields for Arabic and English (title_ar, title_en, content_ar, content_en), a unique slug, publish date, and tags. Separating Arabic and English content in different fields rather than a separate translation table made queries simpler and faster.
+
+The bilingual blog system was an enjoyable challenge. Every article needs to be available in Arabic and English with the same slug. Users can switch between languages with a single click. The design itself adapts — when you choose Arabic, everything switches to RTL: menus, text, buttons. I used dir="rtl" and dir="ltr" dynamically based on the selected language. Fonts also change — Cairo for Arabic and Inter for English — so each language is optimally readable.
+
+The project showcase was one of the most fun parts. Each of the 14 projects has a card with: name, brief description, technologies used, live demo link, and GitHub code link. I used filters so visitors can filter by technology — for example, selecting Next.js to see all projects built with it. The cards themselves use responsive CSS Grid that changes the number of columns based on screen size. I also added a subtle animation on card hover — something light that makes the experience feel alive.
+
+Dark Mode was essential. Most developers use dark mode, and a website that represents me needs to have it. I used next-themes to manage themes easily. The challenge was that every color in the design needs two versions — light and dark. I created a complete color system in tailwind.config with primary, secondary, accent, background, surface, and all have a dark variant. The result was a cohesive design in both modes.
+
+SEO was a priority from the start. Every page has custom title and description in both Arabic and English. I used next/metadata to add Open Graph tags — this makes links show a nice card with title, description, and image when shared on social media. I also built automatic sitemap.xml and robots.txt through Next.js. And I added Schema.org markup for articles so Google understands the content better. The result: the site appears in the top search results when someone searches my name.
+
+Having your own domain is a step you shouldn't skip. The ziadamr.me domain was a simple investment with huge value. A personal domain gives a professional impression, makes your website address memorable, and lets your email be professional@ziadamr.me instead of gmail. Vercel hosting was also ideal — free for personal sites, automatic deployment from GitHub, and free SSL. Every time I push to main, the site updates automatically.
+
+What sets a portfolio apart from others is real projects. Nothing makes an impact more than showcasing projects that were actually built and used by real people. Tutorial sites and Todo Apps don't impress. But Esma3 Radio with real users, Tammeny protecting people's privacy, and Battle of Questions that people actually play — those are what make a visitor respect you as a developer. That's why my portfolio connects all 14 projects together, each with a live demo link, not just a screenshot.
+
+My advice for any developer who hasn't built a portfolio yet: start today, not tomorrow. Even if the site is simple at first, having it online is more important than not having it. And keep updating — add every new project, write about everything you learn. A portfolio isn't a project you finish, it's a living thing that grows with you. And most importantly: make it yours — not a copy of someone else's portfolio. Your personality and style are what will set you apart.`,
+    },
+    tags: ["Portfolio", "Web Development", "Career"],
+  },
 ];
