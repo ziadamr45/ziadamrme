@@ -265,6 +265,103 @@ export default function Home() {
         </div>
       </section>
 
+      {/* KEY INFO / README SECTION */}
+      <ScrollReveal animation="fade-in" delay={0}>
+      <section className="relative z-10 w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">
+        <Card className="relative w-full overflow-hidden border-0 shadow-xl shadow-slate-200/50 dark:shadow-black/50 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl">
+          {/* README-style header */}
+          <div className="flex items-center gap-2 px-5 sm:px-6 pt-5 sm:pt-6 pb-3 border-b border-slate-200/60 dark:border-slate-700/60">
+            <div className="flex items-center gap-1.5">
+              <span className="w-3 h-3 rounded-full bg-red-400 dark:bg-red-500" />
+              <span className="w-3 h-3 rounded-full bg-yellow-400 dark:bg-yellow-500" />
+              <span className="w-3 h-3 rounded-full bg-green-400 dark:bg-green-500" />
+            </div>
+            <div className="flex-1 text-center">
+              <span className="text-[11px] font-mono text-slate-400 dark:text-slate-500 tracking-wide">
+                ziad-amr / README.md
+              </span>
+            </div>
+            <div className="flex items-center gap-1 opacity-0">
+              <span className="w-3 h-3 rounded-full" />
+              <span className="w-3 h-3 rounded-full" />
+              <span className="w-3 h-3 rounded-full" />
+            </div>
+          </div>
+          <CardContent className="p-5 sm:p-6">
+            {/* Status badge */}
+            <div className="flex flex-wrap items-center gap-2 mb-5">
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-green-500/10 dark:bg-green-500/20 text-green-700 dark:text-green-400 border border-green-500/20 dark:border-green-500/30">
+                <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
+                {t.readmeStatusAvailable}
+              </span>
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 border border-slate-200/60 dark:border-slate-700/60">
+                📍 {t.readmeLocation}
+              </span>
+            </div>
+
+            {/* Info rows */}
+            <div className="space-y-4">
+              {/* Focus */}
+              <div className="flex items-start gap-3">
+                <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-orange-500/10 dark:bg-orange-500/20 shrink-0 mt-0.5">
+                  <svg className="w-4 h-4 text-orange-600 dark:text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
+                </div>
+                <div className="flex-1 min-w-0">
+                  <p className="text-xs font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-wider mb-1">{t.readmeFocus}</p>
+                  <p className="text-sm text-slate-700 dark:text-slate-300 leading-relaxed">{t.readmeFocusItems}</p>
+                </div>
+              </div>
+
+              {/* Current Goal */}
+              <div className="flex items-start gap-3">
+                <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-blue-500/10 dark:bg-blue-500/20 shrink-0 mt-0.5">
+                  <svg className="w-4 h-4 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" /></svg>
+                </div>
+                <div className="flex-1 min-w-0">
+                  <p className="text-xs font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-wider mb-1">{t.readmeCurrentGoal}</p>
+                  <p className="text-sm text-slate-700 dark:text-slate-300 leading-relaxed">{t.readmeCurrentGoalText}</p>
+                </div>
+              </div>
+
+              {/* Fun Fact */}
+              <div className="flex items-start gap-3">
+                <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-purple-500/10 dark:bg-purple-500/20 shrink-0 mt-0.5">
+                  <svg className="w-4 h-4 text-purple-600 dark:text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" /></svg>
+                </div>
+                <div className="flex-1 min-w-0">
+                  <p className="text-xs font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-wider mb-1">{t.readmeFunFact}</p>
+                  <p className="text-sm text-slate-700 dark:text-slate-300 leading-relaxed">{t.readmeFunFactText}</p>
+                </div>
+              </div>
+
+              {/* Mission */}
+              <div className="flex items-start gap-3">
+                <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-amber-500/10 dark:bg-amber-500/20 shrink-0 mt-0.5">
+                  <svg className="w-4 h-4 text-amber-600 dark:text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" /></svg>
+                </div>
+                <div className="flex-1 min-w-0">
+                  <p className="text-xs font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-wider mb-1">{t.readmeMission}</p>
+                  <p className="text-sm text-slate-700 dark:text-slate-300 leading-relaxed">{t.readmeMissionText}</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Quick tech badges */}
+            <div className="mt-5 pt-4 border-t border-slate-200/60 dark:border-slate-700/60">
+              <p className="text-xs font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-wider mb-3">
+                {language === "ar" ? "التقنيات الأساسية" : "Core Tech"}
+              </p>
+              <div className="flex flex-wrap gap-2">
+                {techStack.filter(t => ["Next.js", "React", "TypeScript", "Tailwind CSS", "Node.js", "PostgreSQL", "Prisma"].includes(t.name)).map((tech) => (
+                  <TechBadge key={tech.name} name={tech.name} color={tech.color} size="sm" />
+                ))}
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      </section>
+      </ScrollReveal>
+
       {/* STATS SECTION */}
       <ScrollReveal animation="fade-in" delay={0}>
       <section className="relative z-10 w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">
