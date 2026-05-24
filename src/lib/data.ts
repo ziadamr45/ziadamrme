@@ -86,6 +86,27 @@ export const testimonials = [
   },
 ];
 
+// Calculate tech usage based on project count
+// Returns tech data sorted by usage (most used first) with percentage
+export function getTechWithUsage(projectTechArrays: string[][]) {
+  const totalProjects = projectTechArrays.length || 1;
+  const usageMap = new Map<string, number>();
+  
+  for (const techs of projectTechArrays) {
+    for (const tech of techs) {
+      usageMap.set(tech, (usageMap.get(tech) || 0) + 1);
+    }
+  }
+
+  return techStack
+    .map((tech) => ({
+      ...tech,
+      projectCount: usageMap.get(tech.name) || 0,
+      percentage: Math.round(((usageMap.get(tech.name) || 0) / totalProjects) * 100),
+    }))
+    .sort((a, b) => b.projectCount - a.projectCount);
+}
+
 // Tech stack with GitHub-style badge data
 // Each tech has: name, color (brand color), logo (simple identifier for badge display)
 export const techStack = [

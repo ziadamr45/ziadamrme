@@ -56,6 +56,9 @@ export function Navigation() {
     { id: "contact", label: language === "ar" ? "تواصل معي" : "Contact" },
   ];
 
+  // Tech page link (separate page)
+  const techPageItem = { href: "/tech", label: language === "ar" ? "التقنيات التي أستخدمها" : "Technologies I Use" };
+
   // Special navigation items (cross-page links)
   const specialNavItems = [
     { id: "github-activity", label: language === "ar" ? "نشاطي على جيت هاب" : "My GitHub Activity", href: "/" },
@@ -212,6 +215,17 @@ export function Navigation() {
             >
               {language === "ar" ? "شهادات العملاء" : "Testimonials"}
             </button>
+            {/* Tech page link on desktop */}
+            <Link
+              href="/tech"
+              className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
+                pathname === "/tech"
+                  ? "bg-orange-500/10 text-orange-600 dark:text-orange-400"
+                  : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800/50"
+              }`}
+            >
+              {language === "ar" ? "التقنيات" : "Technologies"}
+            </Link>
           </div>
 
           {/* Controls: Language + Theme + CTA + Hamburger */}
@@ -299,6 +313,19 @@ export function Navigation() {
                     {item.label}
                   </button>
                 ))}
+
+                {/* Tech page link */}
+                <Link
+                  href={techPageItem.href}
+                  onClick={() => { setIsOpen(false); document.body.style.overflow = ""; }}
+                  className={`flex items-center px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200 ${
+                    pathname === "/tech"
+                      ? "bg-orange-500/10 text-orange-600 dark:text-orange-400"
+                      : "text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700/50"
+                  }`}
+                >
+                  {techPageItem.label}
+                </Link>
 
                 {/* Section links (scroll on home page) */}
                 {pathname === "/" && (
