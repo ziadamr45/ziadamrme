@@ -29,6 +29,18 @@ export default function Home() {
     window.addEventListener("open-contact-form", handler);
     return () => window.removeEventListener("open-contact-form", handler);
   }, []);
+
+  // Handle scroll to contact from other pages via sessionStorage
+  useEffect(() => {
+    if (sessionStorage.getItem("scrollToContact") === "true") {
+      sessionStorage.removeItem("scrollToContact");
+      setTimeout(() => {
+        const el = document.getElementById("contact");
+        if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+        setShowContactForm(true);
+      }, 500);
+    }
+  }, []);
   const [contactForm, setContactForm] = useState({ name: "", email: "", message: "" });
   const [contactStatus, setContactStatus] = useState<"idle" | "sending" | "success" | "error" | "rateLimit" | "validation">("idle");
 
@@ -102,7 +114,7 @@ export default function Home() {
   }
 
   return (
-    <div className="relative min-h-screen flex flex-col items-center bg-linear-to-br from-slate-50 via-white to-slate-100 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950">
+    <div className="relative min-h-screen flex flex-col items-center bg-linear-to-br from-slate-50 via-white to-slate-100 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 overflow-x-hidden">
       <AnimatedBackground />
       <Navigation />
 
@@ -119,8 +131,11 @@ export default function Home() {
           {/* Left side - Text */}
           <div className="lg:col-span-3 text-center lg:text-start">
             <p className="text-sm font-medium text-orange-600 dark:text-orange-400 mb-2">{t.heroGreeting}</p>
-            <h1 className="text-4xl sm:text-5xl font-bold mb-3">
-              <span className="bg-clip-text text-transparent bg-linear-to-r from-orange-500 via-amber-500 to-orange-600 dark:from-orange-400 dark:via-amber-400 dark:to-orange-500" style={{ fontFamily: "'Cairo', 'Noto Sans SC', sans-serif" }}>{t.name}</span>
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-3">
+              <span className="relative inline-block">
+                <span className="relative z-10 bg-clip-text text-transparent bg-linear-to-r from-orange-500 via-amber-500 to-orange-600 dark:from-orange-400 dark:via-amber-400 dark:to-orange-500" style={{ fontFamily: "'Cairo', 'Noto Sans SC', sans-serif" }}>{t.name}</span>
+                <span className="absolute inset-0 bg-linear-to-r from-orange-500/10 via-amber-500/10 to-orange-500/10 dark:from-orange-500/20 dark:via-amber-500/20 dark:to-orange-500/20 blur-xl rounded-lg" aria-hidden="true" />
+              </span>
             </h1>
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-linear-to-r from-orange-500/10 to-amber-500/10 dark:from-orange-500/20 dark:to-amber-500/20 text-orange-600 dark:text-orange-400 text-sm font-medium mb-4">
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" /></svg>
@@ -171,7 +186,7 @@ export default function Home() {
                   <span className="text-xs text-slate-400 dark:text-slate-500 font-medium">{t.socialLinksTitle}</span>
                   <div className="flex-1 h-px bg-linear-to-r from-transparent via-slate-200 dark:via-slate-700 to-transparent" />
                 </div>
-                <div id="social-links" className="grid grid-cols-4 gap-2 w-full">
+                <div id="hero-social-links" className="grid grid-cols-4 gap-2 w-full">
                   {socialLinks.slice(0, 8).map((link) => (
                     <a
                       key={link.key}
@@ -209,7 +224,7 @@ export default function Home() {
 
       {/* WHY HIRE ME SECTION */}
       <ScrollReveal animation="slide-up" delay={0}>
-      <section className="relative z-10 w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">
+      <section id="why-hire-me" className="relative z-10 w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">
         <div className="text-center mb-8">
           <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white mb-2">{t.whyHireMeTitle}</h2>
           <p className="text-sm text-slate-500 dark:text-slate-400 max-w-2xl mx-auto">{t.whyHireMeSubtitle}</p>
@@ -232,7 +247,7 @@ export default function Home() {
 
       {/* ABOUT SECTION */}
       <ScrollReveal animation="slide-up" delay={100}>
-      <section className="relative z-10 w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">
+      <section id="about" className="relative z-10 w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">
         <Card className="relative w-full overflow-hidden border-0 shadow-xl shadow-slate-200/50 dark:shadow-black/50 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl">
           <CardContent className="p-8">
             <div className="flex items-center gap-3 mb-4">
@@ -261,12 +276,12 @@ export default function Home() {
                 <p className="text-xs text-slate-500 dark:text-slate-400">{t.contributionSubtitle}</p>
               </div>
             </div>
-            <div className="w-full overflow-x-auto">
+            <div className="w-full overflow-x-auto -mx-2 px-2">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src="https://ghchart.rshah.org/ziadamr45"
                 alt="GitHub Contribution Graph"
-                className="w-full h-auto min-w-[600px] rounded-lg"
+                className="w-full h-auto min-w-[480px] sm:min-w-[600px] rounded-lg"
                 loading="lazy"
               />
             </div>
@@ -277,7 +292,7 @@ export default function Home() {
 
       {/* PROJECTS SECTION */}
       <ScrollReveal animation="slide-up" delay={100}>
-      <section className="relative z-10 w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">
+      <section id="projects-section" className="relative z-10 w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center gap-3">
             <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-linear-to-br from-purple-500/10 to-pink-500/10 dark:from-purple-500/20 dark:to-pink-500/20">
@@ -490,7 +505,7 @@ export default function Home() {
                 </div>
                 <div className="flex flex-col gap-2 p-3 rounded-lg bg-amber-50/80 dark:bg-amber-500/10 border border-amber-200/50 dark:border-amber-500/20">
                   <p className="text-xs text-amber-700 dark:text-amber-300 font-medium leading-relaxed">{t.contactReplyNotice}</p>
-                  <button type="button" onClick={() => document.getElementById('social-links')?.scrollIntoView({ behavior: 'smooth' })} className="inline-flex items-center gap-1.5 text-xs font-semibold text-orange-600 dark:text-orange-400 hover:text-orange-700 dark:hover:text-orange-300 transition-colors cursor-pointer w-fit">
+                  <button type="button" onClick={() => document.getElementById('footer-social-links')?.scrollIntoView({ behavior: 'smooth' })} className="inline-flex items-center gap-1.5 text-xs font-semibold text-orange-600 dark:text-orange-400 hover:text-orange-700 dark:hover:text-orange-300 transition-colors cursor-pointer w-fit">
                     <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" /></svg>
                     {t.contactSocialLink}
                   </button>
@@ -530,14 +545,14 @@ export default function Home() {
 
       {/* FOOTER */}
       <footer className="relative z-10 w-full bg-white/50 dark:bg-slate-900/50 border-t border-slate-200/50 dark:border-slate-700/50 mt-auto">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
             {/* Brand */}
-            <div className="lg:col-span-2">
+            <div className="sm:col-span-2 lg:col-span-2">
               <div className="flex items-center gap-2.5 mb-3">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
-                  src="/profile.jpg"
+                  src="/profile-thumb.jpg"
                   alt="Ziad Amr"
                   width={36}
                   height={36}
@@ -570,7 +585,7 @@ export default function Home() {
               </ul>
             </div>
             {/* Social */}
-            <div>
+            <div id="footer-social-links">
               <h3 className="text-sm font-semibold text-slate-900 dark:text-white mb-3">{t.footerContact}</h3>
               <div className="flex flex-wrap gap-2">
                 {socialLinks.slice(0, 6).map((link) => (
@@ -587,7 +602,7 @@ export default function Home() {
               </div>
             </div>
           </div>
-          <div className="border-t border-slate-200/50 dark:border-slate-700/50 mt-8 pt-6">
+          <div className="border-t border-slate-200/50 dark:border-slate-700/50 mt-6 sm:mt-8 pt-4 sm:pt-6">
             <p className="text-xs text-slate-400 dark:text-slate-500 text-center">
               &copy; {new Date().getFullYear()} {t.name}. {language === "ar" ? "جميع الحقوق محفوظة" : "All rights reserved"}.
             </p>

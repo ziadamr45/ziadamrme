@@ -23,7 +23,11 @@ export function AnimatedBackground() {
   const { theme } = useApp();
 
   const initParticles = useCallback((width: number, height: number) => {
-    const count = Math.min(80, Math.floor((width * height) / 15000));
+    // Reduce particles on mobile for better performance
+    const isMobile = width < 768;
+    const maxCount = isMobile ? 30 : 80;
+    const divisor = isMobile ? 25000 : 15000;
+    const count = Math.min(maxCount, Math.floor((width * height) / divisor));
     const particles: Particle[] = [];
     for (let i = 0; i < count; i++) {
       particles.push({
@@ -139,14 +143,16 @@ export function AnimatedBackground() {
         ctx.fill();
       }
 
-      // Draw connections between nearby particles
+      // Draw connections between nearby particles (skip on mobile for performance)
+      const connectionDist = canvas.width < 768 ? 80 : 120;
+      if (canvas.width >= 768) {
       for (let i = 0; i < particles.length; i++) {
         for (let j = i + 1; j < particles.length; j++) {
           const dx = particles[i].x - particles[j].x;
           const dy = particles[i].y - particles[j].y;
           const dist = Math.sqrt(dx * dx + dy * dy);
-          if (dist < 120) {
-            const lineOpacity = (1 - dist / 120) * 0.12;
+          if (dist < connectionDist) {
+            const lineOpacity = (1 - dist / connectionDist) * 0.12;
             ctx.beginPath();
             ctx.moveTo(particles[i].x, particles[i].y);
             ctx.lineTo(particles[j].x, particles[j].y);
@@ -160,6 +166,7 @@ export function AnimatedBackground() {
           }
         }
       }
+      } // end if (canvas.width >= 768)
 
       animationRef.current = requestAnimationFrame(animate);
     };
@@ -183,8 +190,8 @@ export function AnimatedBackground() {
         aria-hidden="true"
       />
 
-      {/* Animated gradient orbs */}
-      <div className="absolute inset-0 overflow-hidden" aria-hidden="true">
+      {/* Animated gradient orbs - hidden on mobile for performance */}
+      <div className="absolute inset-0 overflow-hidden hidden sm:block" aria-hidden="true">
         {/* Orb 1 — top right, warm orange */}
         <div className="orb orb-1" />
 
@@ -198,8 +205,8 @@ export function AnimatedBackground() {
         <div className="orb orb-4" />
       </div>
 
-      {/* Animated aurora wave at bottom */}
-      <div className="absolute bottom-0 left-0 right-0 h-40 overflow-hidden" aria-hidden="true">
+      {/* Animated aurora wave at bottom - hidden on mobile for performance */}
+      <div className="absolute bottom-0 left-0 right-0 h-40 overflow-hidden hidden sm:block" aria-hidden="true">
         <div className="aurora aurora-1" />
         <div className="aurora aurora-2" />
       </div>

@@ -184,7 +184,7 @@ export const translations = {
     contactValidationError: "Please fill in all fields correctly",
     contactReplyNotice: "⚡ The reply will be sent to the email you enter — make sure it's correct",
     contactSocialLink: "Or reach out via social media",
-    avatarFallback: "ZA",
+    avatarFallback: "زياد",
     ariaSendEmail: "Send email",
     ariaOpensNew: "Opens in new window",
     contributionTitle: "GitHub Activity",
