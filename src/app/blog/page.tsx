@@ -9,6 +9,8 @@ import { translations } from "@/lib/translations";
 import { formatDate } from "@/lib/utils";
 import Link from "next/link";
 import { useScrollRestoration } from "@/hooks/use-scroll-restoration";
+import { TechBadge } from "@/components/tech-badge";
+import { techStack } from "@/lib/data";
 
 export default function BlogPage() {
   const { language } = useApp();
@@ -50,9 +52,17 @@ export default function BlogPage() {
                   <p className="text-sm text-slate-500 dark:text-slate-400 leading-relaxed mb-4 line-clamp-3">{post.excerpt[language]}</p>
                   <div className="flex items-center justify-between">
                     <div className="flex flex-wrap gap-1.5">
-                      {post.tags.slice(0, 3).map((tag) => (
-                        <span key={tag} className="inline-flex items-center px-2 py-1 rounded-md text-[11px] font-medium bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 border border-slate-200/50 dark:border-slate-700/50">{tag}</span>
-                      ))}
+                      {post.tags.slice(0, 3).map((tag) => {
+                        const techData = techStack.find((t) => t.name === tag);
+                        return (
+                          <TechBadge
+                            key={tag}
+                            name={tag}
+                            color={techData?.color}
+                            size="sm"
+                          />
+                        );
+                      })}
                     </div>
                     <span className="inline-flex items-center gap-1.5 text-xs font-medium text-orange-600 dark:text-orange-400">
                       {t.readMore}

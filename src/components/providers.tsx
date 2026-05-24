@@ -5,6 +5,7 @@ import {
   useContext,
   useState,
   useEffect,
+  useLayoutEffect,
   useCallback,
   useRef,
 } from "react";
@@ -54,7 +55,9 @@ export function Providers({ children }: { children: React.ReactNode }) {
     setMounted(true);
   }, []);
 
-  useEffect(() => {
+  // Apply theme & language to DOM synchronously BEFORE browser paint
+  // to prevent any flash of default (light + Arabic) during navigation.
+  useLayoutEffect(() => {
     if (!mounted) return;
     const root = document.documentElement;
 

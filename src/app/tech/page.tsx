@@ -11,6 +11,7 @@ import { projects } from "@/lib/projects";
 import Link from "next/link";
 import { useScrollRestoration } from "@/hooks/use-scroll-restoration";
 import { ScrollReveal } from "@/components/scroll-reveal";
+import { TechBadge } from "@/components/tech-badge";
 
 // Animated Progress Bar Component
 function AnimatedProgressBar({ percentage, color, delay = 0 }: { percentage: number; color: string; delay?: number }) {
@@ -146,17 +147,10 @@ export default function TechPage() {
               <Card className="relative overflow-hidden border-0 shadow-md shadow-slate-200/30 dark:shadow-black/20 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl hover:shadow-lg transition-shadow duration-300">
                 <CardContent className="p-4 sm:p-5">
                   <div className="flex items-center gap-3 mb-3">
-                    {/* Color dot */}
-                    <span
-                      className="w-3 h-3 rounded-full flex-shrink-0 ring-1 ring-white/20"
-                      style={{ backgroundColor: tech.color === "#000000" ? "#1e293b" : tech.color }}
-                    />
-                    {/* Tech name */}
-                    <h3 className="text-sm sm:text-base font-bold text-slate-900 dark:text-white flex-1">
-                      {tech.name}
-                    </h3>
+                    {/* GitHub shields.io-style badge */}
+                    <TechBadge name={tech.name} color={tech.color} size="md" />
                     {/* Project count badge */}
-                    <span className="text-[11px] font-medium px-2 py-0.5 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 border border-slate-200/50 dark:border-slate-700/50 whitespace-nowrap">
+                    <span className="text-[11px] font-medium px-2 py-0.5 rounded-[4px] bg-slate-500 text-white whitespace-nowrap">
                       {t.techUsedInProjects.replace("{count}", String(tech.projectCount))}
                     </span>
                     {/* Percentage */}

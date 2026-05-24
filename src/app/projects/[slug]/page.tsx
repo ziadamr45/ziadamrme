@@ -8,6 +8,7 @@ import { projects } from "@/lib/projects";
 import { techStack } from "@/lib/data";
 import { translations } from "@/lib/translations";
 import { useParams, useRouter } from "next/navigation";
+import { TechBadge } from "@/components/tech-badge";
 
 export default function ProjectPage() {
   const { language } = useApp();
@@ -131,7 +132,7 @@ export default function ProjectPage() {
               </div>
             )}
 
-            {/* Tech Stack - GitHub-style badges */}
+            {/* Tech Stack - GitHub shields.io-style badges */}
             <div className="mb-6">
               <h3 className="text-sm font-semibold text-slate-900 dark:text-white mb-3">
                 {language === "ar" ? "التقنيات المستخدمة" : "Technologies Used"}
@@ -140,21 +141,12 @@ export default function ProjectPage() {
                 {project.tech.map((tech) => {
                   const techData = techStack.find((t) => t.name === tech);
                   return (
-                    <span
+                    <TechBadge
                       key={tech}
-                      className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-medium border transition-all duration-200 hover:scale-105 cursor-default"
-                      style={{
-                        borderColor: techData ? `${techData.color}30` : "rgba(148,163,184,0.3)",
-                        backgroundColor: techData ? `${techData.color}10` : "rgba(241,245,249,1)",
-                        color: techData && techData.color !== "#000000" ? techData.color : undefined,
-                      }}
-                    >
-                      <span
-                        className="w-2.5 h-2.5 rounded-full flex-shrink-0 ring-1 ring-white/20"
-                        style={{ backgroundColor: techData ? techData.color : "#94a3b8" }}
-                      />
-                      {tech}
-                    </span>
+                      name={tech}
+                      color={techData?.color}
+                      size="md"
+                    />
                   );
                 })}
               </div>

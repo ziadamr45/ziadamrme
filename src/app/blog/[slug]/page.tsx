@@ -13,6 +13,7 @@ import { useParams, useRouter } from "next/navigation";
 import { useScrollRestoration } from "@/hooks/use-scroll-restoration";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+import { TechBadge } from "@/components/tech-badge";
 
 export default function BlogPostPage() {
   const { language } = useApp();
@@ -82,21 +83,12 @@ export default function BlogPostPage() {
               {post.tags.map((tag) => {
                 const techData = techStack.find((t) => t.name === tag);
                 return (
-                  <span
+                  <TechBadge
                     key={tag}
-                    className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-[11px] font-medium border"
-                    style={{
-                      borderColor: techData ? `${techData.color}30` : "rgba(148,163,184,0.3)",
-                      backgroundColor: techData ? `${techData.color}08` : "rgba(241,245,249,1)",
-                      color: techData && techData.color !== "#000000" ? techData.color : undefined,
-                    }}
-                  >
-                    <span
-                      className="w-1.5 h-1.5 rounded-full flex-shrink-0"
-                      style={{ backgroundColor: techData ? techData.color : "#94a3b8" }}
-                    />
-                    {tag}
-                  </span>
+                    name={tag}
+                    color={techData?.color}
+                    size="sm"
+                  />
                 );
               })}
             </div>

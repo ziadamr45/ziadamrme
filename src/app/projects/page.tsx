@@ -10,6 +10,7 @@ import { techStack } from "@/lib/data";
 import { translations } from "@/lib/translations";
 import Link from "next/link";
 import { useScrollRestoration } from "@/hooks/use-scroll-restoration";
+import { TechBadge, TechOverflowBadge } from "@/components/tech-badge";
 
 export default function ProjectsPage() {
   const { language } = useApp();
@@ -61,39 +62,35 @@ export default function ProjectsPage() {
             <button
               type="button"
               onClick={() => setSelectedTech(null)}
-              className={`inline-flex items-center px-2.5 py-1 rounded-md text-[11px] font-medium border transition-all duration-200 cursor-pointer ${
+              className={`inline-flex items-center px-2.5 py-1 rounded-[4px] text-[11px] font-semibold whitespace-nowrap leading-none transition-all duration-200 cursor-pointer ${
                 selectedTech === null
-                  ? "bg-orange-500/10 text-orange-600 dark:text-orange-400 border-orange-500/30 dark:border-orange-500/20"
-                  : "bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 border-slate-200/50 dark:border-slate-700/50 hover:bg-slate-200 dark:hover:bg-slate-700"
+                  ? "bg-orange-500 text-white shadow-sm"
+                  : "bg-transparent text-slate-600 dark:text-slate-400 border-1.5 border-slate-300 dark:border-slate-600 hover:bg-slate-100 dark:hover:bg-slate-800"
               }`}
             >
               {t.filterAll}
             </button>
             {allTechs.slice(0, 5).map((tech) => {
               const techData = techStack.find((t) => t.name === tech);
-              return (
-                <button
+              const isSelected = selectedTech === tech;
+              return isSelected ? (
+                <TechBadge
                   key={tech}
-                  type="button"
-                  onClick={() => setSelectedTech(selectedTech === tech ? null : tech)}
-                  className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-[11px] font-medium border transition-all duration-200 cursor-pointer ${
-                    selectedTech === tech
-                      ? "border-orange-500/30 dark:border-orange-500/20"
-                      : "border-slate-200/50 dark:border-slate-700/50 hover:bg-slate-200 dark:hover:bg-slate-700"
-                  }`}
-                  style={selectedTech === tech ? {
-                    backgroundColor: techData ? `${techData.color}10` : undefined,
-                    color: techData && techData.color !== "#000000" ? techData.color : undefined,
-                  } : {
-                    backgroundColor: undefined,
-                  }}
-                >
-                  <span
-                    className="w-1.5 h-1.5 rounded-full"
-                    style={{ backgroundColor: techData ? techData.color : "#94a3b8" }}
-                  />
-                  {tech}
-                </button>
+                  name={tech}
+                  color={techData?.color}
+                  size="sm"
+                  variant="solid"
+                  onClick={() => setSelectedTech(null)}
+                />
+              ) : (
+                <TechBadge
+                  key={tech}
+                  name={tech}
+                  color={techData?.color}
+                  size="sm"
+                  variant="outline"
+                  onClick={() => setSelectedTech(tech)}
+                />
               );
             })}
             {allTechs.length > 5 && (
@@ -128,29 +125,25 @@ export default function ProjectsPage() {
                 <div className="flex flex-wrap gap-1.5">
                   {allTechs.slice(5).map((tech) => {
                     const techData = techStack.find((t) => t.name === tech);
-                    return (
-                      <button
+                    const isSelected = selectedTech === tech;
+                    return isSelected ? (
+                      <TechBadge
                         key={tech}
-                        type="button"
-                        onClick={() => setSelectedTech(selectedTech === tech ? null : tech)}
-                        className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-[11px] font-medium border transition-all duration-200 cursor-pointer ${
-                          selectedTech === tech
-                            ? "border-orange-500/30 dark:border-orange-500/20"
-                            : "border-slate-200/50 dark:border-slate-700/50 hover:bg-slate-200 dark:hover:bg-slate-700"
-                        }`}
-                        style={selectedTech === tech ? {
-                          backgroundColor: techData ? `${techData.color}10` : undefined,
-                          color: techData && techData.color !== "#000000" ? techData.color : undefined,
-                        } : {
-                          backgroundColor: undefined,
-                        }}
-                      >
-                        <span
-                          className="w-1.5 h-1.5 rounded-full"
-                          style={{ backgroundColor: techData ? techData.color : "#94a3b8" }}
-                        />
-                        {tech}
-                      </button>
+                        name={tech}
+                        color={techData?.color}
+                        size="sm"
+                        variant="solid"
+                        onClick={() => setSelectedTech(null)}
+                      />
+                    ) : (
+                      <TechBadge
+                        key={tech}
+                        name={tech}
+                        color={techData?.color}
+                        size="sm"
+                        variant="outline"
+                        onClick={() => setSelectedTech(tech)}
+                      />
                     );
                   })}
                 </div>
@@ -185,24 +178,15 @@ export default function ProjectsPage() {
                       {project.tech.slice(0, 4).map((tech) => {
                         const techData = techStack.find((t) => t.name === tech);
                         return (
-                          <span
+                          <TechBadge
                             key={tech}
-                            className="inline-flex items-center gap-1.5 px-2 py-1 rounded-md text-[11px] font-medium border"
-                            style={{
-                              borderColor: techData ? `${techData.color}30` : "rgba(148,163,184,0.3)",
-                              backgroundColor: techData ? `${techData.color}08` : "rgba(241,245,249,1)",
-                              color: techData && techData.color !== "#000000" ? techData.color : undefined,
-                            }}
-                          >
-                            <span
-                              className="w-1.5 h-1.5 rounded-full flex-shrink-0"
-                              style={{ backgroundColor: techData ? techData.color : "#94a3b8" }}
-                            />
-                            {tech}
-                          </span>
+                            name={tech}
+                            color={techData?.color}
+                            size="sm"
+                          />
                         );
                       })}
-                      {project.tech.length > 4 && <span className="inline-flex items-center px-2 py-1 rounded-md text-[11px] font-medium bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 border border-slate-200/50 dark:border-slate-700/50">+{project.tech.length - 4}</span>}
+                      {project.tech.length > 4 && <TechOverflowBadge count={project.tech.length - 4} />}
                     </div>
                     <span className="inline-flex items-center gap-2 text-xs font-medium text-orange-600 dark:text-orange-400">
                       {t.viewProject}

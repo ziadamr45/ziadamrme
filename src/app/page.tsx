@@ -14,6 +14,7 @@ import { translations } from "@/lib/translations";
 import { SocialFeedSection } from "@/components/social-feed";
 import { useScrollRestoration } from "@/hooks/use-scroll-restoration";
 import { ScrollReveal } from "@/components/scroll-reveal";
+import { TechBadge, TechOverflowBadge } from "@/components/tech-badge";
 
 export default function Home() {
   const { language } = useApp();
@@ -167,25 +168,7 @@ export default function Home() {
     }
   };
 
-  // GitHub-style tech badge component
-  function TechBadge({ tech }: { tech: typeof techStack[number] }) {
-    return (
-      <span
-        className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-medium border transition-all duration-200 hover:scale-105 hover:shadow-md cursor-default bg-slate-100 dark:bg-slate-800/50 text-slate-700 dark:text-slate-300 border-slate-200/60 dark:border-slate-700/40"
-        style={{
-          borderColor: `${tech.color}30`,
-          backgroundColor: `${tech.color}10`,
-          color: tech.color === "#000000" ? undefined : tech.color,
-        }}
-      >
-        <span
-          className="w-2.5 h-2.5 rounded-full flex-shrink-0 ring-1 ring-white/20"
-          style={{ backgroundColor: tech.color === "#000000" ? "#1e293b" : tech.color }}
-        />
-        {tech.name}
-      </span>
-    );
-  }
+
 
   return (
     <div className="relative min-h-screen flex flex-col items-center bg-linear-to-br from-slate-50 via-white to-slate-100 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 overflow-x-hidden">
@@ -406,24 +389,15 @@ export default function Home() {
                     {project.tech.slice(0, 4).map((tech) => {
                       const techData = techStack.find((t) => t.name === tech);
                       return (
-                        <span
+                        <TechBadge
                           key={tech}
-                          className="inline-flex items-center gap-1.5 px-2 py-1 rounded-md text-[11px] font-medium border"
-                          style={{
-                            borderColor: techData ? `${techData.color}30` : "rgba(148,163,184,0.3)",
-                            backgroundColor: techData ? `${techData.color}08` : "rgba(241,245,249,1)",
-                            color: techData && techData.color !== "#000000" ? techData.color : undefined,
-                          }}
-                        >
-                          <span
-                            className="w-1.5 h-1.5 rounded-full flex-shrink-0"
-                            style={{ backgroundColor: techData ? techData.color : "#94a3b8" }}
-                          />
-                          {tech}
-                        </span>
+                          name={tech}
+                          color={techData?.color}
+                          size="sm"
+                        />
                       );
                     })}
-                    {project.tech.length > 4 && <span className="inline-flex items-center px-2 py-1 rounded-md text-[11px] font-medium bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 border border-slate-200/50 dark:border-slate-700/50">+{project.tech.length - 4}</span>}
+                    {project.tech.length > 4 && <TechOverflowBadge count={project.tech.length - 4} />}
                   </div>
                   <div className="flex items-center justify-between">
                     <span className="inline-flex items-center gap-2 text-xs font-medium text-orange-600 dark:text-orange-400">
@@ -475,7 +449,7 @@ export default function Home() {
             </div>
             <div className="flex flex-wrap gap-2">
               {techStack.slice(0, 10).map((tech) => (
-                <TechBadge key={tech.name} tech={tech} />
+                <TechBadge key={tech.name} name={tech.name} color={tech.color} size="md" />
               ))}
             </div>
             {/* Mobile view all link */}

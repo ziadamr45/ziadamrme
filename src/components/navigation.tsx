@@ -153,7 +153,9 @@ export function Navigation() {
                 if (pathname === "/") {
                   window.scrollTo({ top: 0, behavior: "smooth" });
                 } else {
-                  router.push("/");
+                  router.push("/", { scroll: false });
+                  // Scroll to top after navigation completes
+                  setTimeout(() => window.scrollTo({ top: 0, behavior: "smooth" }), 100);
                 }
               }}
               className="relative group/img cursor-pointer focus:outline-none"
@@ -166,21 +168,27 @@ export function Navigation() {
                 width={32}
                 height={32}
                 fetchPriority="high"
-                className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl object-cover shadow-lg shadow-orange-500/20 group-hover/img:shadow-orange-500/40 transition-all duration-300 ring-2 ring-orange-500/20 group-hover/img:scale-105"
+                draggable={false}
+                onContextMenu={(e) => e.preventDefault()}
+                className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl object-cover shadow-lg shadow-orange-500/20 group-hover/img:shadow-orange-500/40 transition-all duration-300 ring-2 ring-orange-500/20 group-hover/img:scale-105 pointer-events-none"
               />
             </button>
-            <Link href="/" className="flex items-center" onClick={(e) => {
-              e.preventDefault();
-              if (pathname === "/") {
-                window.scrollTo({ top: 0, behavior: "smooth" });
-              } else {
-                router.push("/");
-              }
-            }}>
+            <button
+              type="button"
+              onClick={() => {
+                if (pathname === "/") {
+                  window.scrollTo({ top: 0, behavior: "smooth" });
+                } else {
+                  router.push("/", { scroll: false });
+                  setTimeout(() => window.scrollTo({ top: 0, behavior: "smooth" }), 100);
+                }
+              }}
+              className="flex items-center cursor-pointer focus:outline-none"
+            >
               <span className="font-bold text-slate-900 dark:text-white text-base sm:text-lg hidden sm:block">
                 {language === "ar" ? "زياد عمرو" : "Ziad Amr"}
               </span>
-            </Link>
+            </button>
           </div>
 
           {/* Desktop Navigation */}

@@ -9,6 +9,8 @@ import { Navigation } from "@/components/navigation";
 import { translations } from "@/lib/translations";
 import Link from "next/link";
 import { useScrollRestoration } from "@/hooks/use-scroll-restoration";
+import { TechBadge } from "@/components/tech-badge";
+import { techStack } from "@/lib/data";
 
 const services = [
   {
@@ -142,9 +144,17 @@ export default function ServicesPage() {
                 <h3 className={`text-lg font-bold mb-2 ${service.iconColor}`}>{String(t[service.titleKey as keyof typeof t])}</h3>
                 <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-4">{String(t[service.descKey as keyof typeof t])}</p>
                 <div className="flex flex-wrap gap-1.5">
-                  {service.tech.map((tech) => (
-                    <span key={tech} className="inline-flex items-center px-2 py-1 rounded-md text-[11px] font-medium bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 border border-slate-200/50 dark:border-slate-700/50">{tech}</span>
-                  ))}
+                  {service.tech.map((tech) => {
+                    const techData = techStack.find((t) => t.name === tech);
+                    return (
+                      <TechBadge
+                        key={tech}
+                        name={tech}
+                        color={techData?.color}
+                        size="sm"
+                      />
+                    );
+                  })}
                 </div>
               </CardContent>
             </Card>
