@@ -7,6 +7,7 @@ import { Controls } from "@/components/controls";
 import { Navigation } from "@/components/navigation";
 import { blogPosts } from "@/lib/blog-data";
 import { translations } from "@/lib/translations";
+import { formatDate } from "@/lib/utils";
 import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
 
@@ -66,7 +67,7 @@ export default function BlogPostPage() {
           <CardContent className="p-8">
             <div className="flex items-center gap-2 mb-4">
               <span className="text-xs text-slate-400 dark:text-slate-500 font-medium">
-                {new Date(post.date).toLocaleDateString(language === "ar" ? "ar-EG" : "en-US", { year: "numeric", month: "long", day: "numeric" })}
+                {formatDate(post.date, language)}
               </span>
             </div>
             <h1 className="text-2xl font-bold text-slate-900 dark:text-white mb-4">{post.title[language]}</h1>

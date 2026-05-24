@@ -17,6 +17,7 @@ __pycache__/
 # misc
 .DS_Store
 *.pem
+*.key
 
 # debug
 npm-debug.log*
@@ -25,8 +26,10 @@ yarn-error.log*
 .pnpm-debug.log*
 
 # env files
-.env*.local
 .env
+.env.local
+.env.production
+.env.development
 
 # vercel
 .vercel

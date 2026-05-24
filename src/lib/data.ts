@@ -13,7 +13,7 @@ export function getStats(projectCount: number) {
 export const stats = [
   { number: "3+", label: { ar: "سنوات خبرة", en: "Years Experience" }, icon: "📅" },
   { number: "12+", label: { ar: "مشروع منجز", en: "Projects Completed" }, icon: "🚀" },
-  { number: "40+", label: { ar: "تقنية مستخدمة", en: "Technologies Used" }, icon: "🛠️" },
+  { number: "42+", label: { ar: "تقنية مستخدمة", en: "Technologies Used" }, icon: "🛠️" },
 ];
 
 export const techStack = [
@@ -56,4 +56,6 @@ export const techStack = [
   { name: "ytdl-core", color: "from-red-500/80 to-red-400" },
   { name: "Google Fonts", color: "from-blue-400/80 to-green-400" },
   { name: "Font Awesome", color: "from-blue-500/80 to-sky-400" },
+  { name: "Lucide", color: "from-slate-600/80 to-slate-400" },
+  { name: "View Transitions API", color: "from-teal-600/80 to-cyan-400" },
 ];

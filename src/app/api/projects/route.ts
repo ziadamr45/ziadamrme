@@ -17,7 +17,7 @@ const projectMeta: Record<string, {
       ar: "تطبيق ويب احترافي للاستماع إلى محطات الراديو من مختلف أنحاء العالم، يتضمن قسمًا للقرآن الكريم مع توصيات ذكية ونظام إشعارات متقدم",
       en: "Professional web app for listening to radio stations worldwide, with a Quran section, smart recommendations, and an advanced notification system",
     },
-    tech: ["Next.js", "React", "TypeScript", "Tailwind CSS", "PostgreSQL", "Prisma", "NextAuth"],
+    tech: ["Next.js", "React", "TypeScript", "Tailwind CSS", "PostgreSQL", "Prisma", "NextAuth", "PWA"],
     featured: true,
   },
   Elmokhber: {
@@ -97,7 +97,7 @@ const projectMeta: Record<string, {
       ar: "تطبيق طقس احترافي مع توقعات دقيقة وتحليلات مناخية مفصلة وواجهة ثنائية اللغة ومساعد طقس ذكي",
       en: "Professional weather app with accurate forecasts, detailed climate analysis, bilingual UI, and a smart weather assistant",
     },
-    tech: ["Next.js", "TypeScript", "Tailwind CSS", "Prisma", "Framer Motion"],
+    tech: ["Next.js", "TypeScript", "Tailwind CSS", "Prisma", "Framer Motion", "PWA"],
     featured: false,
   },
   Notifications: {
