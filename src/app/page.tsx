@@ -79,24 +79,29 @@ export default function Home() {
   const [contactStatus, setContactStatus] = useState<"idle" | "sending" | "success" | "error" | "rateLimit" | "validation">("idle");
 
   // Animated Counter Component
-  function AnimatedCounter({ target, suffix = "+", duration = 2000 }: { target: number; suffix?: string; duration?: number }) {
-    const [count, setCount] = useState(0);
+  function AnimatedCounter({ target, suffix = "+", duration = 1200 }: { target: number; suffix?: string; duration?: number }) {
+    const [count, setCount] = useState<number | null>(null);
     const ref = useRef<HTMLDivElement>(null);
     const hasAnimated = useRef(false);
 
     const animate = useCallback(() => {
       if (hasAnimated.current) return;
       hasAnimated.current = true;
-      const startTime = performance.now();
-      const step = (currentTime: number) => {
-        const elapsed = currentTime - startTime;
-        const progress = Math.min(elapsed / duration, 1);
-        // easeOutExpo for smooth deceleration
-        const eased = progress === 1 ? 1 : 1 - Math.pow(2, -10 * progress);
-        setCount(Math.floor(eased * target));
-        if (progress < 1) requestAnimationFrame(step);
-      };
-      requestAnimationFrame(step);
+      setCount(0); // Ensure 0 is visible first
+      // Small delay so the user sees the 0 before counting starts
+      setTimeout(() => {
+        const startTime = performance.now();
+        const step = (currentTime: number) => {
+          const elapsed = currentTime - startTime;
+          const progress = Math.min(elapsed / duration, 1);
+          // easeOutCubic for smooth but fast animation
+          const eased = 1 - Math.pow(1 - progress, 3);
+          setCount(Math.round(eased * target));
+          if (progress < 1) requestAnimationFrame(step);
+          else setCount(target);
+        };
+        requestAnimationFrame(step);
+      }, 150);
     }, [target, duration]);
 
     useEffect(() => {
@@ -104,13 +109,13 @@ export default function Home() {
         ([entry]) => {
           if (entry.isIntersecting) animate();
         },
-        { threshold: 0.3 }
+        { threshold: 0.1 }
       );
       if (ref.current) observer.observe(ref.current);
       return () => observer.disconnect();
     }, [animate]);
 
-    return <div ref={ref}>{count}{suffix}</div>;
+    return <div ref={ref}>{count !== null ? count : 0}{suffix}</div>;
   }
 
   useEffect(() => {
@@ -356,7 +361,7 @@ export default function Home() {
               <img
                 src="https://ghchart.rshah.org/ziadamr45"
                 alt="GitHub Contribution Graph"
-                className="w-full h-auto min-w-[480px] sm:min-w-[600px] rounded-lg"
+                className="w-full h-auto min-w-[400px] sm:min-w-[600px] rounded-lg"
                 loading="lazy"
               />
             </div>
@@ -515,47 +520,43 @@ export default function Home() {
       </section>
       </ScrollReveal>
 
-      {/* SERVICES SECTION LINK */}
-      <ScrollReveal animation="slide-up" delay={100}>
-      <section className="relative z-10 w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pb-4">
-        <Link href="/services">
-          <Card className="relative w-full overflow-hidden border-0 shadow-xl shadow-slate-200/50 dark:shadow-black/50 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl transition-transform duration-300 hover:scale-[1.02] cursor-pointer">
-            <CardContent className="p-8">
-              <div className="flex items-center gap-3">
-                <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-linear-to-br from-orange-500/10 to-amber-500/10 dark:from-orange-500/20 dark:to-amber-500/20">
-                  <svg className="w-5 h-5 text-orange-600 dark:text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" /></svg>
-                </div>
-                <div className="flex-1">
-                  <h2 className="text-lg font-bold text-slate-900 dark:text-white">{t.servicesTitle}</h2>
-                  <p className="text-xs text-slate-500 dark:text-slate-400">{t.servicesSubtitle}</p>
-                </div>
-                <svg className="w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={language === "ar" ? "M19 12H5m0 0l7 7m-7-7l7-7" : "M5 12h14m0 0l-7-7m7 7l-7 7"} /></svg>
-              </div>
-            </CardContent>
-          </Card>
-        </Link>
-      </section>
-      </ScrollReveal>
-
-      {/* BLOG SECTION LINK */}
+      {/* SERVICES & BLOG SECTION LINKS - Side by side */}
       <ScrollReveal animation="slide-up" delay={100}>
       <section className="relative z-10 w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">
-        <Link href="/blog">
-          <Card className="relative w-full overflow-hidden border-0 shadow-xl shadow-slate-200/50 dark:shadow-black/50 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl transition-transform duration-300 hover:scale-[1.02] cursor-pointer">
-            <CardContent className="p-8">
-              <div className="flex items-center gap-3">
-                <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-linear-to-br from-amber-500/10 to-yellow-500/10 dark:from-amber-500/20 dark:to-yellow-500/20">
-                  <svg className="w-5 h-5 text-amber-600 dark:text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" /></svg>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <Link href="/services">
+            <Card className="relative w-full overflow-hidden border-0 shadow-xl shadow-slate-200/50 dark:shadow-black/50 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl transition-transform duration-300 hover:scale-[1.02] cursor-pointer h-full">
+              <CardContent className="p-6 sm:p-8">
+                <div className="flex items-center gap-3">
+                  <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-linear-to-br from-orange-500/10 to-amber-500/10 dark:from-orange-500/20 dark:to-amber-500/20">
+                    <svg className="w-5 h-5 text-orange-600 dark:text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" /></svg>
+                  </div>
+                  <div className="flex-1">
+                    <h2 className="text-lg font-bold text-slate-900 dark:text-white">{t.servicesTitle}</h2>
+                    <p className="text-xs text-slate-500 dark:text-slate-400">{t.servicesSubtitle}</p>
+                  </div>
+                  <svg className="w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={language === "ar" ? "M19 12H5m0 0l7 7m-7-7l7-7" : "M5 12h14m0 0l-7-7m7 7l-7 7"} /></svg>
                 </div>
-                <div className="flex-1">
-                  <h2 className="text-lg font-bold text-slate-900 dark:text-white">{t.blogTitle}</h2>
-                  <p className="text-xs text-slate-500 dark:text-slate-400">{t.blogSubtitle}</p>
+              </CardContent>
+            </Card>
+          </Link>
+          <Link href="/blog">
+            <Card className="relative w-full overflow-hidden border-0 shadow-xl shadow-slate-200/50 dark:shadow-black/50 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl transition-transform duration-300 hover:scale-[1.02] cursor-pointer h-full">
+              <CardContent className="p-6 sm:p-8">
+                <div className="flex items-center gap-3">
+                  <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-linear-to-br from-amber-500/10 to-yellow-500/10 dark:from-amber-500/20 dark:to-yellow-500/20">
+                    <svg className="w-5 h-5 text-amber-600 dark:text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" /></svg>
+                  </div>
+                  <div className="flex-1">
+                    <h2 className="text-lg font-bold text-slate-900 dark:text-white">{t.blogTitle}</h2>
+                    <p className="text-xs text-slate-500 dark:text-slate-400">{t.blogSubtitle}</p>
+                  </div>
+                  <svg className="w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={language === "ar" ? "M19 12H5m0 0l7 7m-7-7l7-7" : "M5 12h14m0 0l-7-7m7 7l-7 7"} /></svg>
                 </div>
-                <svg className="w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={language === "ar" ? "M19 12H5m0 0l7 7m-7-7l7-7" : "M5 12h14m0 0l-7-7m7 7l-7 7"} /></svg>
-              </div>
-            </CardContent>
-          </Card>
-        </Link>
+              </CardContent>
+            </Card>
+          </Link>
+        </div>
       </section>
       </ScrollReveal>
 
