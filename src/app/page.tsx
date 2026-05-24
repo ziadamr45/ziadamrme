@@ -30,7 +30,7 @@ export default function Home() {
     return () => window.removeEventListener("open-contact-form", handler);
   }, []);
 
-  // Listen for open-profile-image custom event (from navigation)
+  // Listen for open-profile-image custom event (kept for future use)
   useEffect(() => {
     const handler = () => setShowImageModal(true);
     window.addEventListener("open-profile-image", handler);

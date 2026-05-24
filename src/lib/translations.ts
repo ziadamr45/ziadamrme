@@ -74,7 +74,7 @@ export const translations = {
     navSocialFeed: "المنشورات",
     // Why Hire Me section
     whyHireMeTitle: "ليه تختار زياد عمرو؟",
-    whyHireMeSubtitle: "مش مجرد مطوِّر — شريكك في تحويل أفكارك لواقع",
+    whyHireMeSubtitle: "مش مجرد مطوِّر — ده شريكك في تحويل أفكارك لواقع",
     whyDelivery: "تسليم سريع",
     whyDeliveryDesc: "متوسط وقت التسليم 4 أيام مع الحفاظ على أعلى جودة",
     whyCommunication: "تواصل مستمر",
@@ -227,7 +227,7 @@ export const translations = {
     navSocialFeed: "Social Feed",
     // Why Hire Me section
     whyHireMeTitle: "Why Ziad Amr?",
-    whyHireMeSubtitle: "Not just a developer — your partner in turning ideas into reality",
+    whyHireMeSubtitle: "Not just a developer — this is your partner in turning ideas into reality",
     whyDelivery: "Fast Delivery",
     whyDeliveryDesc: "Average delivery time of 4 days while maintaining the highest quality",
     whyCommunication: "Continuous Communication",

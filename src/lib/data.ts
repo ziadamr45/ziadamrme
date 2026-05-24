@@ -13,7 +13,7 @@ export function getStats(projectCount: number) {
 export const stats = [
   { number: "3+", label: { ar: "سنوات خبرة", en: "Years Experience" }, icon: "📅" },
   { number: "12+", label: { ar: "مشروع منجز", en: "Projects Completed" }, icon: "🚀" },
-  { number: "53+", label: { ar: "تقنية مستخدمة", en: "Technologies Used" }, icon: "🛠️" },
+  { number: "52+", label: { ar: "تقنية مستخدمة", en: "Technologies Used" }, icon: "🛠️" },
 ];
 
 // Why Hire Me data
@@ -120,7 +120,6 @@ export const techStack = [
   { name: "Socket.io", color: "#010101", logo: "socketdotio" },
   { name: "LiveKit", color: "#4F46E5", logo: "livekit" },
   { name: "NextAuth", color: "#EF4444", logo: "nextauth" },
-  { name: "Python", color: "#3776AB", logo: "python" },
   { name: "Docker", color: "#2496ED", logo: "docker" },
   { name: "Git", color: "#F05032", logo: "git" },
   { name: "Vercel", color: "#000000", logo: "vercel" },

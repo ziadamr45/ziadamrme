@@ -16,6 +16,7 @@ export default function ProjectsPage() {
   const t = translations[language];
   useScrollRestoration();
   const [selectedTech, setSelectedTech] = useState<string | null>(null);
+  const [showAllFilters, setShowAllFilters] = useState(false);
 
   // Extract all unique tech tags
   const allTechs = useMemo(() => {
@@ -68,7 +69,7 @@ export default function ProjectsPage() {
             >
               {t.filterAll}
             </button>
-            {allTechs.map((tech) => {
+            {(showAllFilters ? allTechs : allTechs.slice(0, 5)).map((tech) => {
               const techData = techStack.find((t) => t.name === tech);
               return (
                 <button
@@ -95,6 +96,24 @@ export default function ProjectsPage() {
                 </button>
               );
             })}
+            {allTechs.length > 5 && !showAllFilters && (
+              <button
+                type="button"
+                onClick={() => setShowAllFilters(true)}
+                className="inline-flex items-center gap-1 px-2.5 py-1 rounded-md text-[11px] font-medium border border-orange-500/30 dark:border-orange-500/20 bg-orange-500/5 text-orange-600 dark:text-orange-400 hover:bg-orange-500/10 transition-all duration-200 cursor-pointer"
+              >
+                {language === "ar" ? `عرض الكل (${allTechs.length})` : `Show All (${allTechs.length})`}
+              </button>
+            )}
+            {showAllFilters && (
+              <button
+                type="button"
+                onClick={() => setShowAllFilters(false)}
+                className="inline-flex items-center gap-1 px-2.5 py-1 rounded-md text-[11px] font-medium border border-slate-200/50 dark:border-slate-700/50 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700 transition-all duration-200 cursor-pointer"
+              >
+                {language === "ar" ? "عرض أقل" : "Show Less"}
+              </button>
+            )}
           </div>
         </div>
 
