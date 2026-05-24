@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import Link from "next/link";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Card, CardContent } from "@/components/ui/card";
@@ -77,6 +77,41 @@ export default function Home() {
   }, []);
   const [contactForm, setContactForm] = useState({ name: "", email: "", message: "" });
   const [contactStatus, setContactStatus] = useState<"idle" | "sending" | "success" | "error" | "rateLimit" | "validation">("idle");
+
+  // Animated Counter Component
+  function AnimatedCounter({ target, suffix = "+", duration = 2000 }: { target: number; suffix?: string; duration?: number }) {
+    const [count, setCount] = useState(0);
+    const ref = useRef<HTMLDivElement>(null);
+    const hasAnimated = useRef(false);
+
+    const animate = useCallback(() => {
+      if (hasAnimated.current) return;
+      hasAnimated.current = true;
+      const startTime = performance.now();
+      const step = (currentTime: number) => {
+        const elapsed = currentTime - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        // easeOutExpo for smooth deceleration
+        const eased = progress === 1 ? 1 : 1 - Math.pow(2, -10 * progress);
+        setCount(Math.floor(eased * target));
+        if (progress < 1) requestAnimationFrame(step);
+      };
+      requestAnimationFrame(step);
+    }, [target, duration]);
+
+    useEffect(() => {
+      const observer = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting) animate();
+        },
+        { threshold: 0.3 }
+      );
+      if (ref.current) observer.observe(ref.current);
+      return () => observer.disconnect();
+    }, [animate]);
+
+    return <div ref={ref}>{count}{suffix}</div>;
+  }
 
   useEffect(() => {
     if (showImageModal) {
@@ -243,15 +278,21 @@ export default function Home() {
       <ScrollReveal animation="fade-in" delay={0}>
       <section className="relative z-10 w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">
         <div className="grid grid-cols-3 gap-3 sm:gap-4">
-          {stats.map((stat) => (
-            <Card key={stat.label.en} className="relative overflow-hidden border-0 shadow-lg shadow-slate-200/50 dark:shadow-black/30 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl">
-              <CardContent className="p-4 sm:p-6 text-center">
-                <span className="text-2xl sm:text-3xl mb-1 block">{stat.icon}</span>
-                <p className="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white">{stat.number}</p>
-                <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 font-medium">{stat.label[language]}</p>
-              </CardContent>
-            </Card>
-          ))}
+          {stats.map((stat) => {
+            const numericValue = parseInt(stat.number.replace(/[^0-9]/g, ""), 10);
+            const suffix = stat.number.includes("+") ? "+" : "";
+            return (
+              <Card key={stat.label.en} className="relative overflow-hidden border-0 shadow-lg shadow-slate-200/50 dark:shadow-black/30 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl">
+                <CardContent className="p-4 sm:p-6 text-center">
+                  <span className="text-2xl sm:text-3xl mb-1 block">{stat.icon}</span>
+                  <p className="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white">
+                    <AnimatedCounter target={numericValue} suffix={suffix} />
+                  </p>
+                  <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 font-medium">{stat.label[language]}</p>
+                </CardContent>
+              </Card>
+            );
+          })}
         </div>
       </section>
       </ScrollReveal>
