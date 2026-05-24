@@ -5,7 +5,6 @@ import Link from "next/link";
 import { useApp } from "@/components/providers";
 import { Card, CardContent } from "@/components/ui/card";
 import { AnimatedBackground } from "@/components/animated-background";
-import { Controls } from "@/components/controls";
 import { Navigation } from "@/components/navigation";
 import { translations } from "@/lib/translations";
 import { useScrollRestoration } from "@/hooks/use-scroll-restoration";
@@ -39,7 +38,6 @@ export default function SocialFeedPage() {
 
   return (
     <div className="relative min-h-screen flex flex-col items-center bg-linear-to-br from-slate-50 via-white to-slate-100 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950">
-      <Controls />
       <AnimatedBackground />
       <Navigation />
 

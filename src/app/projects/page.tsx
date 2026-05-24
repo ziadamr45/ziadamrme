@@ -4,7 +4,6 @@ import { useState, useMemo } from "react";
 import { useApp } from "@/components/providers";
 import { Card, CardContent } from "@/components/ui/card";
 import { AnimatedBackground } from "@/components/animated-background";
-import { Controls } from "@/components/controls";
 import { Navigation } from "@/components/navigation";
 import { sortedProjects, projects } from "@/lib/projects";
 import { techStack } from "@/lib/data";
@@ -35,7 +34,6 @@ export default function ProjectsPage() {
 
   return (
     <div className="relative min-h-screen flex flex-col items-center bg-linear-to-br from-slate-50 via-white to-slate-100 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950">
-      <Controls />
       <AnimatedBackground />
       <Navigation />
 

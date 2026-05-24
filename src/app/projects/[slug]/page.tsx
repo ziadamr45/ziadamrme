@@ -3,7 +3,6 @@
 import { useApp } from "@/components/providers";
 import { Card, CardContent } from "@/components/ui/card";
 import { AnimatedBackground } from "@/components/animated-background";
-import { Controls } from "@/components/controls";
 import { Navigation } from "@/components/navigation";
 import { projects } from "@/lib/projects";
 import { techStack } from "@/lib/data";
@@ -23,7 +22,6 @@ export default function ProjectPage() {
     return (
       <div className="relative min-h-screen flex flex-col items-center justify-center bg-linear-to-br from-slate-50 via-white to-slate-100 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950">
         <AnimatedBackground />
-        <Controls />
         <Navigation />
         <Card className="relative z-10 w-full max-w-md mx-4 overflow-hidden border-0 shadow-xl shadow-slate-200/50 dark:shadow-black/50 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl">
           <CardContent className="p-8 text-center">
@@ -48,7 +46,6 @@ export default function ProjectPage() {
 
   return (
     <div className="relative min-h-screen flex flex-col items-center bg-linear-to-br from-slate-50 via-white to-slate-100 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950">
-      <Controls />
       <AnimatedBackground />
       <Navigation />
 

@@ -321,3 +321,59 @@
     @apply font-sans;
   }
 }
+
+/* ===== Code Syntax Highlighting (dark theme for code blocks) ===== */
+.prose-content pre code {
+  color: #e2e8f0;
+}
+
+.prose-content pre .hljs-keyword,
+.prose-content pre .hljs-selector-tag,
+.prose-content pre .hljs-built_in {
+  color: #c084fc;
+}
+
+.prose-content pre .hljs-string,
+.prose-content pre .hljs-attr,
+.prose-content pre .hljs-template-variable {
+  color: #34d399;
+}
+
+.prose-content pre .hljs-comment,
+.prose-content pre .hljs-doctag {
+  color: #64748b;
+  font-style: italic;
+}
+
+.prose-content pre .hljs-number,
+.prose-content pre .hljs-literal,
+.prose-content pre .hljs-type {
+  color: #fb923c;
+}
+
+.prose-content pre .hljs-function .hljs-title,
+.prose-content pre .hljs-title {
+  color: #60a5fa;
+}
+
+.prose-content pre .hljs-variable,
+.prose-content pre .hljs-params {
+  color: #f472b6;
+}
+
+.prose-content pre .hljs-meta {
+  color: #94a3b8;
+}
+
+/* ===== Dynamic Favicon ===== */
+.favicon-dark {
+  display: none;
+}
+
+.dark .favicon-light {
+  display: none;
+}
+
+.dark .favicon-dark {
+  display: block;
+}

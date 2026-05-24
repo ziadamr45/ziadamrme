@@ -75,6 +75,13 @@ export const metadata: Metadata = {
     },
   },
   manifest: "/manifest.json",
+  icons: {
+    icon: [
+      { url: "/favicon.png", media: "(prefers-color-scheme: light)" },
+      { url: "/favicon-dark.png", media: "(prefers-color-scheme: dark)" },
+    ],
+    apple: "/icon.png",
+  },
 };
 
 export default function RootLayout({
@@ -120,9 +127,11 @@ export default function RootLayout({
   return (
     <html lang="ar" dir="rtl" suppressHydrationWarning>
       <head>
-        <link rel="icon" href="/favicon.png" sizes="any" />
+        <link rel="icon" href="/favicon.png" sizes="any" media="(prefers-color-scheme: light)" />
+        <link rel="icon" href="/favicon-dark.png" sizes="any" media="(prefers-color-scheme: dark)" />
         <link rel="apple-touch-icon" href="/icon.png" />
-        <meta name="theme-color" content="#0a5c5c" />
+        <meta name="theme-color" content="#f97316" media="(prefers-color-scheme: light)" />
+        <meta name="theme-color" content="#0f172a" media="(prefers-color-scheme: dark)" />
         <meta name="google-site-verification" content="" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />

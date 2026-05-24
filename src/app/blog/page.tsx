@@ -3,7 +3,6 @@
 import { useApp } from "@/components/providers";
 import { Card, CardContent } from "@/components/ui/card";
 import { AnimatedBackground } from "@/components/animated-background";
-import { Controls } from "@/components/controls";
 import { Navigation } from "@/components/navigation";
 import { blogPosts } from "@/lib/blog-data";
 import { translations } from "@/lib/translations";
@@ -18,7 +17,6 @@ export default function BlogPage() {
 
   return (
     <div className="relative min-h-screen flex flex-col items-center bg-linear-to-br from-slate-50 via-white to-slate-100 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950">
-      <Controls />
       <AnimatedBackground />
       <Navigation />
 

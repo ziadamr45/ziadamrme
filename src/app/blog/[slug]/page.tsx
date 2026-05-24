@@ -3,13 +3,16 @@
 import { useApp } from "@/components/providers";
 import { Card, CardContent } from "@/components/ui/card";
 import { AnimatedBackground } from "@/components/animated-background";
-import { Controls } from "@/components/controls";
 import { Navigation } from "@/components/navigation";
 import { blogPosts } from "@/lib/blog-data";
 import { translations } from "@/lib/translations";
 import { formatDate } from "@/lib/utils";
+import { techStack } from "@/lib/data";
 import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
+import { useScrollRestoration } from "@/hooks/use-scroll-restoration";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 
 export default function BlogPostPage() {
   const { language } = useApp();
@@ -24,7 +27,6 @@ export default function BlogPostPage() {
     return (
       <div className="relative min-h-screen flex flex-col items-center justify-center bg-linear-to-br from-slate-50 via-white to-slate-100 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950">
         <AnimatedBackground />
-        <Controls />
         <Navigation />
         <Card className="relative z-10 w-full max-w-md mx-4 overflow-hidden border-0 shadow-xl shadow-slate-200/50 dark:shadow-black/50 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl">
           <CardContent className="p-8 text-center">
@@ -45,9 +47,13 @@ export default function BlogPostPage() {
     );
   }
 
+  // Find related posts (same tags, exclude current)
+  const relatedPosts = blogPosts
+    .filter((p) => p.slug !== slug && p.tags.some((tag) => post.tags.includes(tag)))
+    .slice(0, 3);
+
   return (
     <div className="relative min-h-screen flex flex-col items-center bg-linear-to-br from-slate-50 via-white to-slate-100 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950">
-      <Controls />
       <AnimatedBackground />
       <Navigation />
 
@@ -73,18 +79,95 @@ export default function BlogPostPage() {
             <h1 className="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white mb-4">{post.title[language]}</h1>
 
             <div className="flex flex-wrap gap-1.5 mb-6">
-              {post.tags.map((tag) => (
-                <span key={tag} className="inline-flex items-center px-2.5 py-1 rounded-md text-[11px] font-medium bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 border border-slate-200/50 dark:border-slate-700/50">{tag}</span>
-              ))}
+              {post.tags.map((tag) => {
+                const techData = techStack.find((t) => t.name === tag);
+                return (
+                  <span
+                    key={tag}
+                    className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-[11px] font-medium border"
+                    style={{
+                      borderColor: techData ? `${techData.color}30` : "rgba(148,163,184,0.3)",
+                      backgroundColor: techData ? `${techData.color}08` : "rgba(241,245,249,1)",
+                      color: techData && techData.color !== "#000000" ? techData.color : undefined,
+                    }}
+                  >
+                    <span
+                      className="w-1.5 h-1.5 rounded-full flex-shrink-0"
+                      style={{ backgroundColor: techData ? techData.color : "#94a3b8" }}
+                    />
+                    {tag}
+                  </span>
+                );
+              })}
             </div>
 
-            <div className="prose prose-sm dark:prose-invert max-w-none">
-              {post.content[language].split("\n\n").map((paragraph, i) => (
-                <p key={i} className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-4">{paragraph}</p>
-              ))}
+            {/* Markdown rendered content */}
+            <div className="prose-content">
+              <ReactMarkdown
+                remarkPlugins={[remarkGfm]}
+                components={{
+                  h1: ({ children }) => <h1 className="text-2xl font-bold text-slate-900 dark:text-white mt-8 mb-4">{children}</h1>,
+                  h2: ({ children }) => <h2 className="text-xl font-bold text-slate-900 dark:text-white mt-6 mb-3">{children}</h2>,
+                  h3: ({ children }) => <h3 className="text-lg font-semibold text-slate-900 dark:text-white mt-5 mb-2">{children}</h3>,
+                  p: ({ children }) => <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-4">{children}</p>,
+                  ul: ({ children }) => <ul className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-4 list-disc ps-6 space-y-1">{children}</ul>,
+                  ol: ({ children }) => <ol className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-4 list-decimal ps-6 space-y-1">{children}</ol>,
+                  li: ({ children }) => <li className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">{children}</li>,
+                  strong: ({ children }) => <strong className="font-semibold text-slate-900 dark:text-white">{children}</strong>,
+                  em: ({ children }) => <em className="italic text-slate-700 dark:text-slate-300">{children}</em>,
+                  a: ({ href, children }) => <a href={href} target="_blank" rel="noopener noreferrer" className="text-orange-600 dark:text-orange-400 hover:underline">{children}</a>,
+                  blockquote: ({ children }) => <blockquote className="border-s-4 border-orange-500/30 dark:border-orange-400/30 ps-4 py-2 my-4 bg-orange-50/50 dark:bg-orange-500/5 rounded-e-lg">{children}</blockquote>,
+                  code: ({ className, children }) => {
+                    const isInline = !className;
+                    if (isInline) {
+                      return <code className="px-1.5 py-0.5 rounded-md text-[13px] font-mono bg-slate-100 dark:bg-slate-800 text-orange-600 dark:text-orange-400 border border-slate-200 dark:border-slate-700">{children}</code>;
+                    }
+                    return (
+                      <code className={`${className} text-[13px]`}>{children}</code>
+                    );
+                  },
+                  pre: ({ children }) => (
+                    <div className="relative my-4 rounded-xl overflow-hidden border border-slate-200 dark:border-slate-700">
+                      <div className="bg-slate-800 dark:bg-slate-950 overflow-x-auto">
+                        <pre className="p-4 text-[13px] leading-relaxed font-mono text-slate-200">{children}</pre>
+                      </div>
+                    </div>
+                  ),
+                  hr: () => <hr className="my-6 border-slate-200 dark:border-slate-700" />,
+                  table: ({ children }) => <div className="my-4 overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-700"><table className="w-full text-sm">{children}</table></div>,
+                  th: ({ children }) => <th className="px-4 py-2 bg-slate-100 dark:bg-slate-800 text-start text-sm font-semibold text-slate-900 dark:text-white border-b border-slate-200 dark:border-slate-700">{children}</th>,
+                  td: ({ children }) => <td className="px-4 py-2 text-sm text-slate-600 dark:text-slate-400 border-b border-slate-100 dark:border-slate-800">{children}</td>,
+                }}
+              >
+                {post.content[language]}
+              </ReactMarkdown>
             </div>
           </CardContent>
         </Card>
+
+        {/* Related Posts */}
+        {relatedPosts.length > 0 && (
+          <div className="mt-8">
+            <h2 className="text-lg font-bold text-slate-900 dark:text-white mb-4">
+              {language === "ar" ? "مقالات مشابهة" : "Related Articles"}
+            </h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              {relatedPosts.map((relatedPost) => (
+                <Link key={relatedPost.slug} href={`/blog/${relatedPost.slug}`}>
+                  <Card className="relative w-full overflow-hidden border-0 shadow-lg shadow-slate-200/50 dark:shadow-black/30 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl transition-all duration-300 hover:scale-[1.02] cursor-pointer h-full">
+                    <CardContent className="p-5">
+                      <span className="text-[11px] text-slate-400 dark:text-slate-500 font-medium block mb-2">
+                        {formatDate(relatedPost.date, language)}
+                      </span>
+                      <h3 className="text-sm font-bold text-slate-900 dark:text-white mb-2 line-clamp-2">{relatedPost.title[language]}</h3>
+                      <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed line-clamp-2">{relatedPost.excerpt[language]}</p>
+                    </CardContent>
+                  </Card>
+                </Link>
+              ))}
+            </div>
+          </div>
+        )}
       </section>
 
       {/* FOOTER */}

@@ -5,7 +5,6 @@ import Link from "next/link";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Card, CardContent } from "@/components/ui/card";
 import { useApp } from "@/components/providers";
-import { Controls } from "@/components/controls";
 import { AnimatedBackground } from "@/components/animated-background";
 import { Navigation } from "@/components/navigation";
 import { socialLinks } from "@/lib/social-links";
@@ -14,6 +13,7 @@ import { getStats, techStack, whyHireMePoints, testimonials } from "@/lib/data";
 import { translations } from "@/lib/translations";
 import { SocialFeedSection } from "@/components/social-feed";
 import { useScrollRestoration } from "@/hooks/use-scroll-restoration";
+import { ScrollReveal } from "@/components/scroll-reveal";
 
 export default function Home() {
   const { language } = useApp();
@@ -96,7 +96,6 @@ export default function Home() {
 
   return (
     <div className="relative min-h-screen flex flex-col items-center bg-linear-to-br from-slate-50 via-white to-slate-100 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950">
-      <Controls />
       <AnimatedBackground />
       <Navigation />
 
@@ -134,8 +133,9 @@ export default function Home() {
               </button>
               <Link
                 href="/projects"
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl text-sm font-semibold border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-all duration-300"
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl text-sm font-semibold bg-white/90 dark:bg-slate-800/90 backdrop-blur-md border-2 border-orange-500/30 dark:border-orange-400/30 text-slate-900 dark:text-white shadow-lg shadow-orange-500/10 dark:shadow-orange-500/5 hover:shadow-orange-500/20 hover:border-orange-500/50 dark:hover:border-orange-400/50 hover:scale-105 transition-all duration-300"
               >
+                <svg className="w-4 h-4 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" /></svg>
                 {t.heroSecondaryCTA}
               </Link>
             </div>
@@ -182,6 +182,7 @@ export default function Home() {
       </section>
 
       {/* STATS SECTION */}
+      <ScrollReveal animation="fade-in" delay={0}>
       <section className="relative z-10 w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">
         <div className="grid grid-cols-3 gap-3 sm:gap-4">
           {stats.map((stat) => (
@@ -195,8 +196,10 @@ export default function Home() {
           ))}
         </div>
       </section>
+      </ScrollReveal>
 
       {/* WHY HIRE ME SECTION */}
+      <ScrollReveal animation="slide-up" delay={0}>
       <section className="relative z-10 w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">
         <div className="text-center mb-8">
           <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white mb-2">{t.whyHireMeTitle}</h2>
@@ -216,8 +219,10 @@ export default function Home() {
           ))}
         </div>
       </section>
+      </ScrollReveal>
 
       {/* ABOUT SECTION */}
+      <ScrollReveal animation="slide-up" delay={100}>
       <section className="relative z-10 w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">
         <Card className="relative w-full overflow-hidden border-0 shadow-xl shadow-slate-200/50 dark:shadow-black/50 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl">
           <CardContent className="p-8">
@@ -231,8 +236,10 @@ export default function Home() {
           </CardContent>
         </Card>
       </section>
+      </ScrollReveal>
 
       {/* GITHUB CONTRIBUTION GRAPH */}
+      <ScrollReveal animation="slide-up" delay={100}>
       <section className="relative z-10 w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">
         <Card className="relative w-full overflow-hidden border-0 shadow-xl shadow-slate-200/50 dark:shadow-black/50 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl">
           <CardContent className="p-6">
@@ -257,8 +264,10 @@ export default function Home() {
           </CardContent>
         </Card>
       </section>
+      </ScrollReveal>
 
       {/* PROJECTS SECTION */}
+      <ScrollReveal animation="slide-up" delay={100}>
       <section className="relative z-10 w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center gap-3">
@@ -339,8 +348,10 @@ export default function Home() {
           </Card>
         </Link>
       </section>
+      </ScrollReveal>
 
       {/* TECH STACK SECTION - GitHub-style badges */}
+      <ScrollReveal animation="fade-in" delay={100}>
       <section className="relative z-10 w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">
         <Card className="relative w-full overflow-hidden border-0 shadow-xl shadow-slate-200/50 dark:shadow-black/50 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl">
           <CardContent className="p-8">
@@ -361,9 +372,11 @@ export default function Home() {
           </CardContent>
         </Card>
       </section>
+      </ScrollReveal>
 
       {/* TESTIMONIALS SECTION */}
-      <section className="relative z-10 w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">
+      <ScrollReveal animation="slide-up" delay={100}>
+      <section id="testimonials" className="relative z-10 w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">
         <div className="text-center mb-8">
           <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white mb-2">{t.testimonialsTitle}</h2>
           <p className="text-sm text-slate-500 dark:text-slate-400 max-w-2xl mx-auto">{t.testimonialsSubtitle}</p>
@@ -391,8 +404,10 @@ export default function Home() {
           ))}
         </div>
       </section>
+      </ScrollReveal>
 
       {/* BLOG SECTION LINK */}
+      <ScrollReveal animation="slide-up" delay={100}>
       <section className="relative z-10 w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">
         <Link href="/blog">
           <Card className="relative w-full overflow-hidden border-0 shadow-xl shadow-slate-200/50 dark:shadow-black/50 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl transition-transform duration-300 hover:scale-[1.02] cursor-pointer">
@@ -411,6 +426,7 @@ export default function Home() {
           </Card>
         </Link>
       </section>
+      </ScrollReveal>
 
       {/* LATEST SOCIAL POSTS SECTION - YouTube only */}
       <SocialFeedSection />
