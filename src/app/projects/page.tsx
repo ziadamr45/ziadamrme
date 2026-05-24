@@ -69,7 +69,7 @@ export default function ProjectsPage() {
             >
               {t.filterAll}
             </button>
-            {(showAllFilters ? allTechs : allTechs.slice(0, 5)).map((tech) => {
+            {allTechs.slice(0, 5).map((tech) => {
               const techData = techStack.find((t) => t.name === tech);
               return (
                 <button
@@ -96,25 +96,67 @@ export default function ProjectsPage() {
                 </button>
               );
             })}
-            {allTechs.length > 5 && !showAllFilters && (
+            {allTechs.length > 5 && (
               <button
                 type="button"
-                onClick={() => setShowAllFilters(true)}
-                className="inline-flex items-center gap-1 px-2.5 py-1 rounded-md text-[11px] font-medium border border-orange-500/30 dark:border-orange-500/20 bg-orange-500/5 text-orange-600 dark:text-orange-400 hover:bg-orange-500/10 transition-all duration-200 cursor-pointer"
+                onClick={() => setShowAllFilters(!showAllFilters)}
+                className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-md text-[11px] font-medium border transition-all duration-200 cursor-pointer ${
+                  showAllFilters
+                    ? "border-slate-200/50 dark:border-slate-700/50 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700"
+                    : "border-orange-500/30 dark:border-orange-500/20 bg-orange-500/5 text-orange-600 dark:text-orange-400 hover:bg-orange-500/10"
+                }`}
               >
-                {language === "ar" ? `عرض الكل (${allTechs.length})` : `Show All (${allTechs.length})`}
-              </button>
-            )}
-            {showAllFilters && (
-              <button
-                type="button"
-                onClick={() => setShowAllFilters(false)}
-                className="inline-flex items-center gap-1 px-2.5 py-1 rounded-md text-[11px] font-medium border border-slate-200/50 dark:border-slate-700/50 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700 transition-all duration-200 cursor-pointer"
-              >
-                {language === "ar" ? "عرض أقل" : "Show Less"}
+                <svg className={`w-3 h-3 transition-transform duration-300 ${showAllFilters ? "rotate-180" : ""}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
+                {showAllFilters
+                  ? t.filterShowLess
+                  : `${t.filterShowAll} (${allTechs.length})`
+                }
               </button>
             )}
           </div>
+
+          {/* Expandable section for remaining tech filters */}
+          {allTechs.length > 5 && (
+            <div
+              className={`grid transition-all duration-300 ease-in-out ${
+                showAllFilters
+                  ? "grid-rows-[1fr] opacity-100 mt-1.5"
+                  : "grid-rows-[0fr] opacity-0"
+              }`}
+            >
+              <div className="overflow-hidden">
+                <div className="flex flex-wrap gap-1.5">
+                  {allTechs.slice(5).map((tech) => {
+                    const techData = techStack.find((t) => t.name === tech);
+                    return (
+                      <button
+                        key={tech}
+                        type="button"
+                        onClick={() => setSelectedTech(selectedTech === tech ? null : tech)}
+                        className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-[11px] font-medium border transition-all duration-200 cursor-pointer ${
+                          selectedTech === tech
+                            ? "border-orange-500/30 dark:border-orange-500/20"
+                            : "border-slate-200/50 dark:border-slate-700/50 hover:bg-slate-200 dark:hover:bg-slate-700"
+                        }`}
+                        style={selectedTech === tech ? {
+                          backgroundColor: techData ? `${techData.color}10` : undefined,
+                          color: techData && techData.color !== "#000000" ? techData.color : undefined,
+                        } : {
+                          backgroundColor: undefined,
+                        }}
+                      >
+                        <span
+                          className="w-1.5 h-1.5 rounded-full"
+                          style={{ backgroundColor: techData ? techData.color : "#94a3b8" }}
+                        />
+                        {tech}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+            </div>
+          )}
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
