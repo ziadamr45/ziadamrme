@@ -5,7 +5,6 @@ import {
   useContext,
   useState,
   useEffect,
-  useLayoutEffect,
   useCallback,
   useRef,
 } from "react";
@@ -32,16 +31,8 @@ export function useApp() {
 }
 
 export function Providers({ children }: { children: React.ReactNode }) {
-  // Lazy-initialize from localStorage so React state matches the blocking <head> script
-  // and prevents a flash of default (light + Arabic) on mount.
-  const [theme, setTheme] = useState<Theme>(() => {
-    if (typeof window === "undefined") return "light";
-    return (localStorage.getItem("theme") as Theme) || "light";
-  });
-  const [language, setLanguage] = useState<Language>(() => {
-    if (typeof window === "undefined") return "ar";
-    return (localStorage.getItem("language") as Language) || "ar";
-  });
+  const [theme, setTheme] = useState<Theme>("light");
+  const [language, setLanguage] = useState<Language>("ar");
   const [mounted, setMounted] = useState(false);
 
   // Theme transition state
@@ -51,14 +42,16 @@ export function Providers({ children }: { children: React.ReactNode }) {
   const overlayRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    // Mark as mounted; state is already initialized from localStorage
+    const savedTheme = (localStorage.getItem("theme") as Theme) || "light";
+    const savedLanguage = (localStorage.getItem("language") as Language) || "ar";
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- reading from localStorage requires setState
+    setTheme(savedTheme);
+    setLanguage(savedLanguage);
     setMounted(true);
   }, []);
 
-  // Apply theme & language to DOM synchronously BEFORE browser paint.
-  // The blocking script in layout.tsx handles the initial apply,
-  // so this effect only needs to run on subsequent changes.
-  useLayoutEffect(() => {
+  useEffect(() => {
+    if (!mounted) return;
     const root = document.documentElement;
 
     // Theme
@@ -73,7 +66,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
     root.lang = language;
     root.dir = language === "ar" ? "rtl" : "ltr";
     localStorage.setItem("language", language);
-  }, [theme, language]);
+  }, [theme, language, mounted]);
 
   const toggleTheme = useCallback(
     (event?: React.MouseEvent) => {
