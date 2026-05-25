@@ -6,14 +6,17 @@ import { usePathname } from "next/navigation";
 /**
  * useScrollRestoration
  *
- * Saves scroll position to sessionStorage as the user scrolls (debounced),
+ * Saves scroll position to sessionStorage on navigation away,
  * and restores it when the page is re-mounted (e.g., on back navigation).
  *
  * Works with Next.js App Router client-side navigation.
+ * Uses multiple strategies to ensure scroll position is restored
+ * after the content has fully rendered.
  */
 export function useScrollRestoration() {
   const pathname = usePathname();
   const restoredRef = useRef(false);
+  const pathnameRef = useRef(pathname);
 
   useEffect(() => {
     // Disable browser's default scroll restoration so we can control it
@@ -23,17 +26,38 @@ export function useScrollRestoration() {
 
     const storageKey = `scroll:${pathname}`;
 
-    // Restore scroll position on mount
-    if (!restoredRef.current) {
+    // Restore scroll position on mount (only once per pathname change)
+    if (!restoredRef.current || pathnameRef.current !== pathname) {
       restoredRef.current = true;
+      pathnameRef.current = pathname;
+
       const saved = sessionStorage.getItem(storageKey);
       if (saved) {
         const scrollY = parseInt(saved, 10);
         if (!isNaN(scrollY) && scrollY > 0) {
-          // Use requestAnimationFrame to ensure DOM is painted before scrolling
+          // Strategy 1: Try immediately
+          window.scrollTo(0, scrollY);
+
+          // Strategy 2: Try after requestAnimationFrame (DOM paint)
           requestAnimationFrame(() => {
-            window.scrollTo(0, scrollY);
+            if (Math.abs(window.scrollY - scrollY) > 10) {
+              window.scrollTo(0, scrollY);
+            }
           });
+
+          // Strategy 3: Try after a short delay (content may still be loading)
+          setTimeout(() => {
+            if (Math.abs(window.scrollY - scrollY) > 10) {
+              window.scrollTo(0, scrollY);
+            }
+          }, 100);
+
+          // Strategy 4: Final attempt after longer delay for heavy pages
+          setTimeout(() => {
+            if (Math.abs(window.scrollY - scrollY) > 10) {
+              window.scrollTo(0, scrollY);
+            }
+          }, 300);
         }
       }
     }
@@ -55,8 +79,14 @@ export function useScrollRestoration() {
       }
     };
 
+    // Save on beforeunload (full page reload/close)
+    const handleBeforeUnload = () => {
+      sessionStorage.setItem(storageKey, String(window.scrollY));
+    };
+
     window.addEventListener("scroll", handleScroll, { passive: true });
     document.addEventListener("visibilitychange", handleVisibilityChange);
+    window.addEventListener("beforeunload", handleBeforeUnload);
 
     return () => {
       // Save final scroll position on cleanup (navigation away)
@@ -64,6 +94,7 @@ export function useScrollRestoration() {
 
       window.removeEventListener("scroll", handleScroll);
       document.removeEventListener("visibilitychange", handleVisibilityChange);
+      window.removeEventListener("beforeunload", handleBeforeUnload);
 
       if (saveTimer) clearTimeout(saveTimer);
     };

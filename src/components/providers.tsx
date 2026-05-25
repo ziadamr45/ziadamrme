@@ -55,10 +55,10 @@ export function Providers({ children }: { children: React.ReactNode }) {
     setMounted(true);
   }, []);
 
-  // Apply theme & language to DOM synchronously BEFORE browser paint
-  // to prevent any flash of default (light + Arabic) during navigation.
+  // Apply theme & language to DOM synchronously BEFORE browser paint.
+  // The blocking script in layout.tsx handles the initial apply,
+  // so this effect only needs to run on subsequent changes.
   useLayoutEffect(() => {
-    if (!mounted) return;
     const root = document.documentElement;
 
     // Theme
@@ -73,7 +73,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
     root.lang = language;
     root.dir = language === "ar" ? "rtl" : "ltr";
     localStorage.setItem("language", language);
-  }, [theme, language, mounted]);
+  }, [theme, language]);
 
   const toggleTheme = useCallback(
     (event?: React.MouseEvent) => {

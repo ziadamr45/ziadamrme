@@ -310,6 +310,13 @@
   isolation: auto;
 }
 
+/* Prevent flash of default theme/language on page load.
+   Body is hidden until the blocking script in layout.tsx applies
+   the correct theme class and language direction. */
+html:not(.app-ready) body {
+  visibility: hidden;
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;

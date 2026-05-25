@@ -141,7 +141,7 @@ export default function RootLayout({
             This prevents the flash of default (light + Arabic) on page reload. */}
         <script
           dangerouslySetInnerHTML={{
-            __html: `(function(){try{var t=localStorage.getItem('theme');if(t==='dark'){document.documentElement.classList.add('dark')}var l=localStorage.getItem('language');if(l==='en'){document.documentElement.lang='en';document.documentElement.dir='ltr'}else{document.documentElement.lang='ar';document.documentElement.dir='rtl'}}catch(e){}})()`,
+            __html: `(function(){try{var t=localStorage.getItem('theme');if(t==='dark'){document.documentElement.classList.add('dark')}var l=localStorage.getItem('language');if(l==='en'){document.documentElement.lang='en';document.documentElement.dir='ltr'}else{document.documentElement.lang='ar';document.documentElement.dir='rtl'}}catch(e){}document.documentElement.classList.add('app-ready')})()`,
           }}
         />
         <link rel="icon" href="/favicon.png" sizes="any" media="(prefers-color-scheme: light)" />
