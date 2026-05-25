@@ -147,7 +147,7 @@ export default function RootLayout({
         <link rel="icon" href="/favicon.png" sizes="any" media="(prefers-color-scheme: light)" />
         <link rel="icon" href="/favicon-dark.png" sizes="any" media="(prefers-color-scheme: dark)" />
         <link rel="apple-touch-icon" href="/icon.png" />
-        <link rel="preload" as="image" href="/profile.webp" fetchPriority="high" />
+        <link rel="preload" as="image" href="/profile.jpg" fetchPriority="high" />
         {/* theme-color is now handled by viewport export */}
         <meta name="google-site-verification" content="" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
