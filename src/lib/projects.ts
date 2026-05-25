@@ -90,7 +90,7 @@ export const projects = [
       en: "Multiplayer real-time quiz battle game with game rooms, team modes, and live scoring system",
     },
     tech: ["Next.js", "React", "TypeScript", "Socket.io", "Tailwind CSS", "Prisma", "NextAuth", "Docker", "LiveKit", "shadcn/ui", "Radix UI", "Framer Motion", "Zustand", "Recharts", "React Hook Form", "Zod", "dnd-kit", "Sonner", "Embla Carousel", "Lucide", "Railway", "Vercel", "Git", "Node.js", "Bun", "next-intl", "next-themes", "React Query", "Sharp", "cmdk", "date-fns", "TanStack Table", "MDX Editor", "React Markdown", "ESLint"],
-    url: "https://battle-of-questions.vercel.app",
+    url: "https://ma3raka.vercel.app/",
     github: "https://github.com/ziadamr45/Battle-of-Questions",
     featured: true,
     details: {
