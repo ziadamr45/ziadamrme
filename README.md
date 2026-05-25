@@ -19,7 +19,7 @@
 
 **الموقع الشخصي لزياد عمرو** — صفحة هويّة شخصية احترافية تعرض نبذة عني ومهاراتي التقنية ومشاريعي وروابط التواصل الاجتماعي. صُمم الموقع بأسلوب عصري وجذاب يدعم اللغتين العربية والإنجليزية بالكامل، مع وضع داكن/فاتح وتأثيرات حركية سلسة وتصميم متجاوب يعمل على جميع الأجهزة.
 
-الموقع مبني باستخدام Next.js و TypeScript و Tailwind CSS3 مع مكتبة shadcn/ui للمكونات، ويستضيف على Vercel لأفضل أداء وسرعة تحميل.
+الموقع مبني باستخدام Next.js و TypeScript و Tailwind CSS مع مكتبة shadcn/ui للمكونات، ويستضيف على Vercel لأفضل أداء وسرعة تحميل.
 
 </div>
 
@@ -46,7 +46,7 @@
 |---------|-----------|
 | ![Next.js](https://img.shields.io/badge/Next.js-000000?style=flat&logo=next.js&logoColor=white) | إطار العمل الكامل |
 | ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=flat&logo=typescript&logoColor=white) | تطوير آمن بالأنواع |
-| ![Tailwind CSS3](https://img.shields.io/badge/Tailwind_CSS-06B6D4?style=flat&logo=tailwindcss&logoColor=white) | التصميم والأنماط |
+| ![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-06B6D4?style=flat&logo=tailwindcss&logoColor=white) | التصميم والأنماط |
 | ![shadcn/ui](https://img.shields.io/badge/shadcn/ui-000000?style=flat) | مكونات واجهة المستخدم |
 | ![Framer Motion](https://img.shields.io/badge/Framer_Motion-0055FF?style=flat&logo=framer&logoColor=white) | الحركات والأنيميشن |
 | ![Vercel](https://img.shields.io/badge/Vercel-000000?style=flat&logo=vercel&logoColor=white) | الاستضافة والنشر |
@@ -118,7 +118,7 @@ npm run dev
 
 **Ziad Amr's Personal Website** — A professional identity page showcasing an about-me section, technical skills, projects, and social media links. The site is designed with a modern and attractive style that fully supports both Arabic and English, with dark/light mode, smooth animations, and a responsive design that works on all devices.
 
-Built with Next.js, TypeScript, and Tailwind CSS3 with shadcn/ui components, hosted on Vercel for the best performance and loading speed.
+Built with Next.js, TypeScript, and Tailwind CSS with shadcn/ui components, hosted on Vercel for the best performance and loading speed.
 
 ### Features
 
@@ -143,7 +143,7 @@ Built with Next.js, TypeScript, and Tailwind CSS3 with shadcn/ui components, hos
 |------------|---------|
 | ![Next.js](https://img.shields.io/badge/Next.js-000000?style=flat&logo=next.js&logoColor=white) | Fullstack Framework |
 | ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=flat&logo=typescript&logoColor=white) | Type-safe Development |
-| ![Tailwind CSS3](https://img.shields.io/badge/Tailwind_CSS-06B6D4?style=flat&logo=tailwindcss&logoColor=white) | Styling |
+| ![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-06B6D4?style=flat&logo=tailwindcss&logoColor=white) | Styling |
 | ![shadcn/ui](https://img.shields.io/badge/shadcn/ui-000000?style=flat) | UI Components |
 | ![Framer Motion](https://img.shields.io/badge/Framer_Motion-0055FF?style=flat&logo=framer&logoColor=white) | Animations |
 | ![Vercel](https://img.shields.io/badge/Vercel-000000?style=flat&logo=vercel&logoColor=white) | Hosting & Deployment |
