@@ -84,6 +84,10 @@ npm run dev
 
 ![Screenshot](public/og-image.png)
 
+### 📜 الرخصة
+
+⚠️ رخصة عرض المصدر — هذا المشروع متاح **للعرض والاطلاع فقط**. لا يمكن نسخ الكود أو إعادة إنتاجه أو استخدامه في مشاريع أخرى. راجع [LICENSE.md](LICENSE.md) للتفاصيل الكاملة.
+
 ---
 
 ### 👨‍💻 المطور
@@ -101,9 +105,11 @@ npm run dev
 - 💼 LinkedIn: [ziad-amr](https://www.linkedin.com/in/ziad-amr-44633a411)
 - 📧 Email: ziad90216@gmail.com
 
-### 📜 الرخصة
+---
 
-⚠️ رخصة عرض المصدر — هذا المشروع متاح **للعرض والاطلاع فقط**. لا يمكن نسخ الكود أو إعادة إنتاجه أو استخدامه في مشاريع أخرى. راجع [LICENSE.md](LICENSE.md) للتفاصيل الكاملة.
+<p align="center">
+  مدعوم بواسطة <a href="https://ziadamrme.vercel.app/">زياد عمرو</a>
+</p>
 
 ---
 
@@ -171,6 +177,10 @@ npm run dev
 
 The app will be available at `http://localhost:3000`
 
+### 📜 License
+
+⚠️ Source Available License — This project is available for **viewing and reference only**. The code cannot be copied, reproduced, or used in other projects. See [LICENSE.md](LICENSE.md) for full details.
+
 ---
 
 ### 👨‍💻 Developer
@@ -188,16 +198,8 @@ The app will be available at `http://localhost:3000`
 - 💼 LinkedIn: [ziad-amr](https://www.linkedin.com/in/ziad-amr-44633a411)
 - 📧 Email: ziad90216@gmail.com
 
-### 📜 License
-
-⚠️ Source Available License — This project is available for **viewing and reference only**. The code cannot be copied, reproduced, or used in other projects. See [LICENSE.md](LICENSE.md) for full details.
-
 ---
-
-<div align="center">
 
 <p align="center">
   Powered by <a href="https://ziadamrme.vercel.app/">Ziad Amr</a>
 </p>
-
-</div>
