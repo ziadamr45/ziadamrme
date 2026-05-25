@@ -257,7 +257,7 @@ A real example from Battle of Questions: the question card repeated every round.
 
 My advice: if you haven't tried Tailwind yet, start with a small project. You'll be frustrated at first by how the code looks, but after a week you'll find yourself much faster. Use the Tailwind VS Code Extension for autocomplete — it's life-changing. And most importantly, learn to organize your classes so the code stays readable.`,
     },
-    tags: ["CSS", "Tailwind", "Frontend"],
+    tags: ["CSS3", "Tailwind", "Frontend"],
   },
   {
     slug: "database-journey",
