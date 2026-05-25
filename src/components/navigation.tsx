@@ -163,7 +163,7 @@ export function Navigation() {
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                src="/profile.jpg"
+                src="/zp.jpg"
                 alt="Ziad Amr"
                 width={32}
                 height={32}

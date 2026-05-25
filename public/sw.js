@@ -1,10 +1,10 @@
-const CACHE_NAME = "ziad-amr-v1";
+const CACHE_NAME = "ziad-amr-v2";
 const OFFLINE_URL = "/";
 
 const PRECACHE_URLS = [
   "/",
   "/manifest.json",
-  "/profile.jpg",
+  "/zp.jpg",
   "/favicon.png",
   "/icon.png",
 ];
