@@ -22,6 +22,7 @@ export default function Home() {
   useScrollRestoration();
   const stats = getStats(sortedProjects.length);
   const [showImageModal, setShowImageModal] = useState(false);
+  const [showLogoModal, setShowLogoModal] = useState(false);
   const [showContactForm, setShowContactForm] = useState(false);
 
   // Listen for open-contact-form custom event (from navigation)
@@ -120,13 +121,21 @@ export default function Home() {
   }
 
   useEffect(() => {
-    if (showImageModal) {
+    if (showImageModal || showLogoModal) {
       document.body.style.overflow = "hidden";
     } else {
       document.body.style.overflow = "";
     }
     return () => { document.body.style.overflow = ""; };
+  }, [showImageModal, showLogoModal]);
+
+  // Close other modal when one opens
+  useEffect(() => {
+    if (showImageModal) setShowLogoModal(false);
   }, [showImageModal]);
+  useEffect(() => {
+    if (showLogoModal) setShowImageModal(false);
+  }, [showLogoModal]);
 
   const handleContactSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -179,6 +188,13 @@ export default function Home() {
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm animate-in fade-in duration-200 cursor-zoom-out" onClick={() => setShowImageModal(false)} role="dialog" aria-modal="true">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src="/zp.jpg" alt="Ziad Amr" className="max-w-[90vw] max-h-[85vh] rounded-2xl shadow-2xl object-contain animate-in zoom-in-95 duration-300" onClick={(e) => e.stopPropagation()} />
+        </div>
+      )}
+
+      {showLogoModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm animate-in fade-in duration-200 cursor-zoom-out" onClick={() => setShowLogoModal(false)} role="dialog" aria-modal="true">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/logo.jpg" alt="Ziad Amr" className="max-w-[90vw] max-h-[85vh] rounded-2xl shadow-2xl object-contain animate-in zoom-in-95 duration-300" onClick={(e) => e.stopPropagation()} />
         </div>
       )}
 
@@ -634,9 +650,9 @@ export default function Home() {
               <div className="flex items-center gap-2.5 mb-3">
                 <button
                   type="button"
-                  onClick={() => setShowImageModal(true)}
+                  onClick={() => setShowLogoModal(true)}
                   className="relative group/footer-img cursor-pointer focus:outline-none"
-                  aria-label={language === "ar" ? "اضغط لعرض الصورة كاملة" : "Click to view full image"}
+                  aria-label={language === "ar" ? "اضغط لعرض اللوجو كاملاً" : "Click to view full logo"}
                 >
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
