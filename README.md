@@ -109,6 +109,7 @@ npm run dev
 
 ## English
 
+
 **Ziad Amr's Personal Website** — A professional identity page showcasing an about-me section, technical skills, projects, and social media links. The site is designed with a modern and attractive style that fully supports both Arabic and English, with dark/light mode, smooth animations, and a responsive design that works on all devices.
 
 Built with Next.js, TypeScript, and Tailwind CSS with shadcn/ui components, hosted on Vercel for the best performance and loading speed.
