@@ -137,18 +137,11 @@ export default function RootLayout({
   return (
     <html lang="ar" dir="rtl" suppressHydrationWarning>
       <head>
-        {/* Blocking script to apply theme & language from localStorage BEFORE React hydrates.
-            This prevents the flash of default (light + Arabic) on page reload. */}
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `(function(){try{var t=localStorage.getItem('theme');if(t==='dark'){document.documentElement.classList.add('dark')}var l=localStorage.getItem('language');if(l==='en'){document.documentElement.lang='en';document.documentElement.dir='ltr'}else{document.documentElement.lang='ar';document.documentElement.dir='rtl'}}catch(e){}document.documentElement.classList.add('app-ready')})()`,
-          }}
-        />
         <link rel="icon" href="/favicon.png" sizes="any" media="(prefers-color-scheme: light)" />
         <link rel="icon" href="/favicon-dark.png" sizes="any" media="(prefers-color-scheme: dark)" />
         <link rel="apple-touch-icon" href="/icon.png" />
-        <link rel="preload" as="image" href="/logo.jpg" fetchPriority="high" />
-        {/* theme-color is now handled by viewport export */}
+        <meta name="theme-color" content="#f97316" media="(prefers-color-scheme: light)" />
+        <meta name="theme-color" content="#0f172a" media="(prefers-color-scheme: dark)" />
         <meta name="google-site-verification" content="" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
