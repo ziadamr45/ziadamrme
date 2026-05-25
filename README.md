@@ -100,7 +100,7 @@ npm run dev
 - 📸 Instagram: [instagram.com/ziadamr455](https://www.instagram.com/ziadamr455/)
 - 🧵 Threads: [threads.com/@ziadamr455](https://www.threads.com/@ziadamr455)
 - 🐦 X (Twitter): [x.com/ziad90216](https://x.com/ziad90216)
-- 🎥 YouTube: [youtube.com/@alhayat_ala_eltarek](https://youtube.com/@alhayat_ala_eltarek?si=pcsc_31Kcv3Jym14)
+- 🎥 YouTube: [youtube.com/@alhayat_ala_eltarek?si=pcsc_31Kcv3Jym14](https://youtube.com/@alhayat_ala_eltarek?si=pcsc_31Kcv3Jym14?si=pcsc_31Kcv3Jym14)
 - 💼 LinkedIn: [linkedin.com/in/ziad-amr-44633a411](https://www.linkedin.com/in/ziad-amr-44633a411)
 - 📧 Email: ziad90216@gmail.com
 
