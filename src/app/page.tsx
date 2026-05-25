@@ -638,17 +638,14 @@ export default function Home() {
                   className="relative group/footer-img cursor-pointer focus:outline-none"
                   aria-label={language === "ar" ? "اضغط لعرض الصورة كاملة" : "Click to view full image"}
                 >
-                  <picture>
-                    <source srcSet="/profile.webp" type="image/webp" />
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
-                      src="/profile.jpg"
-                      alt="Ziad Amr"
-                      width={36}
-                      height={36}
-                      className="w-9 h-9 rounded-xl object-cover ring-2 ring-orange-500/20 transition-all duration-300 group-hover/footer-img:ring-orange-500/40 group-hover/footer-img:scale-105"
-                    />
-                  </picture>
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src="/logo.jpg"
+                    alt="Ziad Amr"
+                    width={36}
+                    height={36}
+                    className="w-9 h-9 rounded-xl object-cover ring-2 ring-orange-500/20 transition-all duration-300 group-hover/footer-img:ring-orange-500/40 group-hover/footer-img:scale-105"
+                  />
                   <div className="absolute inset-0 flex items-center justify-center rounded-xl bg-black/0 group-hover/footer-img:bg-black/30 transition-all duration-300">
                     <svg className="w-4 h-4 text-white opacity-0 group-hover/footer-img:opacity-100 transition-opacity duration-300 drop-shadow-lg" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m3-3H7" /></svg>
                   </div>
