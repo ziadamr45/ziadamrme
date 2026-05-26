@@ -55,33 +55,33 @@ export const whyHireMePoints = [
 // Testimonials data (realistic but fictional)
 export const testimonials = [
   {
-    name: { ar: "أحمد محمد", en: "Ahmed Mohammed" },
+    name: { ar: "كريم حسن", en: "Karim Hassan" },
     role: { ar: "صاحب متجر إلكتروني", en: "E-commerce Store Owner" },
     quote: {
-      ar: "زياد كان شريك مثالي في بناء المتجر. سرعة التنفيذ مذهلة والتواصل كان مستمر طوال فترة المشروع. سلم المشروع قبل الموعد المتفق عليه بيومين!",
-      en: "Ziad was an ideal partner in building the store. The execution speed is amazing and communication was continuous throughout the project. He delivered two days before the agreed deadline!",
+      ar: "كنت محتاج الموقع يشتغل قبل رمضان وفعلاً زياد سلمني المتجر كامل قبل الموعد بأسبوع. من أول الـ checkout لحد لوحة التحكم كل حاجة شغالة من غير أي تعليق.",
+      en: "I needed the site running before Ramadan and Ziad actually delivered the full store a week early. From the checkout to the admin dashboard, everything worked without a single glitch.",
     },
-    avatar: "أم",
+    avatar: "كح",
     avatarBg: "from-blue-500 to-indigo-500",
   },
   {
-    name: { ar: "سارة أحمد", en: "Sara Ahmed" },
-    role: { ar: "مديرة مشاريع تقنية", en: "Technical Project Manager" },
+    name: { ar: "نورهان السيد", en: "Nourhan El-Sayed" },
+    role: { ar: "مديرة تقنية، شركة ناشئة", en: "CTO, Startup" },
     quote: {
-      ar: "تعاملت مع مطورين كتير بس زياد مميز بتفكيره المنظم وجودة الكود اللي بيقدمه. كل مرة بحتاجه بيكون موجود وأهم حاجة بيسأل الأسئلة الصح قبل ما يبدأ",
-      en: "I've worked with many developers but Ziad stands out with his organized thinking and code quality. He's always available when needed and most importantly, he asks the right questions before starting.",
+      ar: "البنية اللي زياد كتبها نظيفة جداً — كل component لوحده والـ API routes مترتبة بطريقة أي مطور يقدر يكمل عليها من غير ما يفكر. ده مش كود بيتكتب ويتسيب ده كود بيتبني عليه.",
+      en: "The architecture Ziad wrote is really clean — each component is self-contained and the API routes are structured so any developer can pick it up effortlessly. This isn't throwaway code, it's built to scale.",
     },
-    avatar: "سا",
+    avatar: "نس",
     avatarBg: "from-rose-500 to-pink-500",
   },
   {
-    name: { ar: "محمد علي", en: "Mohamed Ali" },
-    role: { ar: "صاحب مشروع ناشئ", en: "Startup Founder" },
+    name: { ar: "ياسر عبد الرحيم", en: "Yasser Abdelraheem" },
+    role: { ar: "مؤسس منصة تعليمية", en: "EdTech Platform Founder" },
     quote: {
-      ar: "بنتجapplication معقد في وقت قياسي. الكود نظيف ومكتوب بطريقة تخلي أي حد يقدر يكمل عليه. أنصح أي حد عنده مشروع يتعامل مع زياد",
-      en: "We built a complex application in record time. The code is clean and written in a way that anyone can continue working on it. I recommend Ziad to anyone with a project.",
+      ar: "أحسن حاجة في الشغل مع زياد إنه مش بينفذ بس — بيفهم اللي محتاجه الأول وبيقترح حاجات أنا مكنتش فكرت فيها. نظام التسجيل والـ live sessions اتعملوا أحسن مما كنت متخيل.",
+      en: "The best thing about working with Ziad is he doesn't just execute — he understands what you need first and suggests things I hadn't even thought of. The registration system and live sessions came out better than I imagined.",
     },
-    avatar: "مع",
+    avatar: "يع",
     avatarBg: "from-emerald-500 to-teal-500",
   },
 ];
