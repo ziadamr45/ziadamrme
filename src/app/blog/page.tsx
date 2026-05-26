@@ -38,6 +38,25 @@ export default function BlogPage() {
           </div>
         </div>
 
+        <a
+          href="https://dev.to/ziad_amr_0e76916f10a8563a"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="group flex items-center gap-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl p-4 shadow-sm hover:shadow-md transition-all duration-300 hover:scale-[1.01] mb-6"
+        >
+          <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-black shrink-0">
+            <svg className="w-5 h-5 text-white" viewBox="0 0 24 24" fill="currentColor"><path d="M7.42 10.05c-.18-.16-.46-.23-.84-.23H6v4.36h.58c.37 0 .65-.08.84-.23.2-.16.3-.46.3-.91v-2.07c0-.45-.1-.76-.3-.92zM0 4.94v14.12h24V4.94H0zM8.56 15.3c-.44.58-1.06.77-1.98.77H4.38V8.89h2.2c.92 0 1.54.19 1.98.78.44.58.58 1.23.58 2.82 0 1.58-.14 2.23-.58 2.81zm5.26-5.57H10.5v2.23h2.02v1.12H10.5v2.45h3.32v1.12H9.27V8.59h4.55v1.14zm5.58 6.33H17.8l-1.48-3.13h-.54v3.13h-1.23V8.89h2.16c.89 0 1.53.18 1.88.54.35.36.53.82.53 1.39 0 .96-.43 1.58-1.24 1.81l1.52 3.23z"/></svg>
+          </div>
+          <div className="flex-1 min-w-0">
+            <p className="text-sm font-semibold text-slate-900 dark:text-white group-hover:text-orange-600 dark:group-hover:text-orange-400 transition-colors">
+              {t.readMoreArticles}
+            </p>
+            <p className="text-xs text-slate-500 dark:text-slate-400">
+              {t.followOnDev} →
+            </p>
+          </div>
+        </a>
+
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           {blogPosts.map((post) => (
             <Link key={post.slug} href={`/blog/${post.slug}`}>

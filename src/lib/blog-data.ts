@@ -2,7 +2,7 @@ export const blogPosts = [
   {
     slug: "building-modern-web-apps",
     title: { ar: "بناء تطبيقات ويب حديثة: رحلتي مع Next.js", en: "Building Modern Web Apps: My Journey with Next.js" },
-    date: "2026-05-23",
+    date: "2025-12-05",
     excerpt: {
       ar: "كيف بدأت مع Next.js ولماذا أصبح إطار العمل المفضل لدي لبناء تطبيقات ويب متكاملة وسريعة.",
       en: "How I got started with Next.js and why it became my go-to framework for building complete, fast web applications.",
@@ -44,7 +44,7 @@ Ultimately, Next.js isn't just a framework — it's a developer's journey compan
   {
     slug: "real-time-apps-socketio",
     title: { ar: "تطبيقات الوقت الحقيقي باستخدام Socket.io", en: "Real-Time Apps with Socket.io" },
-    date: "2026-05-23",
+    date: "2025-12-20",
     excerpt: {
       ar: "دليل عملي لبناء تطبيقات تفاعلية في الوقت الحقيقي باستخدام Socket.io وNext.js مع أمثلة من مشاريع حقيقية.",
       en: "A practical guide to building real-time interactive applications using Socket.io and Next.js with examples from real projects.",
@@ -90,7 +90,7 @@ Ultimately, Socket.io is a very powerful tool but requires good design from the 
   {
     slug: "secure-location-sharing",
     title: { ar: "مشاركة الموقع بأمان: التحديات والحلول", en: "Secure Location Sharing: Challenges and Solutions" },
-    date: "2026-05-23",
+    date: "2026-01-10",
     excerpt: {
       ar: "نظرة تقنية على التحديات الأمنية في تطبيقات مشاركة الموقع وكيف تعاملت معها في تطبيق طمني.",
       en: "A technical look at security challenges in location sharing apps and how I addressed them in the Tammeny app.",
@@ -132,7 +132,7 @@ A final piece of advice: test your security system yourself. Try to bypass the p
   {
     slug: "building-arabic-web-apps",
     title: { ar: "من المخبر لطمني: رحلة بناء تطبيقات ويب عربية", en: "From Elmokhber to Tammeny: Building Arabic Web Apps" },
-    date: "2026-05-23",
+    date: "2026-01-25",
     excerpt: {
       ar: "مناقشة معمقة عن التحديات والمكافآت في بناء تطبيقات ويب مخصصة للمستخدمين العرب، تصميم RTL، الخطوط العربية، الاعتبارات الثقافية.",
       en: "Deep discussion about the challenges and rewards of building web applications specifically for Arabic-speaking users, RTL design, Arabic typography, and cultural considerations.",
@@ -174,7 +174,7 @@ My advice for anyone wanting to build an Arabic app: start with RTL design from 
   {
     slug: "web-security-lessons",
     title: { ar: "الأمان في تطبيقات الويب: دروس تعلمتها", en: "Web App Security: Lessons I Learned" },
-    date: "2026-05-23",
+    date: "2026-02-08",
     excerpt: {
       ar: "غوص عميق في ممارسات أمان الويب التي تعلمتها من بناء تطبيقات حقيقية — منع XSS، حماية CSRF، أنماط المصادقة الآمنة، وأكثر.",
       en: "Deep dive into web security practices learned from building real applications — XSS prevention, CSRF protection, secure authentication patterns, and more.",
@@ -216,7 +216,7 @@ A final important piece of advice: security is an ongoing process, not a one-tim
   {
     slug: "tailwind-css-journey",
     title: { ar: "Tailwind CSS: لماذا أصبح أسلوبي المفضل", en: "Tailwind CSS: Why It Became My Go-To Style" },
-    date: "2026-05-23",
+    date: "2026-02-22",
     excerpt: {
       ar: "مقارنة تفصيلية بين Tailwind وCSS التقليدي، وإزاي الأسلوب العملي (Utility-First) غيّر طريقة عملي، مع أمثلة حقيقية من مشاريعي.",
       en: "Detailed comparison of Tailwind vs traditional CSS, how utility-first methodology changed my workflow, with real examples from my projects.",
@@ -262,7 +262,7 @@ My advice: if you haven't tried Tailwind yet, start with a small project. You'll
   {
     slug: "database-journey",
     title: { ar: "نظام قواعد البيانات: من SQLite لـ PostgreSQL", en: "Database Systems: From SQLite to PostgreSQL" },
-    date: "2026-05-23",
+    date: "2026-03-08",
     excerpt: {
       ar: "رحلة تطور اختيارات قواعد البيانات عبر المشاريع، وليه PostgreSQL هو الخيار الأفضل للتطبيقات الإنتاجية، وفوائد وعيوب Prisma ORM.",
       en: "Evolution of database choices across projects, why PostgreSQL is the best choice for production apps, and the pros and cons of Prisma ORM.",
@@ -308,7 +308,7 @@ My advice for beginners: start with SQLite for development speed, but plan the t
   {
     slug: "pwa-journey",
     title: { ar: "تطبيقات الويب التقدمية: من المتصفح لشاشة الهاتف", en: "Progressive Web Apps: From Browser to Home Screen" },
-    date: "2026-05-24",
+    date: "2026-03-22",
     excerpt: {
       ar: "كيف حوّلت تطبيقات الويب بتاعتي لتطبيقات قابلة للتثبيت على الهاتف — تجربتي العملية مع PWA في إسمع راديو وتطبيق الطقس.",
       en: "How I turned my web apps into installable phone applications — my practical experience with PWA in Esma3 Radio and Weather App.",
@@ -354,7 +354,7 @@ My advice for anyone wanting to add PWA to their app: start with the basics — 
   {
     slug: "web-push-notifications",
     title: { ar: "إشعارات الويب: تواصل مع مستخدميك في أي وقت", en: "Web Push Notifications: Reaching Users Anytime" },
-    date: "2026-05-24",
+    date: "2026-04-05",
     excerpt: {
       ar: "رحلتي في بناء نظام إشعارات ويب متكامل — من مفاتيح VAPID لتجربة المستخدم، مع أمثلة من لوحة الإشعارات وإسمع راديو.",
       en: "My journey building a complete web push notification system — from VAPID keys to user experience, with examples from Notifications dashboard and Esma3 Radio.",
@@ -404,7 +404,7 @@ My advice: if you're adding web notifications, think about the user's first expe
   {
     slug: "building-news-aggregator",
     title: { ar: "بناء مجمع أخبار: التحديات التقنية والحلول", en: "Building a News Aggregator: Technical Challenges and Solutions" },
-    date: "2026-05-24",
+    date: "2026-04-19",
     excerpt: {
       ar: "ما وراء الكواليس في بناء بوابة الحدث — التعامل مع أخبار API متعددة، التخزين المؤقت، خوارزميات الترند، والتلخيص الذكي.",
       en: "Behind the scenes of building Bawabet Elhadas — working with multiple news APIs, caching, trending algorithms, and AI summarization.",
@@ -450,7 +450,7 @@ My advice for anyone building a news aggregator: start with just one source and 
   {
     slug: "building-developer-portfolio",
     title: { ar: "بناء موقع شخصي يمثلك كمطور: دروس من رحلتي", en: "Building a Developer Portfolio That Represents You: Lessons from My Journey" },
-    date: "2026-05-24",
+    date: "2026-05-10",
     excerpt: {
       ar: "إزاي بنيت الموقع الشخصي اللي بيمثلني كمطور — من التصميم لقاعدة البيانات للمدونة الثنائية اللغة، وكل الدروس اللي تعلمتها.",
       en: "How I built the personal website that represents me as a developer — from design to database to bilingual blog, and all the lessons I learned.",
