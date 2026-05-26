@@ -50,6 +50,13 @@
 | ![shadcn/ui](https://img.shields.io/badge/shadcn/ui-000000?style=flat) | مكونات واجهة المستخدم |
 | ![Framer Motion](https://img.shields.io/badge/Framer_Motion-0055FF?style=flat&logo=framer&logoColor=white) | الحركات والأنيميشن |
 | ![Vercel](https://img.shields.io/badge/Vercel-000000?style=flat&logo=vercel&logoColor=white) | الاستضافة والنشر |
+| ![Nodemailer](https://img.shields.io/badge/Nodemailer-10B981?style=flat&logo=nodemailer&logoColor=white) | إرسال البريد الإلكتروني |
+| ![React Markdown](https://img.shields.io/badge/React_Markdown-000000?style=flat&logo=markdown&logoColor=white) | عرض محتوى المدونة |
+| ![remark-gfm](https://img.shields.io/badge/remark--gfm-000000?style=flat&logo=markdown&logoColor=white) | دعم GitHub Flavored Markdown |
+| ![Base UI](https://img.shields.io/badge/Base_UI-007FFF?style=flat&logo=mui&logoColor=white) | مكونات واجهة أولية |
+| ![Lucide](https://img.shields.io/badge/Lucide-000000?style=flat&logo=lucide&logoColor=white) | أيقونات الواجهة |
+| ![Canvas API](https://img.shields.io/badge/Canvas_API-E34F26?style=flat&logo=html5&logoColor=white) | خلفية الجسيمات المتحركة |
+| ![View Transitions](https://img.shields.io/badge/View_Transitions-0D9488?style=flat&logo=css3&logoColor=white) | انتقالات تبديل المظهر |
 
 ## 🚀 التشغيل
 
@@ -147,6 +154,13 @@ Built with Next.js, TypeScript, and Tailwind CSS with shadcn/ui components, host
 | ![shadcn/ui](https://img.shields.io/badge/shadcn/ui-000000?style=flat) | UI Components |
 | ![Framer Motion](https://img.shields.io/badge/Framer_Motion-0055FF?style=flat&logo=framer&logoColor=white) | Animations |
 | ![Vercel](https://img.shields.io/badge/Vercel-000000?style=flat&logo=vercel&logoColor=white) | Hosting & Deployment |
+| ![Nodemailer](https://img.shields.io/badge/Nodemailer-10B981?style=flat&logo=nodemailer&logoColor=white) | Email Sending |
+| ![React Markdown](https://img.shields.io/badge/React_Markdown-000000?style=flat&logo=markdown&logoColor=white) | Blog Content Rendering |
+| ![remark-gfm](https://img.shields.io/badge/remark--gfm-000000?style=flat&logo=markdown&logoColor=white) | GitHub Flavored Markdown Support |
+| ![Base UI](https://img.shields.io/badge/Base_UI-007FFF?style=flat&logo=mui&logoColor=white) | Primitive UI Components |
+| ![Lucide](https://img.shields.io/badge/Lucide-000000?style=flat&logo=lucide&logoColor=white) | UI Icons |
+| ![Canvas API](https://img.shields.io/badge/Canvas_API-E34F26?style=flat&logo=html5&logoColor=white) | Animated Particle Background |
+| ![View Transitions](https://img.shields.io/badge/View_Transitions-0D9488?style=flat&logo=css3&logoColor=white) | Theme Toggle Transitions |
 
 ### Getting Started
 
