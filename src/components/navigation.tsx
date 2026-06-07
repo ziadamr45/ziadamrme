@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback, useRef } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useApp } from "@/components/providers";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
@@ -13,8 +13,6 @@ export function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [mounted, setMounted] = useState(false);
-  const [menuCanScroll, setMenuCanScroll] = useState(false);
-  const menuRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect -- hydration guard
@@ -37,18 +35,11 @@ export function Navigation() {
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = "hidden";
-      // Check if menu content overflows
-      setTimeout(() => {
-        if (menuRef.current) {
-          setMenuCanScroll(menuRef.current.scrollHeight > menuRef.current.clientHeight);
-        }
-      }, 50);
     } else {
       document.body.style.overflow = "";
-      setMenuCanScroll(false);
     }
     return () => { document.body.style.overflow = ""; };
-  }, [isOpen, pathname]);
+  }, [isOpen]);
 
   const navItems = [
     { href: "/", label: language === "ar" ? "الرئيسية (الملف الشخصي)" : "Home (Profile)" },
@@ -313,13 +304,8 @@ export function Navigation() {
             {/* Dark backdrop */}
             <div className="absolute inset-0 bg-black/10" />
             {/* Menu panel - stop propagation so clicks inside don't close */}
-            <div className="absolute top-2 inset-x-0 p-3 pb-6" onClick={(e) => e.stopPropagation()}>
-              <div ref={menuRef} className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-2xl p-3 space-y-1 max-h-[60vh] overflow-y-auto" onScroll={() => {
-                if (menuRef.current) {
-                  const { scrollTop, scrollHeight, clientHeight } = menuRef.current;
-                  setMenuCanScroll(scrollTop + clientHeight < scrollHeight - 5);
-                }
-              }}">
+            <div className="absolute top-0 inset-x-0 p-3" onClick={(e) => e.stopPropagation()}>
+              <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-2xl p-3 space-y-1 max-h-[calc(100vh-5rem)] overflow-y-auto">
                 {/* Page navigation */}
                 {navItems.map((item) => (
                   <Link
@@ -396,15 +382,6 @@ export function Navigation() {
                   </button>
                 )}
               </div>
-              {/* Scroll indicator */}
-              {menuCanScroll && (
-                <div className="flex items-center justify-center pt-1 pb-1 animate-bounce">
-                  <span className="flex items-center gap-1 text-[11px] text-slate-400 dark:text-slate-500">
-                    {language === "ar" ? "المزيد" : "More"}
-                    <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" /></svg>
-                  </span>
-                </div>
-              )}
             </div>
           </div>
         )}
