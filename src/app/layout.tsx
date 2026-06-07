@@ -165,6 +165,14 @@ export default function RootLayout({
   return (
     <html lang="ar" dir="rtl" suppressHydrationWarning>
       <head>
+        {/* Blocking script to prevent flash of wrong theme/language on page load.
+            Reads localStorage and applies dark class + lang/dir BEFORE paint.
+            Must be first in <head> so it runs before any CSS renders. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{var t=localStorage.getItem("theme");if(t==="dark"){document.documentElement.classList.add("dark")}var l=localStorage.getItem("language");if(l==="en"){document.documentElement.lang="en";document.documentElement.dir="ltr"}}catch(e){}})()`,
+          }}
+        />
         <link rel="icon" href="/favicon.png" sizes="any" media="(prefers-color-scheme: light)" />
         <link rel="icon" href="/favicon-dark.png" sizes="any" media="(prefers-color-scheme: dark)" />
         <link rel="apple-touch-icon" href="/icon.png" />
