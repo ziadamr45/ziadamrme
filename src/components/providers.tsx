@@ -31,8 +31,18 @@ export function useApp() {
 }
 
 export function Providers({ children }: { children: React.ReactNode }) {
-  const [theme, setTheme] = useState<Theme>("light");
-  const [language, setLanguage] = useState<Language>("ar");
+  const [theme, setTheme] = useState<Theme>(() => {
+    if (typeof window !== "undefined") {
+      return (localStorage.getItem("theme") as Theme) || "light";
+    }
+    return "light";
+  });
+  const [language, setLanguage] = useState<Language>(() => {
+    if (typeof window !== "undefined") {
+      return (localStorage.getItem("language") as Language) || "ar";
+    }
+    return "ar";
+  });
   const [mounted, setMounted] = useState(false);
 
   // Theme transition state
@@ -42,16 +52,10 @@ export function Providers({ children }: { children: React.ReactNode }) {
   const overlayRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const savedTheme = (localStorage.getItem("theme") as Theme) || "light";
-    const savedLanguage = (localStorage.getItem("language") as Language) || "ar";
-    // eslint-disable-next-line react-hooks/set-state-in-effect -- reading from localStorage requires setState
-    setTheme(savedTheme);
-    setLanguage(savedLanguage);
     setMounted(true);
   }, []);
 
   useEffect(() => {
-    if (!mounted) return;
     const root = document.documentElement;
 
     // Theme
@@ -66,7 +70,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
     root.lang = language;
     root.dir = language === "ar" ? "rtl" : "ltr";
     localStorage.setItem("language", language);
-  }, [theme, language, mounted]);
+  }, [theme, language]);
 
   const toggleTheme = useCallback(
     (event?: React.MouseEvent) => {
