@@ -304,8 +304,8 @@ export function Navigation() {
             {/* Dark backdrop */}
             <div className="absolute inset-0 bg-black/10" />
             {/* Menu panel - stop propagation so clicks inside don't close */}
-            <div className="absolute top-0 inset-x-0 p-3" onClick={(e) => e.stopPropagation()}>
-              <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-2xl p-3 space-y-1 max-h-[calc(100vh-5rem)] overflow-y-auto">
+            <div className="absolute top-0 inset-x-0 p-3 pb-6" onClick={(e) => e.stopPropagation()}>
+              <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-2xl p-3 space-y-1 max-h-[65vh] overflow-y-auto">
                 {/* Page navigation */}
                 {navItems.map((item) => (
                   <Link
