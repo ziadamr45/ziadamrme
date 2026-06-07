@@ -144,13 +144,6 @@ export function Navigation() {
     }
   }, [scrollToElement, pathname, router]);
 
-  const handleMenuScroll = useCallback(() => {
-    if (menuRef.current) {
-      const { scrollTop, scrollHeight, clientHeight } = menuRef.current;
-      setMenuCanScroll(scrollTop + clientHeight < scrollHeight - 5);
-    }
-  }, []);
-
   return (
     <header
       className={`fixed top-0 inset-x-0 z-50 transition-all duration-300 ${
@@ -321,11 +314,12 @@ export function Navigation() {
             <div className="absolute inset-0 bg-black/10" />
             {/* Menu panel - stop propagation so clicks inside don't close */}
             <div className="absolute top-2 inset-x-0 p-3 pb-6" onClick={(e) => e.stopPropagation()}>
-              <div
-                ref={menuRef}
-                className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-2xl p-3 pb-1 space-y-1 max-h-[60vh] overflow-y-auto"
-                onScroll={handleMenuScroll}
-              >
+              <div ref={menuRef} className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-2xl p-3 space-y-1 max-h-[60vh] overflow-y-auto" onScroll={() => {
+                if (menuRef.current) {
+                  const { scrollTop, scrollHeight, clientHeight } = menuRef.current;
+                  setMenuCanScroll(scrollTop + clientHeight < scrollHeight - 5);
+                }
+              }}">
                 {/* Page navigation */}
                 {navItems.map((item) => (
                   <Link
@@ -401,17 +395,16 @@ export function Navigation() {
                     {language === "ar" ? "كلمني؟" : "Contact Me"}
                   </button>
                 )}
-
-                {/* Scroll indicator - inside the menu */}
-                {menuCanScroll && (
-                  <div className="flex items-center justify-center pt-2 pb-1 animate-bounce">
-                    <span className="flex items-center gap-1 text-[11px] text-slate-400 dark:text-slate-500">
-                      {language === "ar" ? "عرض المزيد" : "Show More"}
-                      <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" /></svg>
-                    </span>
-                  </div>
-                )}
               </div>
+              {/* Scroll indicator */}
+              {menuCanScroll && (
+                <div className="flex items-center justify-center pt-1 pb-1 animate-bounce">
+                  <span className="flex items-center gap-1 text-[11px] text-slate-400 dark:text-slate-500">
+                    {language === "ar" ? "المزيد" : "More"}
+                    <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" /></svg>
+                  </span>
+                </div>
+              )}
             </div>
           </div>
         )}
