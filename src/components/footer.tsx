@@ -1,14 +1,43 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useApp } from "@/components/providers";
 import { socialLinks } from "@/lib/social-links";
 import { translations } from "@/lib/translations";
 
+const MINIMAL_FOOTER_PATHS = ["/privacy-policy", "/terms"];
+
 export function Footer() {
   const { language } = useApp();
   const t = translations[language];
+  const pathname = usePathname();
+  const isMinimal = MINIMAL_FOOTER_PATHS.includes(pathname);
 
+  // Minimal footer for legal pages — only copyright + legal links
+  if (isMinimal) {
+    return (
+      <footer className="relative z-10 w-full bg-white/50 dark:bg-slate-900/50 border-t border-slate-200/50 dark:border-slate-700/50 mt-auto">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-3">
+            <p className="text-xs text-slate-400 dark:text-slate-500">
+              &copy; {new Date().getFullYear()} {t.name}. {language === "ar" ? "جميع الحقوق محفوظة" : "All rights reserved"}.
+            </p>
+            <div className="flex items-center gap-4">
+              <Link href="/privacy-policy" className="text-xs text-slate-400 dark:text-slate-500 hover:text-orange-500 dark:hover:text-orange-400 transition-colors">
+                {language === "ar" ? "سياسة الخصوصية" : "Privacy Policy"}
+              </Link>
+              <Link href="/terms" className="text-xs text-slate-400 dark:text-slate-500 hover:text-orange-500 dark:hover:text-orange-400 transition-colors">
+                {language === "ar" ? "شروط الاستخدام" : "Terms of Service"}
+              </Link>
+            </div>
+          </div>
+        </div>
+      </footer>
+    );
+  }
+
+  // Full footer for all other pages
   return (
     <footer className="relative z-10 w-full bg-white/50 dark:bg-slate-900/50 border-t border-slate-200/50 dark:border-slate-700/50 mt-auto">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
