@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next";
+import { cookies } from "next/headers";
 import "./globals.css";
 import { Providers } from "@/components/providers";
 import { Footer } from "@/components/footer";
@@ -98,11 +99,15 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  // Read user preferences from cookies (server-side) — prevents flash
+  const cookieStore = await cookies();
+  const theme = cookieStore.get("theme")?.value || "light";
+  const language = cookieStore.get("language")?.value || "ar";
   const personJsonLd = {
     "@context": "https://schema.org",
     "@type": "Person",
@@ -164,7 +169,7 @@ export default function RootLayout({
   };
 
   return (
-    <html lang="ar" dir="rtl" suppressHydrationWarning>
+    <html lang={language} dir={language === "ar" ? "rtl" : "ltr"} className={theme === "dark" ? "dark" : ""} suppressHydrationWarning>
       <head>
         <link rel="icon" href="/favicon.png" sizes="any" media="(prefers-color-scheme: light)" />
         <link rel="icon" href="/favicon-dark.png" sizes="any" media="(prefers-color-scheme: dark)" />
