@@ -13,7 +13,10 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  title: "Ziad Amr — Web Developer | مطوّر ويب",
+  title: {
+    default: "Ziad Amr — Web Developer | مطوّر ويب",
+    template: "%s | Ziad Amr",
+  },
   description:
     "Egyptian web developer specializing in Next.js, React, TypeScript, and modern web technologies. Building free services and making technology accessible to everyone.",
   keywords: [
@@ -99,7 +102,7 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const jsonLd = {
+  const personJsonLd = {
     "@context": "https://schema.org",
     "@type": "Person",
     name: "Ziad Amr",
@@ -134,6 +137,21 @@ export default function RootLayout({
     ],
   };
 
+  const websiteJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: "Ziad Amr Portfolio",
+    alternateName: "موقع زياد عمرو",
+    url: "https://ziadamrme.vercel.app",
+    description:
+      "Egyptian web developer specializing in Next.js, React, TypeScript, and modern web technologies.",
+    inLanguage: ["ar", "en"],
+    author: {
+      "@type": "Person",
+      name: "Ziad Amr",
+    },
+  };
+
   return (
     <html lang="ar" dir="rtl" suppressHydrationWarning>
       <head>
@@ -147,9 +165,14 @@ export default function RootLayout({
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
         <meta name="apple-mobile-web-app-title" content="Ziad Amr" />
         <link rel="manifest" href="/manifest.json" />
+        <link rel="alternate" type="application/rss+xml" title="مدونة زياد عمرو" href="https://ziadamrme.vercel.app/feed.xml" />
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
         />
       </head>
       <body className="antialiased"><Providers>{children}</Providers></body>
