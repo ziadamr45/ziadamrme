@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { useApp } from "@/components/providers";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
@@ -13,6 +13,8 @@ export function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [mounted, setMounted] = useState(false);
+  const [menuScrolledToBottom, setMenuScrolledToBottom] = useState(false);
+  const menuRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect -- hydration guard
@@ -35,11 +37,26 @@ export function Navigation() {
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = "hidden";
+      // Reset scroll state when menu opens
+      setMenuScrolledToBottom(false);
+      setTimeout(() => {
+        if (menuRef.current) {
+          const { scrollTop, scrollHeight, clientHeight } = menuRef.current;
+          setMenuScrolledToBottom(scrollTop + clientHeight >= scrollHeight - 5);
+        }
+      }, 50);
     } else {
       document.body.style.overflow = "";
     }
     return () => { document.body.style.overflow = ""; };
   }, [isOpen]);
+
+  const handleMenuScroll = useCallback(() => {
+    if (menuRef.current) {
+      const { scrollTop, scrollHeight, clientHeight } = menuRef.current;
+      setMenuScrolledToBottom(scrollTop + clientHeight >= scrollHeight - 5);
+    }
+  }, []);
 
   const navItems = [
     { href: "/", label: language === "ar" ? "الرئيسية (الملف الشخصي)" : "Home (Profile)" },
@@ -305,7 +322,12 @@ export function Navigation() {
             <div className="absolute inset-0 bg-black/10" />
             {/* Menu panel - stop propagation so clicks inside don't close */}
             <div className="absolute top-0 inset-x-0 p-3 pb-6" onClick={(e) => e.stopPropagation()}>
-              <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-2xl p-3 space-y-1 max-h-[65vh] overflow-y-auto">
+              <div className="relative">
+              <div
+                ref={menuRef}
+                className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-2xl p-3 space-y-1 max-h-[65vh] overflow-y-auto"
+                onScroll={handleMenuScroll}
+              >
                 {/* Page navigation */}
                 {navItems.map((item) => (
                   <Link
@@ -381,6 +403,11 @@ export function Navigation() {
                     {language === "ar" ? "كلمني؟" : "Contact Me"}
                   </button>
                 )}
+              </div>
+              {/* Gradient fade at bottom to indicate more content */}
+              {!menuScrolledToBottom && (
+                <div className="pointer-events-none absolute bottom-0 inset-x-0 h-10 rounded-b-2xl bg-gradient-to-t from-white dark:from-slate-900 to-transparent" />
+              )}
               </div>
             </div>
           </div>
