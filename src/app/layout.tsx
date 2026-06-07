@@ -1,8 +1,15 @@
 import type { Metadata, Viewport } from "next";
-import { cookies } from "next/headers";
+import { cookies, headers } from "next/headers";
 import "./globals.css";
 import { Providers } from "@/components/providers";
 import { Footer } from "@/components/footer";
+
+// Arabic-speaking country codes
+const ARABIC_COUNTRIES = new Set([
+  "EG", "SA", "AE", "KW", "QA", "BH", "OM", "IQ", "JO", "LB",
+  "SY", "PS", "YE", "DZ", "MA", "TN", "LY", "SD", "MR", "DJ",
+  "KM", "SO",
+]);
 
 export const viewport: Viewport = {
   width: "device-width",
@@ -107,7 +114,15 @@ export default async function RootLayout({
   // Read user preferences from cookies (server-side) — prevents flash
   const cookieStore = await cookies();
   const theme = cookieStore.get("theme")?.value || "light";
-  const language = cookieStore.get("language")?.value || "ar";
+  
+  // Language: cookie takes priority, then geo-detection, then default "ar"
+  let language = cookieStore.get("language")?.value;
+  if (!language) {
+    // No saved preference — detect from country via Vercel geo headers
+    const headersList = await headers();
+    const country = headersList.get("x-vercel-ip-country");
+    language = country && ARABIC_COUNTRIES.has(country) ? "ar" : "en";
+  }
   const personJsonLd = {
     "@context": "https://schema.org",
     "@type": "Person",
