@@ -64,9 +64,19 @@ export function Footer() {
           </div>
         </div>
         <div className="border-t border-slate-200/50 dark:border-slate-700/50 mt-6 sm:mt-8 pt-4 sm:pt-6">
-          <p className="text-xs text-slate-400 dark:text-slate-500 text-center">
-            &copy; {new Date().getFullYear()} {t.name}. {language === "ar" ? "جميع الحقوق محفوظة" : "All rights reserved"}.
-          </p>
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-3">
+            <p className="text-xs text-slate-400 dark:text-slate-500">
+              &copy; {new Date().getFullYear()} {t.name}. {language === "ar" ? "جميع الحقوق محفوظة" : "All rights reserved"}.
+            </p>
+            <div className="flex items-center gap-4">
+              <Link href="/privacy-policy" className="text-xs text-slate-400 dark:text-slate-500 hover:text-orange-500 dark:hover:text-orange-400 transition-colors">
+                {language === "ar" ? "سياسة الخصوصية" : "Privacy Policy"}
+              </Link>
+              <Link href="/terms" className="text-xs text-slate-400 dark:text-slate-500 hover:text-orange-500 dark:hover:text-orange-400 transition-colors">
+                {language === "ar" ? "شروط الاستخدام" : "Terms of Service"}
+              </Link>
+            </div>
+          </div>
         </div>
       </div>
     </footer>

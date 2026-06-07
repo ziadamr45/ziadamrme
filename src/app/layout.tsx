@@ -3,6 +3,7 @@ import { cookies, headers } from "next/headers";
 import "./globals.css";
 import { Providers } from "@/components/providers";
 import { Footer } from "@/components/footer";
+import { CookieConsent } from "@/components/cookie-consent";
 
 // Arabic-speaking country codes
 const ARABIC_COUNTRIES = new Set([
@@ -209,7 +210,7 @@ export default async function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
         />
       </head>
-      <body className="antialiased"><Providers defaultTheme={theme as "light" | "dark"} defaultLanguage={language as "ar" | "en"}>{children}<Footer /></Providers></body>
+      <body className="antialiased"><Providers defaultTheme={theme as "light" | "dark"} defaultLanguage={language as "ar" | "en"}>{children}<Footer /><CookieConsent /></Providers></body>
     </html>
   );
 }
