@@ -365,6 +365,31 @@
   color: #94a3b8;
 }
 
+/* ===== Share Active - Disable card animations when share dropdown is open ===== */
+.share-active {
+  --tw-scale-x: 1 !important;
+  --tw-scale-y: 1 !important;
+  --tw-translate-x: 0 !important;
+  --tw-translate-y: 0 !important;
+  transition: none !important;
+}
+
+.share-active:hover {
+  --tw-scale-x: 1 !important;
+  --tw-scale-y: 1 !important;
+  --tw-translate-x: 0 !important;
+  --tw-translate-y: 0 !important;
+  transform: none !important;
+}
+
+.share-active:active {
+  --tw-scale-x: 1 !important;
+  --tw-scale-y: 1 !important;
+  --tw-translate-x: 0 !important;
+  --tw-translate-y: 0 !important;
+  transform: none !important;
+}
+
 /* ===== Dynamic Favicon ===== */
 .favicon-dark {
   display: none;

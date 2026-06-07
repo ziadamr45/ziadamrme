@@ -8,9 +8,10 @@ interface ShareButtonProps {
   language?: "ar" | "en";
   size?: "sm" | "md";
   className?: string;
+  onOpenChange?: (isOpen: boolean) => void;
 }
 
-export function ShareButton({ url, title, language = "ar", size = "md", className = "" }: ShareButtonProps) {
+export function ShareButton({ url, title, language = "ar", size = "md", className = "", onOpenChange }: ShareButtonProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [copied, setCopied] = useState(false);
   const [dropdownStyle, setDropdownStyle] = useState<React.CSSProperties>({});
@@ -90,6 +91,7 @@ export function ShareButton({ url, title, language = "ar", size = "md", classNam
       setTimeout(() => {
         setCopied(false);
         setIsOpen(false);
+        onOpenChange?.(false);
       }, 1500);
     } catch {
       const textArea = document.createElement("textarea");
@@ -102,9 +104,10 @@ export function ShareButton({ url, title, language = "ar", size = "md", classNam
       setTimeout(() => {
         setCopied(false);
         setIsOpen(false);
+        onOpenChange?.(false);
       }, 1500);
     }
-  }, [fullUrl]);
+  }, [fullUrl, onOpenChange]);
 
   const handleShare = useCallback((link: typeof shareLinks[number]) => {
     if (link.action === "copy") {
@@ -112,8 +115,9 @@ export function ShareButton({ url, title, language = "ar", size = "md", classNam
     } else {
       window.open(link.action as string, "_blank", "noopener,noreferrer,width=600,height=400");
       setIsOpen(false);
+      onOpenChange?.(false);
     }
-  }, [handleCopy]);
+  }, [handleCopy, onOpenChange]);
 
   const calculateDropdownPosition = useCallback(() => {
     if (buttonRef.current) {
@@ -159,8 +163,12 @@ export function ShareButton({ url, title, language = "ar", size = "md", classNam
     e.stopPropagation();
     e.preventDefault();
     calculateDropdownPosition();
-    setIsOpen((prev) => !prev);
-  }, [calculateDropdownPosition]);
+    setIsOpen((prev) => {
+      const next = !prev;
+      onOpenChange?.(next);
+      return next;
+    });
+  }, [calculateDropdownPosition, onOpenChange]);
 
   const handleButtonMouseDown = useCallback((e: React.MouseEvent) => {
     e.stopPropagation();
@@ -175,6 +183,12 @@ export function ShareButton({ url, title, language = "ar", size = "md", classNam
     e.preventDefault();
     handleShare(link);
   }, [handleShare]);
+
+  // Close dropdown and notify parent when clicking outside
+  const handleBackdropClick = useCallback(() => {
+    setIsOpen(false);
+    onOpenChange?.(false);
+  }, [onOpenChange]);
 
   const btnSize = size === "sm" ? "w-7 h-7" : "w-9 h-9";
   const iconSize = size === "sm" ? "w-3.5 h-3.5" : "w-4 h-4";
@@ -197,7 +211,7 @@ export function ShareButton({ url, title, language = "ar", size = "md", classNam
 
       {isOpen && (
         <>
-          <div className="fixed inset-0 z-40" onClick={() => setIsOpen(false)} />
+          <div className="fixed inset-0 z-40" onClick={handleBackdropClick} />
           <div
             style={dropdownStyle}
             className="w-48 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 shadow-xl shadow-slate-200/50 dark:shadow-black/50 py-1.5 animate-in fade-in-0 zoom-in-95 duration-150"
@@ -211,14 +225,14 @@ export function ShareButton({ url, title, language = "ar", size = "md", classNam
                 onTouchStart={(e) => e.stopPropagation()}
                 className={`w-full flex items-center gap-2.5 px-3 py-2 text-sm text-slate-700 dark:text-slate-300 transition-colors ${link.color}`}
               >
-                {link.name === "Copy Link" && copied ? (
+                {link.action === "copy" && copied ? (
                   <svg className="w-4 h-4 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                   </svg>
                 ) : (
                   link.icon
                 )}
-                {link.name === "Copy Link" && copied
+                {link.action === "copy" && copied
                   ? (language === "ar" ? "تم النسخ!" : "Copied!")
                   : link.name}
               </button>

@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { useApp } from "@/components/providers";
 import { Card, CardContent } from "@/components/ui/card";
 import { AnimatedBackground } from "@/components/animated-background";
@@ -23,6 +24,8 @@ export default function BlogPostPage() {
   const params = useParams();
   const router = useRouter();
   const slug = params.slug as string;
+  const [shareOpen, setShareOpen] = useState(false);
+  const [relatedShareOpen, setRelatedShareOpen] = useState<string | null>(null);
 
   const post = blogPosts.find((p) => p?.slug === slug);
 
@@ -79,7 +82,7 @@ export default function BlogPostPage() {
           </Link>
         </div>
 
-        <Card className="relative w-full overflow-hidden border-0 shadow-2xl shadow-slate-200/50 dark:shadow-black/50 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl">
+        <Card className={`relative w-full overflow-hidden border-0 shadow-2xl shadow-slate-200/50 dark:shadow-black/50 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl ${shareOpen ? 'share-active' : ''}`}>
           {post.image && (
             <div className="relative w-full aspect-[16/9] overflow-hidden">
               <Image
@@ -101,7 +104,13 @@ export default function BlogPostPage() {
             </div>
             <div className="flex items-start justify-between gap-3 mb-4">
               <h1 className="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white">{post.title[language]}</h1>
-              <ShareButton url={`/blog/${post.slug}`} title={post.title[language]} language={language} size="md" />
+              <ShareButton 
+                url={`/blog/${post.slug}`} 
+                title={post.title[language]} 
+                language={language} 
+                size="md" 
+                onOpenChange={setShareOpen}
+              />
             </div>
 
             <div className="flex flex-wrap gap-1.5 mb-6">
@@ -193,7 +202,7 @@ export default function BlogPostPage() {
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               {relatedPosts.map((relatedPost) => (
                 <Link key={relatedPost.slug} href={`/blog/${relatedPost.slug}`}>
-                  <Card className="relative w-full overflow-hidden border-0 shadow-lg shadow-slate-200/50 dark:shadow-black/30 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl transition-all duration-300 hover:scale-[1.02] cursor-pointer h-full">
+                  <Card className={`relative w-full overflow-hidden border-0 shadow-lg shadow-slate-200/50 dark:shadow-black/30 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl transition-all duration-300 hover:scale-[1.02] cursor-pointer h-full ${relatedShareOpen === relatedPost.slug ? 'share-active' : ''}`}>
                     {relatedPost.image && (
                       <div className="relative w-full aspect-[16/9] overflow-hidden">
                         <Image

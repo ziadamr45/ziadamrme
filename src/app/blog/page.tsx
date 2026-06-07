@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { useApp } from "@/components/providers";
 import { Card, CardContent } from "@/components/ui/card";
 import { AnimatedBackground } from "@/components/animated-background";
@@ -18,6 +19,7 @@ export default function BlogPage() {
   const { language } = useApp();
   const t = translations[language];
   useScrollRestoration();
+  const [shareOpenSlug, setShareOpenSlug] = useState<string | null>(null);
 
   return (
     <div className="relative min-h-screen flex flex-col items-center bg-linear-to-br from-slate-50 via-white to-slate-100 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 overflow-x-hidden">
@@ -64,7 +66,7 @@ export default function BlogPage() {
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           {blogPosts.map((post) => (
             <Link key={post.slug} href={`/blog/${post.slug}`}>
-              <Card className="relative w-full overflow-hidden border-0 shadow-lg shadow-slate-200/50 dark:shadow-black/30 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl transition-all duration-300 hover:scale-[1.02] cursor-pointer h-full">
+              <Card className={`relative w-full overflow-hidden border-0 shadow-lg shadow-slate-200/50 dark:shadow-black/30 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl transition-all duration-300 hover:scale-[1.02] cursor-pointer h-full ${shareOpenSlug === post.slug ? 'share-active' : ''}`}>
                 {post.image && (
                   <div className="relative w-full aspect-[16/9] overflow-hidden">
                     <Image
@@ -100,7 +102,13 @@ export default function BlogPage() {
                       })}
                     </div>
                     <div className="flex items-center gap-1">
-                      <ShareButton url={`/blog/${post.slug}`} title={post.title[language]} language={language} size="sm" />
+                      <ShareButton 
+                        url={`/blog/${post.slug}`} 
+                        title={post.title[language]} 
+                        language={language} 
+                        size="sm" 
+                        onOpenChange={(open) => setShareOpenSlug(open ? post.slug : null)}
+                      />
                       <span className="inline-flex items-center gap-1.5 text-xs font-medium text-orange-600 dark:text-orange-400">
                         {t.readMore}
                         <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={language === "ar" ? "M19 12H5m0 0l7 7m-7-7l7-7" : "M5 12h14m0 0l-7-7m7 7l-7 7"} /></svg>
