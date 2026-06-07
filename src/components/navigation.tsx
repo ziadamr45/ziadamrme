@@ -374,6 +374,27 @@ export function Navigation() {
                   {techPageItem.label}
                 </Link>
 
+                {/* Section links (scroll on home page) */}
+                {pathname === "/" && (
+                  <>
+                    <div className="px-4 py-2 mt-2">
+                      <div className="h-px bg-slate-200 dark:bg-slate-700" />
+                    </div>
+                    <p className="px-4 py-1 text-xs font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-wider">
+                      {language === "ar" ? "أقسام الصفحة" : "Page Sections"}
+                    </p>
+                    {sectionItems.map((item) => (
+                      <button
+                        key={item.id}
+                        onClick={() => handleMobileNavClick(item.id)}
+                        className="w-full flex items-center px-4 py-3 rounded-xl text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700/50 transition-all duration-200 cursor-pointer"
+                      >
+                        {item.label}
+                      </button>
+                    ))}
+                  </>
+                )}
+
                 {/* Legal pages */}
                 <div className="px-4 py-2 mt-2">
                   <div className="h-px bg-slate-200 dark:bg-slate-700" />
@@ -395,27 +416,6 @@ export function Navigation() {
                     {item.label}
                   </Link>
                 ))}
-
-                {/* Section links (scroll on home page) */}
-                {pathname === "/" && (
-                  <>
-                    <div className="px-4 py-2 mt-2">
-                      <div className="h-px bg-slate-200 dark:bg-slate-700" />
-                    </div>
-                    <p className="px-4 py-1 text-xs font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-wider">
-                      {language === "ar" ? "أقسام الصفحة" : "Page Sections"}
-                    </p>
-                    {sectionItems.map((item) => (
-                      <button
-                        key={item.id}
-                        onClick={() => handleMobileNavClick(item.id)}
-                        className="w-full flex items-center px-4 py-3 rounded-xl text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700/50 transition-all duration-200 cursor-pointer"
-                      >
-                        {item.label}
-                      </button>
-                    ))}
-                  </>
-                )}
 
                 {/* Contact CTA in mobile menu (non-home pages) */}
                 {pathname !== "/" && (
