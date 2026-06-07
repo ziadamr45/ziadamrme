@@ -50,10 +50,17 @@ export default function BlogPostPage() {
     );
   }
 
-  // Find related posts (same tags, exclude current)
-  const relatedPosts = (blogPosts
-    .filter((p) => p?.slug !== slug && p?.tags?.some((tag) => post.tags.includes(tag))) as typeof blogPosts[number][])
-    .slice(0, 3);
+  // Find related posts by tag overlap count (more shared tags = more relevant)
+  const relatedPosts = blogPosts
+    .filter((p) => p?.slug !== slug)
+    .map((p) => ({
+      post: p as NonNullable<typeof p>,
+      score: p?.tags?.filter((tag) => post.tags.includes(tag)).length ?? 0,
+    }))
+    .filter((item) => item.score > 0)
+    .sort((a, b) => b.score - a.score)
+    .slice(0, 3)
+    .map((item) => item.post);
 
   return (
     <div className="relative min-h-screen flex flex-col items-center bg-linear-to-br from-slate-50 via-white to-slate-100 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 overflow-x-hidden">
@@ -184,9 +191,7 @@ export default function BlogPostPage() {
               {language === "ar" ? "مقالات مشابهة" : "Related Articles"}
             </h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-              {relatedPosts.map((relatedPost, i) => {
-                if (!relatedPost) return null;
-                return (
+              {relatedPosts.map((relatedPost) => (
                 <Link key={relatedPost.slug} href={`/blog/${relatedPost.slug}`}>
                   <Card className="relative w-full overflow-hidden border-0 shadow-lg shadow-slate-200/50 dark:shadow-black/30 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl transition-all duration-300 hover:scale-[1.02] cursor-pointer h-full">
                     {relatedPost.image && (
@@ -210,8 +215,7 @@ export default function BlogPostPage() {
                     </CardContent>
                   </Card>
                 </Link>
-              );
-              })}
+              ))}
             </div>
           </div>
         )}

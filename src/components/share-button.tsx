@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, useRef } from "react";
 
 interface ShareButtonProps {
   url: string;
@@ -13,6 +13,8 @@ interface ShareButtonProps {
 export function ShareButton({ url, title, language = "ar", size = "md", className = "" }: ShareButtonProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [copied, setCopied] = useState(false);
+  const [dropdownStyle, setDropdownStyle] = useState<React.CSSProperties>({});
+  const buttonRef = useRef<HTMLButtonElement>(null);
 
   const fullUrl = typeof window !== "undefined" && url.startsWith("/") ? `${window.location.origin}${url}` : url;
 
@@ -85,9 +87,11 @@ export function ShareButton({ url, title, language = "ar", size = "md", classNam
     try {
       await navigator.clipboard.writeText(fullUrl);
       setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
+      setTimeout(() => {
+        setCopied(false);
+        setIsOpen(false);
+      }, 1500);
     } catch {
-      // Fallback
       const textArea = document.createElement("textarea");
       textArea.value = fullUrl;
       document.body.appendChild(textArea);
@@ -95,7 +99,10 @@ export function ShareButton({ url, title, language = "ar", size = "md", classNam
       document.execCommand("copy");
       document.body.removeChild(textArea);
       setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
+      setTimeout(() => {
+        setCopied(false);
+        setIsOpen(false);
+      }, 1500);
     }
   }, [fullUrl]);
 
@@ -104,17 +111,82 @@ export function ShareButton({ url, title, language = "ar", size = "md", classNam
       handleCopy();
     } else {
       window.open(link.action as string, "_blank", "noopener,noreferrer,width=600,height=400");
+      setIsOpen(false);
     }
   }, [handleCopy]);
+
+  const calculateDropdownPosition = useCallback(() => {
+    if (buttonRef.current) {
+      const rect = buttonRef.current.getBoundingClientRect();
+      const dropdownWidth = 192; // w-48 = 12rem = 192px
+      const dropdownHeight = 300;
+      const viewportHeight = window.innerHeight;
+      const viewportWidth = window.innerWidth;
+
+      let top = rect.bottom + 4;
+      let left: number;
+
+      // If dropdown would go off bottom, show above button
+      if (top + dropdownHeight > viewportHeight) {
+        top = rect.top - dropdownHeight - 4;
+      }
+
+      // Ensure top is not negative
+      top = Math.max(8, top);
+
+      // For RTL, align right edge of dropdown with right edge of button
+      const isRTL = document.documentElement.dir === 'rtl';
+      if (isRTL) {
+        left = rect.right - dropdownWidth;
+      } else {
+        left = rect.left;
+      }
+
+      // Ensure dropdown doesn't go off screen horizontally
+      if (left < 8) left = 8;
+      if (left + dropdownWidth > viewportWidth - 8) left = viewportWidth - dropdownWidth - 8;
+
+      setDropdownStyle({
+        position: 'fixed' as const,
+        top: `${top}px`,
+        left: `${left}px`,
+        zIndex: 50,
+      });
+    }
+  }, []);
+
+  const handleButtonClick = useCallback((e: React.MouseEvent) => {
+    e.stopPropagation();
+    e.preventDefault();
+    calculateDropdownPosition();
+    setIsOpen((prev) => !prev);
+  }, [calculateDropdownPosition]);
+
+  const handleButtonMouseDown = useCallback((e: React.MouseEvent) => {
+    e.stopPropagation();
+  }, []);
+
+  const handleButtonTouchStart = useCallback((e: React.TouchEvent) => {
+    e.stopPropagation();
+  }, []);
+
+  const handleItemClick = useCallback((e: React.MouseEvent, link: typeof shareLinks[number]) => {
+    e.stopPropagation();
+    e.preventDefault();
+    handleShare(link);
+  }, [handleShare]);
 
   const btnSize = size === "sm" ? "w-7 h-7" : "w-9 h-9";
   const iconSize = size === "sm" ? "w-3.5 h-3.5" : "w-4 h-4";
 
   return (
-    <div className={`relative ${className}`}>
+    <div className={className}>
       <button
+        ref={buttonRef}
         type="button"
-        onClick={() => setIsOpen(!isOpen)}
+        onClick={handleButtonClick}
+        onMouseDown={handleButtonMouseDown}
+        onTouchStart={handleButtonTouchStart}
         className={`${btnSize} flex items-center justify-center rounded-lg text-slate-400 dark:text-slate-500 hover:text-orange-500 dark:hover:text-orange-400 hover:bg-orange-50 dark:hover:bg-orange-500/10 transition-all duration-200 cursor-pointer`}
         title={language === "ar" ? "مشاركة" : "Share"}
       >
@@ -126,12 +198,17 @@ export function ShareButton({ url, title, language = "ar", size = "md", classNam
       {isOpen && (
         <>
           <div className="fixed inset-0 z-40" onClick={() => setIsOpen(false)} />
-          <div className="absolute z-50 end-0 top-full mt-1 w-48 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 shadow-xl shadow-slate-200/50 dark:shadow-black/50 py-1.5 animate-in fade-in-0 zoom-in-95 duration-150">
+          <div
+            style={dropdownStyle}
+            className="w-48 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 shadow-xl shadow-slate-200/50 dark:shadow-black/50 py-1.5 animate-in fade-in-0 zoom-in-95 duration-150"
+          >
             {shareLinks.map((link) => (
               <button
                 key={link.name}
                 type="button"
-                onClick={() => handleShare(link)}
+                onClick={(e) => handleItemClick(e, link)}
+                onMouseDown={(e) => e.stopPropagation()}
+                onTouchStart={(e) => e.stopPropagation()}
                 className={`w-full flex items-center gap-2.5 px-3 py-2 text-sm text-slate-700 dark:text-slate-300 transition-colors ${link.color}`}
               >
                 {link.name === "Copy Link" && copied ? (

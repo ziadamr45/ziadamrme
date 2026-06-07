@@ -33,6 +33,8 @@ export const blogPosts: BlogPost[] = [
 
 من أهم الدروس اللي تعلمتها: استخدم Server Components للبيانات الثابتة وClient Components للتفاعل فقط. في البداية كنت بخلي كل حاجة Client Component، وبعدين اكتشفت إن ده بيأثر على الأداء وحجم الـ JavaScript المُحمّل. كمان تعلمت إن Image Optimization في Next.js مش مجرد ميزة لطيفة، دي ضرورة عشان الأداء على الموبايل.
 
+![Server Components مقابل Client Components](/blog/inline-server-components.png)
+
 نصيحتي لأي حد بيبدأ مع Next.js: ابدأ بالمشروع الصغير وافهم الأساسيات كويس قبل ما تتحول للمشاريع الكبيرة. اتعلم الفرق بين Server Components وClient Components، وافهم إزاي data fetching يختلف عن React العادي. واستفيد من App Router الجديد لأنه بيوفر مرونة أكبر بكثير من Pages Router القديم.
 
 في النهاية، Next.js مش مجرد إطار عمل، ده رفيق رحلة المطور. كل مشروع بنيته بيه كان تجربة تعلم جديدة. من إسمع راديو لمعركة الأسئلة لطمني، كل تطبيق علمني حاجة جديدة عن Next.js وعن تطوير الويب بشكل عام. لو لسه ما جربتهوش، أنصحك تبدأ النهاردة — هتلاقي نفسك بتبني تطبيقات أفضل وأسرع.`,
@@ -49,6 +51,8 @@ In the Elmokhber project, the challenge was different. The app relies on live vo
 The Battle of Questions project was another application where Next.js proved its strength. The app relies on Socket.io for real-time communication, and I needed API Routes to handle events. Next.js with integrated API Routes let me build the backend and frontend in one place without needing a separate server. This saved significant development time and made deployment easier.
 
 One of the most important lessons I learned: use Server Components for static data and Client Components only for interactivity. Initially, I made everything a Client Component, then discovered this affects performance and the loaded JavaScript bundle size. I also learned that Image Optimization in Next.js isn't just a nice feature — it's essential for mobile performance.
+
+![Server Components vs Client Components](/blog/inline-server-components.png)
 
 My advice for anyone starting with Next.js: begin with a small project and understand the fundamentals well before moving to large projects. Learn the difference between Server Components and Client Components, and understand how data fetching differs from regular React. Take advantage of the new App Router because it offers much more flexibility than the older Pages Router.
 
@@ -76,6 +80,8 @@ Ultimately, Next.js isn't just a framework — it's a developer's journey compan
 
 أهم نمط تصميمي تعلمته هو "Server as Source of Truth". في البداية كنت بخلي كل عميل (Client) يدير حالة اللعبة لوحده، وده أدى لمشاكل كتير في التزامن. بعد كده غيّرت النهج وخليت السيرفر هو المصدر الوحيد للحقيقة. كل إجراء بيتعمل على العميل بيتعمل Validate على السيرفر الأول، وبعدين السيرفر بيبث التحديث لكل العملاء. ده ضمن إن كل اللاعبين شايفين نفس الحاجة في نفس الوقت.
 
+![تزامن البيانات في الوقت الحقيقي](/blog/inline-realtime-sync.png)
+
 إدارة الغرف (Rooms) في Socket.io كانت ميزة أساسية. كل غرفة لعب ليها Room خاص، ولو لاعب انضم، بينضم للـ Room ده. لما سؤال بيتعرض، السيرفر بيبعته لكل اللي في الـ Room بس، مش لكل الناس على السيرفر. كمان لما لاعب بيسحب إجابته، السيرفر بيعمل Validate وبيحدث النقاط ويبثها لكل اللاعبين في الغرفة.
 
 مشكلة انقطاع الاتصال كانت من أكتر المشاكل اللي واجهتها. في لعبة زي معركة الأسئلة، لو لاعب فقد الاتصال في نص الجولة، لازم نتعامل مع الموقف ده بذكاء. الحل اللي استخدمته كان: لما اللاعب بيفقد الاتصال، السيرفر بيحتفظ بمكانه لمدة 30 ثانية. لو رجع، بيستكمل من حيث ما وقف. لو مارجعش، السيرفر بيطلعه من الغرفة وبيوزع نقاطه على خصومه.
@@ -94,6 +100,8 @@ In the Battle of Questions project, I used Socket.io to create an interactive ga
 Designing the architecture of Socket.io with Next.js was the first challenge. Next.js does Server-Side Rendering, and Socket.io needs a persistent connection. The solution was to create a Custom Server or use an API Route as the place to set up the Socket.io Server. In Battle of Questions, I used a hybrid pattern: Next.js for the frontend and a separate Socket.io Server running on a different port. Communication between them happens through events.
 
 The most important design pattern I learned is "Server as Source of Truth." Initially, I let each client manage its own game state, which led to many synchronization problems. After that, I changed the approach and made the server the sole source of truth. Every action on the client gets validated on the server first, then the server broadcasts the update to all clients. This ensured all players see the same thing at the same time.
+
+![Real-Time Data Synchronization](/blog/inline-realtime-sync.png)
 
 Room management in Socket.io was an essential feature. Each game room has its own Room, and when a player joins, they join that Room. When a question is displayed, the server sends it only to everyone in that Room, not to everyone on the server. Also, when a player submits an answer, the server validates it, updates the score, and broadcasts it to all players in the room.
 
@@ -121,6 +129,8 @@ Ultimately, Socket.io is a very powerful tool but requires good design from the 
 
 أول حاجة فكرت فيها كانت: إزاي أحمي بيانات الموقع أثناء النقل؟ الإجابة كانت واضحة — تشفير HTTPS إجباري لكل الاتصالات. بس ده مش كافي. حتى لو الاتصال مشفر، لو السيرفر بيخزن الموقع كنص عادي (plaintext)، أي حد يوصل لقاعدة البيانات هيعرف مكانك. عشان كده استخدمت تشفير إضافي على مستوى التطبيق. الموقع بيتشفّر قبل ما يتخزن في قاعدة البيانات، ومفتاح التشفير محفوظ في مكان آمن منفصل عن قاعدة البيانات.
 
+![تشفير بيانات الموقع](/blog/inline-location-security.png)
+
 التحدي التاني كان: مين يقدر يشوف الموقع؟ في طمني، المستخدم هو اللي بيحدد مين يشوف موقعه. كل مشاركة ليها صلاحيات واضحة: إما شخص معين عبر رابط مؤقت، أو أفراد العائلة في الحلقة العائلية. النظام بيتأكد إن كل طلب عرض موقع بيتعمل Validate — مفيش طريقة تقدر تتخطى الصلاحيات وتشوف موقع حد مش شاركه معاك.
 
 روابط المشاركة المؤقتة كانت فكرة أساسية. المستخدم بيختار المدة: 15 دقيقة، ساعة، 3 ساعات، أو يوم كامل. بعد انتهاء المدة، الرابط بيتعطل تلقائيًا ومش بيقدر حد يوصل للموقع تاني. التطبيق بيستخدم توكنات مشفرة (JWT) ليها تاريخ انتهاء صلاحية. حتى لو حد حاول يستخدم الرابط بعد انتهاء الصلاحية، السيرفر هيرفضه فورًا.
@@ -135,6 +145,8 @@ Ultimately, Socket.io is a very powerful tool but requires good design from the 
       en: `Location sharing apps raise legitimate security concerns, and that's completely natural and expected. Geographic location is one of the most sensitive types of data because it reveals your actual physical presence, and if it falls into the wrong hands, it can cause serious problems. In the Tammeny app, security was the highest priority from the very start. From data encryption to access control, every design decision was driven by security considerations.
 
 The first thing I thought about was: how do I protect location data in transit? The answer was clear — mandatory HTTPS encryption for all connections. But that's not enough. Even if the connection is encrypted, if the server stores location as plaintext, anyone who accesses the database will know your location. That's why I used additional application-level encryption. Location gets encrypted before being stored in the database, and the encryption key is kept in a secure location separate from the database.
+
+![Location Data Encryption](/blog/inline-location-security.png)
 
 The second challenge was: who can see the location? In Tammeny, the user determines who can see their location. Every share has clear permissions: either a specific person via a temporary link, or family members in the family circle. The system ensures every location view request is validated — there's no way to bypass permissions and see someone's location who hasn't shared it with you.
 
@@ -164,6 +176,8 @@ A final piece of advice: test your security system yourself. Try to bypass the p
 
 أول وأكبر تحدي هو دعم RTL (Right-to-Left). العربية بتتكتب من اليمين للشمال، وده بيأثر على كل حاجة في الصفحة: التخطيط، الترتيب، الأيقونات، الاتجاهات. في البداية كنت بعكس كل حاجة يدويًا — الـ margin-left تبقى margin-right والـ padding كمان. ده كان مرهق ومصدر أخطاء كتير. بعدين اكتشفت إن Tailwind CSS بيدعم RTL بشكل ممتاز من خلال الأدوات rtl: وltr:. بس المشكلة الأكبر كانت في المكونات اللي بتتغير اتجاهها: السلايدر، الـ dropdown، الـ tooltip — كل دول محتاجين اهتمام خاص.
 
+![تصميم RTL مقابل LTR](/blog/inline-rtl-layout.png)
+
 الخطوط العربية تحدي لوحده. معظم الخطوط المتاحة على الويب مصممة للاتيني (Latin) ومش بتاخد في الاعتبار خصائص الخط العربي. الخط العربي بيحتاج مساحة أفقية أكبر، والحروف بتتصل ببعض بطريقة مختلفة حسب موقعها في الكلمة. جربت خطوط كتير ولقيت إن خطوط زي Cairo وTajawal وNoto Kufi Arabic بتقدم تجربة قراءة أفضل بكثير. بس لاحظت إن تحميل الخطوط العربية بيأثر على سرعة الصفحة، عشان ملفات الخطوط العربية أكبر من الاتينية.
 
 الاعتبارات الثقافية مش أقل أهمية. في إسمع راديو، إضافة قسم القرآن الكريم كانت مطلب أساسي من المستخدمين العرب. بس إضافة القسم ده محتاجة احترام واهتمام: اتجاه النص، نوع الخط، الألوان المستخدمة، طريقة عرض الآيات. كل حاجة لازم تكون محترمة ومناسبة. في تطبيق المخبر، أسماء الأدوار والشخصيات كانت بالعربي ومصممة تناسب الثقافة العربية.
@@ -178,6 +192,8 @@ Localization مقابل Internationalization فرق مهم. في طمني، عم
       en: `Building web applications for Arabic-speaking users is a unique journey that doesn't resemble building English-language apps. From the moment I started working on Esma3 Radio, I encountered challenges I hadn't expected. In this article, I'll share the insights I gained from building multiple Arabic apps, and how dealing with Arabic on the web is fundamentally different from any other language.
 
 The first and biggest challenge is RTL (Right-to-Left) support. Arabic is written from right to left, and this affects everything on the page: layout, ordering, icons, and directions. Initially, I was manually reversing everything — margin-left becomes margin-right, and padding too. This was exhausting and a source of many bugs. Then I discovered that Tailwind CSS supports RTL excellently through the rtl: and ltr: utilities. But the bigger problem was with components that change direction: sliders, dropdowns, tooltips — all of these need special attention.
+
+![RTL vs LTR Layout](/blog/inline-rtl-layout.png)
 
 Arabic typography is a challenge on its own. Most web-available fonts are designed for Latin scripts and don't account for Arabic script characteristics. Arabic script needs more horizontal space, and letters connect differently depending on their position in the word. I tried many fonts and found that fonts like Cairo, Tajawal, and Noto Kufi Arabic provide a much better reading experience. But I noticed that loading Arabic fonts affects page speed because Arabic font files are larger than Latin ones.
 
@@ -217,6 +233,8 @@ My advice for anyone wanting to build an Arabic app: start with RTL design from 
 
 Rate Limiting عمومًا درس مهم. في إسمع راديو، لاحظت إن في bots بتحاول تجلب آلاف المحطات في ثواني. أضفت Rate Limiting على كل API Endpoint وده حماي من الـ DDoS ومن الاستخدام المفرط للموارد. استخدمت نمط Sliding Window Rate Limiting اللي بيسمح بـ 100 طلب كل 15 دقيقة لكل مستخدم.
 
+![طبقات الأمان في تطبيقات الويب](/blog/inline-security-layers.png)
+
 التحقق من المدخلات (Input Validation) مش رفاهية — ده خط الدفاع الأول. في كل تطبيقاتي، بتحقق من كل حاجة بتأتي من المستخدم: النوع، الطول، التنسيق. استخدمت Zod للتحقق من النماذج في Next.js وده وفّر عليّ كتابة Validation يدوي. في نظام الإقبال، بيانات الطالب لازم تتطابق مع أنماط محددة: الإيميل لازم يكون صحيح، الرقم المصري لازم يبدأ بـ 01 ويتكون من 11 رقم.
 
 نصيحة أخيرة ومهمة: الأمان عملية مستمرة مش خطوة واحدة. كل ما تكتشف ثغرة جديدة، أصلحها ووثّقها. اعمل Security Audit دوري لكودك. واستخدم أدوات زي npm audit عشان تكتشف الثغرات في المكتبات اللي بتستخدمها. الثغرات الأمنية مش عيب فيك كمطور — العيب إنك تتجاهلها.`,
@@ -233,6 +251,8 @@ The biggest mistake I made was with environment variables (.env). In one of my e
 Secure authentication in Eleqbal Form was an important learning experience. I used OTP via email instead of traditional passwords. The reason: passwords can be guessed and have dictionary attacks, but OTP has limited validity and changes every time. I also used Rate Limiting on OTP sending to prevent brute force attacks. Each IP address can't request more than 5 OTPs per hour.
 
 Rate Limiting in general is an important lesson. In Esma3 Radio, I noticed bots trying to fetch thousands of stations in seconds. I added Rate Limiting on every API Endpoint, which protected against DDoS and excessive resource usage. I used a Sliding Window Rate Limiting pattern allowing 100 requests per 15 minutes per user.
+
+![Web Security Defense Layers](/blog/inline-security-layers.png)
 
 Input Validation isn't a luxury — it's the first line of defense. In all my applications, I validate everything coming from the user: type, length, format. I used Zod for form validation in Next.js, which saved me from writing manual validation. In Eleqbal Form, student data must match specific patterns: email must be valid, Egyptian phone number must start with 01 and be 11 digits long.
 
@@ -262,6 +282,8 @@ A final important piece of advice: security is an ongoing process, not a one-tim
 
 التصميم المتجاوب (Responsive Design) مع Tailwind تجربة مختلفة تمامًا. بدل ما أكتب media queries منفصلة، بكتب البادئة مباشرة: sm:, md:, lg:, xl:. في إسمع راديو، بطاقات المحطات بتظهر عمودين على الموبايل وتلاتة على التابلت وأربعة على الكمبيوتر. الكود ده بيكون واضح ومقروء في مكان واحد: grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4.
 
+![التصميم المتجاوب مع Tailwind](/blog/inline-responsive-tailwind.png)
+
 الوضع الداكن (Dark Mode) مع Tailwind بسيط جدًا. بادئة dark: قبل أي أداة بتخليها تتنفذ في الوضع الداكن بس. في تطبيق الطقس، الوضع الداكن كان مطلب أساسي عشان التطبيق بيستخدمه الناس في أوقات مختلفة من اليوم. كل اللي عملته إني أضفت dark: قبل الألوان والخلفيات وخلصت. بالـ CSS التقليدي، كنت محتاج أكتب media query منفصلة لكل عنصر.
 
 أكبر نقد بيتقال عن Tailwind هو إن HTML بيكون مليان كلاسات وبيبقى صعب القراءة. وده صحيح في البداية. بس مع الوقت بتتعلم تنظم الكلاسات: الأول الأساسيات (display, position)، بعدين الأبعاد (width, height, padding)، بعدين الألوان والحدود، وفي الآخر التفاعلات (hover, focus). كمان استخراج المكونات (Component Extraction) بيحل المشكلة دي — لما عنصر بيتكرر، بتعمله مكون منفصل.
@@ -279,6 +301,8 @@ Customization in Tailwind was a turning point. The tailwind.config file lets you
 
 Responsive Design with Tailwind is a completely different experience. Instead of writing separate media queries, I write prefixes directly: sm:, md:, lg:, xl:. In Esma3 Radio, station cards show 2 columns on mobile, 3 on tablet, and 4 on desktop. The code is clear and readable in one place: grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4.
 
+![Responsive Design with Tailwind](/blog/inline-responsive-tailwind.png)
+
 Dark Mode with Tailwind is extremely simple. The dark: prefix before any utility makes it apply only in dark mode. In the Weather App, dark mode was essential since people use it at different times of day. All I did was add dark: before colors and backgrounds, and it was done. With traditional CSS, I would have needed separate media queries for each element.
 
 The biggest criticism of Tailwind is that HTML becomes full of classes and hard to read. This is true initially. But over time, you learn to organize classes: first basics (display, position), then dimensions (width, height, padding), then colors and borders, and finally interactions (hover, focus). Component extraction also solves this problem — when an element repeats, you make it a separate component.
@@ -291,6 +315,7 @@ My advice: if you haven't tried Tailwind yet, start with a small project. You'll
   },
   {
     slug: "database-journey",
+    image: "/blog/database-journey.png",
     title: { ar: "نظام قواعد البيانات: من SQLite لـ PostgreSQL", en: "Database Systems: From SQLite to PostgreSQL" },
     date: "2026-03-08",
     excerpt: {
@@ -302,9 +327,13 @@ My advice: if you haven't tried Tailwind yet, start with a small project. You'll
 
 بدأت بـ SQLite في أول مشاريعي. SQLite ممتاز للمشاريع الصغيرة والنماذج الأولية — مفيش سيرفر لازم تشغله، الملف بتاع قاعدة البيانات بيتحط في المشروع نفسه، وكل حاجة شغالة فورًا. في مشروع بسيط زي نظام الإقبال في البداية، SQLite كان كافي. بس لما المشروع كبر ولما عدد المستخدمين زاد، ظهرت مشاكل: SQLite مش بيقدر يتعامل مع اتصالات متزامنة كتير، ومفيش Features متقدمة زي Full-Text Search أو JSONB.
 
+![رحلة قواعد البيانات](/blog/inline-db-migration-new.png)
+
 الانتقال لـ PostgreSQL كان نقطة تحول. في إسمع راديو، كان محتاجين قاعدة بيانات تتعامل مع آلاف المحطات ومئات المستخدمين في نفس الوقت. PostgreSQL وفّر ده وأكتر. دعم JSONB خلاه سهل أخزن بيانات المحطات المتغيرة بدون ما أعمل Schema معقد. كمان Full-Text Search الأصلي ساعدني أعمل بحث سريع في أسماء المحطات بدون مكتبات خارجية.
 
 Prisma ORM كان الحلقة اللي ربطت كل حاجة. بدل ما أكتب SQL يدوي واتعامل مع الاتصالات والـ Migrations، Prisma وفّرلي Schema واضح ومقروء، TypeScript types تلقائية، وMigration system بيدير التغييرات في قاعدة البيانات. في طمني، الـ Schema كان بسيط وواضح: موديل User، موديل LocationShare، موديل FamilyCircle. كل علاقة معرّفة بوضوح في ملف schema.prisma.
+
+![Prisma Schema](/blog/inline-prisma-schema.png)
 
 من أكبر فوائد Prisma: الـ Type Safety. لما بتكتب كود بتاعك، كل حاجة ليها نوع واضح. لو حبيت تعمل Query على المستخدمين، Prisma بيرجعلك Type دقيق فيه كل الحقول اللي في الموديل. ده بيمنع أخطاء كتير جدًا وبيخلي الـ autocomplete يشتغل بشكل ممتاز. في معركة الأسئلة، الـ Types ساعدتني أتعامل مع بيانات اللاعبين والجولات بدون أي خطأ في وقت التشغيل.
 
@@ -319,9 +348,13 @@ Prisma ORM كان الحلقة اللي ربطت كل حاجة. بدل ما أك
 
 I started with SQLite in my first projects. SQLite is excellent for small projects and prototypes — there's no server to run, the database file sits in the project itself, and everything works instantly. In a simple project like Eleqbal Form initially, SQLite was sufficient. But as the project grew and user numbers increased, problems emerged: SQLite can't handle many concurrent connections, and lacks advanced features like Full-Text Search or JSONB.
 
+![Database Journey](/blog/inline-db-migration-new.png)
+
 Moving to PostgreSQL was a turning point. In Esma3 Radio, we needed a database that could handle thousands of stations and hundreds of users simultaneously. PostgreSQL provided that and more. JSONB support made it easy to store variable station data without a complex schema. Native Full-Text Search helped me implement fast searching across station names without external libraries.
 
 Prisma ORM was the link that tied everything together. Instead of writing SQL manually and dealing with connections and migrations, Prisma provided a clear, readable schema, automatic TypeScript types, and a migration system that manages database changes. In Tammeny, the schema was simple and clear: User model, LocationShare model, FamilyCircle model. Every relationship is clearly defined in the schema.prisma file.
+
+![Prisma Schema](/blog/inline-prisma-schema.png)
 
 One of Prisma's biggest benefits: Type Safety. When writing your code, everything has a clear type. If you want to query users, Prisma returns an exact type with all the fields in the model. This prevents many runtime errors and makes autocomplete work perfectly. In Battle of Questions, the Types helped me handle player and round data without any runtime errors.
 
@@ -337,6 +370,7 @@ My advice for beginners: start with SQLite for development speed, but plan the t
   },
   {
     slug: "pwa-journey",
+    image: "/blog/pwa-journey.png",
     title: { ar: "تطبيقات الويب التقدمية: من المتصفح لشاشة الهاتف", en: "Progressive Web Apps: From Browser to Home Screen" },
     date: "2026-03-22",
     excerpt: {
@@ -383,6 +417,7 @@ My advice for anyone wanting to add PWA to their app: start with the basics — 
   },
   {
     slug: "web-push-notifications",
+    image: "/blog/web-push-notifications.png",
     title: { ar: "إشعارات الويب: تواصل مع مستخدميك في أي وقت", en: "Web Push Notifications: Reaching Users Anytime" },
     date: "2026-04-05",
     excerpt: {
@@ -393,6 +428,8 @@ My advice for anyone wanting to add PWA to their app: start with the basics — 
       ar: `الإشعارات من أقوى الطرق اللي تقدر توصل بيها لمستخدميك. بس برضه من أكتر الحاجات اللي ممكن تزعجهم لو اتعاملت معاها غلط. بنيت لوحة الإشعارات كمشروع متكامل، وأضفت إشعارات ويب لإسمع راديو، واتعلمت دروس كتير عن Web Push API وتجربة المستخدم. في المقال ده هشارك الرحلة دي من أول مفاتيح VAPID لحد الإشعارات اللي بتوصل فعلًا.
 
 أول خطوة كانت فهم إزاي Web Push بيشتغل. النظام بيحتاج تلاتة أطراف: التطبيق بتاعك (الـ Client)، الـ Push Service (الوسيط اللي بيوصّل الإشعار)، والـ Service Worker (اللي بيستقبل الإشعار وبيعرضه). لما المستخدم بيوافق على الإشعارات، التطبيق بيتواصل مع الـ Push Service وبيعمل Subscription — ده بيرجع كائن فيه Endpoint وKeys. الكائن ده بتبعته لسيرفرك عشان تستخدمه بعد كده تبعت إشعارات.
+
+![تدفق إشعارات الويب](/blog/inline-push-notifications-flow.png)
 
 مفاتيح VAPID كانت من أكتر الحاجات اللي اتعبني في البداية. VAPID (Voluntary Application Server Identification) هي طريقة المصادقة اللي بتأكد للـ Push Service إنك أنت المرسل الحقيقي. لازم تولّد زوج مفاتيح — المفتاح العام اللي بتسجله في الـ Push Service والمفتاح الخاص اللي بتحفظه على السيرفر. لو المفتاح الخاص اتسرب، أي حد يقدر يبعت إشعارات باسمك. في لوحة الإشعارات، حفظت المفتاح الخاص في Environment Variables وعملت Rotation كل فترة.
 
@@ -412,6 +449,8 @@ My advice for anyone wanting to add PWA to their app: start with the basics — 
       en: `Notifications are one of the most powerful ways to reach your users. But they're also one of the easiest ways to annoy them if handled poorly. I built the Notifications dashboard as a complete project, and added web push to Esma3 Radio, learning many lessons about the Web Push API and user experience along the way. In this article, I'll share the journey from VAPID keys to notifications that actually get through.
 
 The first step was understanding how Web Push works. The system needs three parties: your application (the Client), the Push Service (the intermediary that delivers the notification), and the Service Worker (which receives and displays the notification). When a user agrees to notifications, the app communicates with the Push Service and creates a Subscription — this returns an object containing an Endpoint and Keys. You send this object to your server so you can use it later to send notifications.
+
+![Web Push Notification Flow](/blog/inline-push-notifications-flow.png)
 
 VAPID keys were one of the things that gave me the most trouble initially. VAPID (Voluntary Application Server Identification) is the authentication method that assures the Push Service you're the legitimate sender. You need to generate a key pair — the public key you register with the Push Service, and the private key you keep on the server. If the private key leaks, anyone can send notifications in your name. In the Notifications dashboard, I stored the private key in Environment Variables and rotated it periodically.
 
@@ -433,6 +472,7 @@ My advice: if you're adding web notifications, think about the user's first expe
   },
   {
     slug: "building-news-aggregator",
+    image: "/blog/building-news-aggregator.png",
     title: { ar: "بناء مجمع أخبار: التحديات التقنية والحلول", en: "Building a News Aggregator: Technical Challenges and Solutions" },
     date: "2026-04-19",
     excerpt: {
@@ -443,6 +483,8 @@ My advice: if you're adding web notifications, think about the user's first expe
       ar: `بناء مجمع أخبار زي بوابة الحدث كان من أكتر المشاريع اللي علمتني حاجات جديدة. المشروع ده مش مجرد موقع بيعرض أخبار — ده نظام متكامل بيجيب أخبار من مصادر كتير، بيخزنها، بيصنفها، بيعملها تلخيص بالذكاء الاصطناعي، وبيعرف يعرض أكتر الأخبار ترندًا لكل مستخدم. في المقال ده هشرح التحديات التقنية اللي واجهتها والحلول اللي استخدمتها.
 
 أول تحدي كان التعامل مع أكتر من مصدر أخبار API. استخدمت GNews وNewsData كمصادر أساسية. كل API ليها شكل بيانات مختلف (Schema)، وحدود استخدام مختلفة (Rate Limits)، وأسعار مختلفة. عشان أتعامل مع التنوع ده، عملت طبقة تجريد (Abstraction Layer) بتحوّل بيانات كل API لصيغة موحدة. يعني مهما كان المصدر، البيانات بتدخل بنفس الشكل في النظام. ده وفر عليّ إني أضيف مصادر جديدة بسهولة بعد كده من غير ما أغير الكود الأساسي.
+
+![معمارية مجمع الأخبار](/blog/inline-news-aggregator-arch.png)
 
 إدارة حصص الـ API (API Quota Management) كانت مشكلة حقيقية. GNews بيسمح بـ 100 طلب يومي على الباقة المجانية، وNewsData بيسمح بـ 200. لو استهلكت الحصة من واحد، لازم أتحول للتاني تلقائيًا. عملت نظام توجيه (Routing System) بيتابع استهلاك كل API ويحول الطلبات للمصدر المتاح. كمان عملت Caching ذكي — الأخبار مش بتتغير كل ثانية، فهعمل طلب كل 30 دقيقة وأخزن النتائج. ده قلل استهلاك الـ API بنسبة 90٪.
 
@@ -460,6 +502,8 @@ My advice: if you're adding web notifications, think about the user's first expe
       en: `Building a news aggregator like Bawabet Elhadas was one of the projects that taught me the most new things. This project isn't just a website that displays news — it's a complete system that fetches news from multiple sources, stores it, categorizes it, summarizes it with AI, and knows how to display the most trending news for each user. In this article, I'll explain the technical challenges I faced and the solutions I used.
 
 The first challenge was dealing with more than one news API source. I used GNews and NewsData as primary sources. Each API has a different data schema, different rate limits, and different pricing. To handle this diversity, I created an Abstraction Layer that transforms data from each API into a unified format. This means regardless of the source, data enters the system in the same shape. This saved me from having to change core code when adding new sources later.
+
+![News Aggregator Architecture](/blog/inline-news-aggregator-arch.png)
 
 API Quota Management was a real problem. GNews allows 100 daily requests on the free tier, and NewsData allows 200. If I exhaust one quota, I need to automatically switch to the other. I built a Routing System that tracks each API's consumption and routes requests to the available source. I also implemented smart caching — news doesn't change every second, so I make requests every 30 minutes and store the results. This reduced API consumption by 90%.
 
@@ -479,6 +523,7 @@ My advice for anyone building a news aggregator: start with just one source and 
   },
   {
     slug: "building-developer-portfolio",
+    image: "/blog/building-developer-portfolio.png",
     title: { ar: "بناء موقع شخصي يمثلك كمطور: دروس من رحلتي", en: "Building a Developer Portfolio That Represents You: Lessons from My Journey" },
     date: "2026-05-10",
     excerpt: {
@@ -489,6 +534,8 @@ My advice for anyone building a news aggregator: start with just one source and 
       ar: `الموقع الشخصي بتاعك كمطور هو بطاقتك الرقمية — أول حاجة حد يشوفها لما يبحث عنك أو حد يرشحك لفرصة. لما بدأت أبني ziadamr.me، كان هدفي أعمل مكان يجمع كل مشاريعي الـ 14، يعرض مهاراتي، ويكون فيه مدونة ثنائية اللغة بتشارك خبراتي. في المقال ده هشرح إزاي بنيت الموقع ده والدرس اللي تعلمتها في كل خطوة.
 
 أول قرار كان اختيار التقنيات. استخدمت Next.js طبعًا — ده إطار العمل اللي بستخدمه في كل مشاريعي، وكنت عارفه كويس. بس الموقع الشخصي مختلف شوية — محتاج SEO ممتاز عشان يظهر في جوجل لما حد يبحث عن اسمك، محتاج سرعة تحميل عالية عشان الانطباع الأول، ومحتاج يكون متجاوب على كل الأجهزة. Next.js بـ Server-Side Rendering وStatic Generation وفّر كل ده. استخدمت App Router عشان أستفيد من أحدث الميزات.
+
+![معمارية الموقع الشخصي](/blog/inline-portfolio-arch.png)
 
 تصميم قاعدة البيانات كان خطوة مهمة. استخدمت PostgreSQL مع Prisma كالعادة. الـ Schema كان فيه تلاتة موديلات أساسية: BlogPost للمدونة، Project للمشاريع، وUser للإدارة. موديل BlogPost كان أكتر موديل معقد — فيه حقول للعربي والإنجليزي (title_ar، title_en، content_ar، content_en)، slug فريد، تاريخ النشر، والتاجات. الفصل بين المحتوى العربي والإنجليزي في حقول مختلفة بدل ما أعمل جدول ترجمة منفصل خلى الـ Queries أبسط وأسرع.
 
@@ -508,6 +555,8 @@ SEO كان أولوية من الأول. كل صفحة ليها title وdescript
       en: `Your personal website as a developer is your digital business card — the first thing someone sees when they look you up or when someone recommends you for an opportunity. When I started building ziadamr.me, my goal was to create a space that brings together all 14 of my projects, showcases my skills, and includes a bilingual blog where I share my experiences. In this article, I'll explain how I built this website and the lessons I learned at each step.
 
 The first decision was choosing the tech stack. I used Next.js of course — it's the framework I use in all my projects, and I know it well. But a personal website is a bit different — it needs excellent SEO so it appears in Google when someone searches your name, fast loading for a great first impression, and responsiveness across all devices. Next.js with Server-Side Rendering and Static Generation provided all of this. I used the App Router to take advantage of the latest features.
+
+![Portfolio Architecture](/blog/inline-portfolio-arch.png)
 
 Database design was an important step. I used PostgreSQL with Prisma as usual. The Schema had three core models: BlogPost for the blog, Project for the portfolio, and User for administration. The BlogPost model was the most complex — it has fields for Arabic and English (title_ar, title_en, content_ar, content_en), a unique slug, publish date, and tags. Separating Arabic and English content in different fields rather than a separate translation table made queries simpler and faster.
 
@@ -541,6 +590,8 @@ My advice for any developer who hasn't built a portfolio yet: start today, not t
       ar: `أمان الأنواع (Type Safety) في TypeScript مش مجرد ميزة إضافية لطيفة — ده الفرق بين مشروع بيتكسّر في الإنتاج ومشروع بيفضل شغال بثبات. أنا كنت من الناس اللي بتقول "JavaScript كافي ومش محتاج TypeScript"، وبعدين اكتشفت إن ده أكبر غلطة فنية عملتها في حياتي كمطور. في المقال ده هنفهم مع بعض ليه TypeScript مهم، وإزاي الأنواع بتمنع أخطاء حقيقية، وأهم الأنماط اللي لازم كل مطور يعرفها.
 
 أول حاجة لازم نفهمها: TypeScript مش لغة جديدة، ده JavaScript مع طبقة أنواع فوقها. يعني كل اللي بتعرفه عن JavaScript شغال زي ما هو، بس بتحصل على حماية إضافية من الأخطاء. لما بتكتب كود JavaScript عادي، ممكن تعمل متغير اسمه age وتحط فيه string بالغلط ومحدش هيقولك لحد ما التطبيق يقع. بس TypeScript هيقولك من الأول: "ده رقم مش string، إنت غلطان". الفرق ده بيوفّر ساعات من الـ debugging اللي كان ممكن يتحل في ثانية.
+
+![نظام الأنواع في TypeScript](/blog/inline-typescript-types-new.png)
 
 أكثر نمط شائع بيساعدك في TypeScript هو الـ Interfaces و الـ Type Aliases. بدل ما تتعامل مع كائنات مجهولة (anonymous objects) مش عارف شكلها، بتعرف Type واضح لكل كائن. مثال عملي: لو بتعمل API بيرجع بيانات مستخدم، بدل ما تتخبط وتفتكر هل اسم الحقل userName ولا username ولا user_name، بتكتب Interface واضح:
 
@@ -596,6 +647,8 @@ type Grade = "ممتاز" | "جيد جدًا" | "جيد" | "مقبول" | "ضع�
 
 The first thing we need to understand: TypeScript isn't a new language, it's JavaScript with a type layer on top. That means everything you know about JavaScript still works, but you get extra protection from errors. When you write regular JavaScript code, you might create a variable called age and accidentally put a string in it, and no one will tell you until the app crashes. But TypeScript will tell you from the start: "This is a number not a string, you're wrong." That difference saves hours of debugging that could have been resolved in a second.
 
+![TypeScript Type System](/blog/inline-typescript-types-new.png)
+
 The most common pattern that helps you in TypeScript is Interfaces and Type Aliases. Instead of dealing with anonymous objects whose shape you don't know, you define a clear Type for each object. Practical example: if you're building an API that returns user data, instead of guessing whether the field is userName or username or user_name, you write a clear Interface.
 
 Generics are one of TypeScript's most powerful features and the one that scares people the most. But the truth is, Generics have a simple idea: you write code that handles different types but in a safe way. Instead of saying a function returns any (which loses all of TypeScript's benefits), you use a Generic to preserve type information.
@@ -622,6 +675,8 @@ Ultimately, TypeScript isn't just a tool that adds types — it's a different wa
 
 أول وأهم حاجة في أداء PostgreSQL هي الفهرسة (Indexing). الفهرسة زي الفهرس في آخر الكتاب — بدل ما تقلّب كل صفحة عشان تلاقي موضوع معين، بتفتح الفهرس وتلاقي رقم الصفحة على طول. في PostgreSQL، الفهرس الافتراضي هو B-Tree وده مناسب لمعظم الحالات. بس المشكلة إن كتير من المطورين بيستخدموا الفهرس بطريقة غلط. الفهرس مش ضعّه على كل حاجة — كل فهرس بيزيد حجم قاعدة البيانات وبيبطّئ عمليات الكتابة (INSERT, UPDATE, DELETE). القاعدة: ضع فهرس على الأعمدة اللي بتستخدمها في WHERE و JOIN و ORDER BY بكثرة.
 
+![فهرسة قواعد البيانات](/blog/inline-db-indexing.png)
+
 أنواع الفهرسة في PostgreSQL أكتر من B-Tree. فيه Hash Index للبحث عن القيم المتساوية، وGIN Index للبيانات المعقدة زي JSONB و المصفوفات، وGiST Index للبيانات الجغرافية. مثال عملي: لو عندك عمود tags من نوع JSONB وبتدور عليه كتير، GIN Index هو الخيار الأمثل. لو حاولت تدور في JSONB بدون فهرس، PostgreSQL هتعمل Sequential Scan على كل صف في الجدول — يعني هتمر على ملايين الصفوف واحد واحد. مع GIN Index، البحث بيكون فوري تقريبًا. الفرق ممكن يكون من 5 ثواني لـ 5 ملي ثانية.
 
 تحليل الاستعلامات (Query Analysis) هو خطوتك الأولى لما تواجه مشكلة أداء. أداة EXPLAIN ANALYZE هي صديقتك الأولى. كل استعلام بطيء شغّل عليه EXPLAIN ANALYZE وشوف PostgreSQL بتعمل إيه بالظبط. اللي بتبص عليه هو: هل في Sequential Scan (ده علامة إن محتاج فهرس)؟ هل في Nested Loop مع صفوف كتير (ده ممكن يحتاج تحسين JOIN)؟ هل Sorting بيأخذ وقت طويل (ده ممكن يحتاج فهرس على عمود الترتيب)؟
@@ -640,6 +695,8 @@ Ultimately, TypeScript isn't just a tool that adds types — it's a different wa
       en: `PostgreSQL is one of the most powerful relational databases on the market, but power alone isn't enough if you don't know how to use it properly. The database is the heart of any application — if that heart is slow, the entire application will be slow no matter how beautiful the code is. In this article, we'll discuss the most important performance optimization strategies in PostgreSQL, from indexing to query optimization to connection pooling.
 
 The first and most important thing in PostgreSQL performance is indexing. Indexing is like the index at the back of a book — instead of flipping through every page to find a specific topic, you open the index and find the page number immediately. In PostgreSQL, the default index is B-Tree which is suitable for most cases. But many developers use indexes incorrectly. Don't put an index on everything — each index increases the database size and slows down write operations.
+
+![Database Indexing](/blog/inline-db-indexing.png)
 
 There are more types of indexes in PostgreSQL than just B-Tree. There's Hash Index for equality lookups, GIN Index for complex data like JSONB and arrays, and GiST Index for geographic data. If you try to search JSONB without an index, PostgreSQL will do a Sequential Scan on every row in the table. With GIN Index, the search is almost instant. The difference can be from 5 seconds to 5 milliseconds.
 
@@ -667,11 +724,15 @@ Quick final tips: use pg_stat_statements to know which queries consume the most 
 
 الأساس اللي عليه PWA مبني هو Service Worker. Service Worker ده ملف JavaScript بيعمل كـ Proxy بين التطبيق والشبكة. يعني لما التطبيق يطلب ملف أو بيانات، الطلب بيمر على Service Worker الأول، وهو اللي بيقرر: يجيبها من الشبكة ولا من الكاش ولا يعمل حاجة تانية. أهم حاجة عن Service Worker إنه بيشتغل في الخلفية حتى لو المتصفح مقفول — ده اللي بيخلي الإشعارات والتزامن في الخلفية ممكنة.
 
+![Service Worker في PWA](/blog/inline-pwa-serviceworker.png)
+
 دورة حياة Service Worker ليها تلات مراحل: Install وActivate وFetch. في مرحلة Install، بتحصل على فرصة تحمّل الملفات الأساسية وتخزّنها في الكاش (ده اسمه Pre-caching). في مرحلة Activate، بتنظّف الكاش القديم من الإصدارات السابقة. وفي مرحلة Fetch، بتتعامل مع كل طلب شبكة وبتقرر إزاي ترد عليه. فهم الدورة دي مهم عشان مش عايز Service Worker يرد على طلبات بإصدار قديم من الكاش.
 
 استراتيجيات التخزين المؤقت (Caching Strategies) هي جوهر PWA. مش كل الطلبات بتتعامل بنفس الطريقة — لازم تعرف إيه اللي يتخزّن وإيه اللي يتجيب من الشبكة أولًا. أهم الاستراتيجيات: Cache First (الكاش الأول وبعدين الشبكة — مناسب للملفات الثابتة زي الصور والخطوط)، Network First (الشبكة الأول وبعدين الكاش — مناسب للبيانات اللي بتتغير باستمرار)، Stale While Revalidate (اعرض الكاش واطلب من الشبكة في نفس الوقت — مناسب للمحتوى اللي مش مهم يكون أحدث حاجة).
 
 المعمارية Offline-First هي الطريقة الصحيفة للتفكير في PWA. بدل ما تفكر "التطبيق يشتغل أونلاين وبس ممكن يشتغل أوفلاين"، فكر "التطبيق يشتغل أوفلاين وأول ما الشبكة ترجع يحدث البيانات". ده بيغيّر طريقة كتابة الكود بالكامل. بدل ما تعمل طلب شبكة وتستنى الرد، بتعرض البيانات المخزنة أولًا وبعدين بتحّدثها في الخلفية. ده بيدي تجربة مستخدم أسرع بكثير حتى لو الشبكة شغالة، لأن المستخدم مش بيشوف شاشة تحميل.
+
+![استراتيجيات التخزين المؤقت](/blog/inline-caching-strategies.png)
 
 في مشروع إسمع راديو، تحويل التطبيق لـ PWA كان قرار مهم جدًا. المستخدمين بيستمعوا للراديو في أماكن كتير فيها شبكة ضعيفة أو مفيش شبكة خالص — في المترو، في السفر، في مناطق بعيدة. قبل PWA، لما الشبكة بتقطع، التطبيق كان بيبطل يشتغل خالص. بعد PWA، التطبيق بيستمر يشتغل ببيانات الكاش وبيحاول يعيد الاتصال في الخلفية. كمان أضفنا ميزة تنزيل المحطات المفضلة للاستماع أوفلاين — ده خدم مستخدمين كتير بيقولوا "أنا عايز أسمع راديو في المترو من غير نت".
 
@@ -688,11 +749,15 @@ Web App Manifest هو الملف اللي بيخلي المتصفح يتعامل
 
 The foundation PWA is built on is the Service Worker. A Service Worker is a JavaScript file that acts as a Proxy between the app and the network. When the app requests a file or data, the request goes through the Service Worker first, and it decides: fetch from the network, serve from cache, or do something else. The most important thing about Service Workers is they work in the background even if the browser is closed.
 
+![Service Worker in PWA](/blog/inline-pwa-serviceworker.png)
+
 The Service Worker lifecycle has three stages: Install, Activate, and Fetch. In the Install stage, you download and cache essential files (Pre-caching). In the Activate stage, you clean up old caches from previous versions. In the Fetch stage, you handle every network request and decide how to respond.
 
 Caching Strategies are the core of PWA. The most important strategies: Cache First (suitable for static files), Network First (suitable for data that changes frequently), Stale While Revalidate (suitable for content where being the latest isn't critical).
 
 Offline-First Architecture is the right way to think about PWA. Instead of thinking "the app works online and might work offline," think "the app works offline and updates data when the network returns." This completely changes how you write code and gives a much faster user experience.
+
+![Caching Strategies](/blog/inline-caching-strategies.png)
 
 In the Esma3 Radio project, converting the app to a PWA was a very important decision. Users listen to radio in many places with weak or no network. After PWA, the app continues working with cached data and tries to reconnect in the background. We also added offline station downloads.
 
@@ -724,6 +789,8 @@ My advice: start with the basics, then add caching strategies, then think about 
 
 فكرة الوكلاء المتعدين (Multi-Agent Systems) هي الخطوة الجاية. بدل ما وكيل واحد يعمل كل حاجة، عندك فريق وكلاء: واحد متخصص في التصميم، واحد في الـ backend، واحد في الـ frontend، واحد في الاختبارات. كل واحد بيشتغل في مجاله وبيتواصل مع الباقيين. تخيل مشروع زي معركة الأسئلة — وكيل يكتب الـ Socket.io logic، ووكيل يصمم واجهة غرفة اللعب، ووكيل يكتب اختبارات الضغط. كل دول بيشتغلوا بالتوازي وبينسقوا مع بعض. ده مش خيال علمي — ده بيحصل دلوقتي.
 
+![نظام الوكلاء المتعددين](/blog/inline-multi-agent.png)
+
 طيب هل الوكلاء هيستبدلونا كمطورين؟ الإجابة القصيرة: لا. الإجابة الطويلة: لا، بس هتغيّر طريقة شغلنا تمامًا. الوكلاء ممتازين في المهام المتكررة والمعرفة، لكن لسه محتاجين حد يحدد الهدف الصح، يراجع النتائج، ويتخذ القرارات اللي محتاجة سياق بشري. في نظام الإقبال، الوكيل يقدر يكتب كود الـ form validation بسرعة، لكن التصميم القرارات زي إزاي نخلي التجربة سهلة للطالب — دي محتاجة تفكير بشري.
 
 من التحديات الحقيقية للوكلاء: الهلوسة (Hallucination). الوكيل ممكن ياخد قرار غلط ويكمل عليه، وده بيضيع وقت أكتر لو مكنتش بتراجع. كمان مشكلة الحلقة اللانهائية — الوكيل ممكن يدور في حلقة مفرغة لو المشكلة معقدة ومش عارف يحلها. الحل إنك تحط حدود واضحة: أقصى عدد خطوات، نقاط مراجعة في النص، وآلية إيقاف لو الوكيل حاسس إنه مش بيتقدم.
@@ -740,6 +807,8 @@ The difference between an agent and a regular chatbot is clear. A chatbot asked 
 In my own projects, I've started leveraging agents practically. In the Esma3 Radio project, I used an AI agent to do a comprehensive performance analysis. The agent read the Lighthouse report, analyzed the bundle size, and suggested specific improvements with ready-to-use code. It would have taken me a full day to do that analysis manually, but the agent completed it in minutes. In Tammeny, I used an agent to write tests for the location sharing components — it wrote comprehensive test code that covered edge cases I would have missed if I wrote the tests myself.
 
 The concept of Multi-Agent Systems is the next step. Instead of one agent doing everything, you have a team of agents: one specialized in design, one in backend, one in frontend, one in testing. Each works in their domain and communicates with the others. Imagine a project like Battle of Questions — one agent writes the Socket.io logic, another designs the game room interface, and another writes stress tests. All working in parallel and coordinating with each other. This isn't science fiction — it's happening right now.
+
+![Multi-Agent System](/blog/inline-multi-agent.png)
 
 So will agents replace us as developers? The short answer: no. The long answer: no, but they'll completely change how we work. Agents are excellent at repetitive and knowledge-based tasks, but they still need someone to define the right goal, review results, and make decisions that require human context. In Eleqbal Form, an agent can write form validation code quickly, but design decisions like how to make the experience easy for students — that needs human thinking.
 
