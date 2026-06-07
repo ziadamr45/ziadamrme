@@ -194,7 +194,7 @@ export default async function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
         />
       </head>
-      <body className="antialiased"><Providers>{children}<Footer /></Providers></body>
+      <body className="antialiased"><Providers defaultTheme={theme as "light" | "dark"} defaultLanguage={language as "ar" | "en"}>{children}<Footer /></Providers></body>
     </html>
   );
 }

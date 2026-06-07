@@ -30,19 +30,9 @@ export function useApp() {
   return useContext(AppContext);
 }
 
-export function Providers({ children }: { children: React.ReactNode }) {
-  const [theme, setTheme] = useState<Theme>(() => {
-    if (typeof window !== "undefined") {
-      return (localStorage.getItem("theme") as Theme) || "light";
-    }
-    return "light";
-  });
-  const [language, setLanguage] = useState<Language>(() => {
-    if (typeof window !== "undefined") {
-      return (localStorage.getItem("language") as Language) || "ar";
-    }
-    return "ar";
-  });
+export function Providers({ children, defaultTheme, defaultLanguage }: { children: React.ReactNode; defaultTheme?: Theme; defaultLanguage?: Language }) {
+  const [theme, setTheme] = useState<Theme>(defaultTheme || "light");
+  const [language, setLanguage] = useState<Language>(defaultLanguage || "ar");
   const [mounted, setMounted] = useState(false);
 
   // Theme transition state
@@ -52,15 +42,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
   const overlayRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    // Apply theme & language from state (initialized from localStorage) to DOM
-    const root = document.documentElement;
-    if (theme === "dark") {
-      root.classList.add("dark");
-    } else {
-      root.classList.remove("dark");
-    }
-    root.lang = language;
-    root.dir = language === "ar" ? "rtl" : "ltr";
+    // Mark as mounted — theme/language are already applied server-side via cookies
     setMounted(true);
   }, []);
 
