@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, useCallback, useRef } from "react";
+import { useState, useCallback, useRef, useEffect } from "react";
+import { createPortal } from "react-dom";
 
 interface ShareButtonProps {
   url: string;
@@ -15,7 +16,13 @@ export function ShareButton({ url, title, language = "ar", size = "md", classNam
   const [isOpen, setIsOpen] = useState(false);
   const [copied, setCopied] = useState(false);
   const [dropdownStyle, setDropdownStyle] = useState<React.CSSProperties>({});
+  const [mounted, setMounted] = useState(false);
   const buttonRef = useRef<HTMLButtonElement>(null);
+
+  // Ensure we're mounted (client-side) before using portals
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const fullUrl = typeof window !== "undefined" && url.startsWith("/") ? `${window.location.origin}${url}` : url;
 
@@ -96,7 +103,11 @@ export function ShareButton({ url, title, language = "ar", size = "md", classNam
     } catch {
       const textArea = document.createElement("textarea");
       textArea.value = fullUrl;
+      textArea.style.position = "fixed";
+      textArea.style.left = "-9999px";
+      textArea.style.top = "-9999px";
       document.body.appendChild(textArea);
+      textArea.focus();
       textArea.select();
       document.execCommand("copy");
       document.body.removeChild(textArea);
@@ -154,7 +165,7 @@ export function ShareButton({ url, title, language = "ar", size = "md", classNam
         position: 'fixed' as const,
         top: `${top}px`,
         left: `${left}px`,
-        zIndex: 50,
+        zIndex: 9999,
       });
     }
   }, []);
@@ -190,8 +201,71 @@ export function ShareButton({ url, title, language = "ar", size = "md", classNam
     onOpenChange?.(false);
   }, [onOpenChange]);
 
+  // Close on Escape key
+  useEffect(() => {
+    if (!isOpen) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        setIsOpen(false);
+        onOpenChange?.(false);
+      }
+    };
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, [isOpen, onOpenChange]);
+
+  // Recalculate position on scroll/resize when open
+  useEffect(() => {
+    if (!isOpen) return;
+    const handleUpdate = () => calculateDropdownPosition();
+    window.addEventListener("scroll", handleUpdate, true);
+    window.addEventListener("resize", handleUpdate);
+    return () => {
+      window.removeEventListener("scroll", handleUpdate, true);
+      window.removeEventListener("resize", handleUpdate);
+    };
+  }, [isOpen, calculateDropdownPosition]);
+
   const btnSize = size === "sm" ? "w-7 h-7" : "w-9 h-9";
   const iconSize = size === "sm" ? "w-3.5 h-3.5" : "w-4 h-4";
+
+  // Dropdown content rendered via portal to body - avoids overflow/clip issues
+  const dropdownContent = isOpen && mounted ? createPortal(
+    <>
+      <div
+        className="fixed inset-0"
+        style={{ zIndex: 9998 }}
+        onClick={handleBackdropClick}
+      />
+      <div
+        style={dropdownStyle}
+        className="w-48 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 shadow-xl shadow-slate-200/50 dark:shadow-black/50 py-1.5 animate-in fade-in-0 zoom-in-95 duration-150"
+      >
+        {shareLinks.map((link) => (
+          <button
+            key={link.name}
+            type="button"
+            onClick={(e) => handleItemClick(e, link)}
+            onMouseDown={(e) => e.stopPropagation()}
+            onTouchStart={(e) => e.stopPropagation()}
+            className={`w-full flex items-center gap-2.5 px-3 py-2 text-sm text-slate-700 dark:text-slate-300 transition-colors ${link.color}`}
+          >
+            {link.action === "copy" && copied ? (
+              <svg className="w-4 h-4 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+              </svg>
+            ) : (
+              link.icon
+            )}
+            {link.action === "copy" && copied
+              ? (language === "ar" ? "تم النسخ!" : "Copied!")
+              : link.name}
+          </button>
+        ))}
+      </div>
+    </>,
+    document.body
+  ) : null;
 
   return (
     <div className={className}>
@@ -209,37 +283,7 @@ export function ShareButton({ url, title, language = "ar", size = "md", classNam
         </svg>
       </button>
 
-      {isOpen && (
-        <>
-          <div className="fixed inset-0 z-40" onClick={handleBackdropClick} />
-          <div
-            style={dropdownStyle}
-            className="w-48 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 shadow-xl shadow-slate-200/50 dark:shadow-black/50 py-1.5 animate-in fade-in-0 zoom-in-95 duration-150"
-          >
-            {shareLinks.map((link) => (
-              <button
-                key={link.name}
-                type="button"
-                onClick={(e) => handleItemClick(e, link)}
-                onMouseDown={(e) => e.stopPropagation()}
-                onTouchStart={(e) => e.stopPropagation()}
-                className={`w-full flex items-center gap-2.5 px-3 py-2 text-sm text-slate-700 dark:text-slate-300 transition-colors ${link.color}`}
-              >
-                {link.action === "copy" && copied ? (
-                  <svg className="w-4 h-4 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                  </svg>
-                ) : (
-                  link.icon
-                )}
-                {link.action === "copy" && copied
-                  ? (language === "ar" ? "تم النسخ!" : "Copied!")
-                  : link.name}
-              </button>
-            ))}
-          </div>
-        </>
-      )}
+      {dropdownContent}
     </div>
   );
 }
