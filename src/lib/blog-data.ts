@@ -384,6 +384,8 @@ My advice for beginners: start with SQLite for development speed, but plan the t
 
 الـ Service Worker كان العنصر الأساسي. ده سكريبت بيشتغل في الخلفية وبيتحكم في كل طلبات الشبكة. في إسمع راديو، استخدمت استراتيجية Cache First لملفات الـ CSS والـ JavaScript والخطوط — يعني أول مرة بيتحملوا من الإنترنت وبعدين يتخزنوا في الـ Cache وكل مرة تانية بيتخدموا من هناك. ده خلى التطبيق يفتح بشكل فوري بعد أول زيارة. أما بيانات المحطات فاستخدمت Network First — يعني بيحاول يجيبها من الإنترنت الأول، ولو ماقدرش، بيرجع للـ Cache.
 
+![Service Worker](/blog/inline-pwa-serviceworker.png)
+
 دعم الأوفلاين في إسمع راديو كان تحدي خاص. لما المستخدم بيكون أوفلاين، مش هيسمع راديو حي طبعًا، بس قدرت أعرض له رسالة واضحة "أنت مش متصل بالإنترنت" مع المحطات اللي اتحملت قبل كده كمرجع. كمان قدرت أخلي أيقونة التطبيق وشاشة البداية تظهر حتى لو مفيش إنترنت — ده بيخلي المستخدم يحس إن التطبيق حقيقي مش مجرد موقع.
 
 في تطبيق الطقس، التحدي كان مختلف. بيانات الطقس بتتغير كل ساعة تقريبًا، فاستراتيجية Caching لازم تكون ذكية. استخدمت Stale-While-Revalidate — يعني أعرض البيانات القديمة من الـ Cache فورًا، وفي نفس الوقت بطلب البيانات الجديدة من الإنترنت. لما البيانات الجديدة توصل، بأحدث الشاشة. ده بيدي إحساس بالسرعة لأن المستخدم بيشوف حاجة فورًا، وفي نفس الوقت البيانات بتكون أحدث ما يمكن.
@@ -400,6 +402,8 @@ My advice for beginners: start with SQLite for development speed, but plan the t
 The first thing I did was in Esma3 Radio. This app is primarily used on mobile — people listen to radio while commuting, at the gym, or walking. So it made sense to make it work as an installable app. I started with a manifest.json file that provides the browser with all the information it needs: app name, icons in various sizes, theme color, and screen orientation. When a user visits the site for the first time, the browser suggests installing the app on their home screen. The install rate was around 30% of users — a pretty solid number.
 
 The Service Worker was the fundamental element. This is a script that runs in the background and controls all network requests. In Esma3 Radio, I used a Cache First strategy for CSS, JavaScript, and font files — meaning they're fetched from the internet the first time, then stored in the cache and served from there every subsequent time. This made the app load almost instantly after the first visit. For station data, I used Network First — it tries to fetch from the internet first, and if that fails, it falls back to the cache.
+
+![Service Worker](/blog/inline-pwa-serviceworker.png)
 
 Offline support in Esma3 Radio was a unique challenge. When the user is offline, they obviously can't listen to live radio, but I was able to display a clear "You're not connected to the internet" message along with previously loaded stations as reference. I also made sure the app icon and splash screen appear even without internet — this makes the user feel it's a real app, not just a website.
 
@@ -834,6 +838,8 @@ My advice for any developer wanting to start with agents: begin with tools like 
 
 مرحلة الشريك (2024-2025) غيّرت كل حاجة. أدوات زي Cursor ظهرت وفهمت إن الـ AI محتاج يفهم المشروع كله مش بس الملف اللي شغال فيه. Cursor بيقرأ كل الملفات، يفهم الـ architecture، وبيقترح تغييرات متناسقة مع باقي المشروع. في مشروع المخبر، كنت عايز أضيف ميزة جديدة في غرفة اللعب. بدل ما أشرح للـ AI كل حاجة من الأول، Cursor فهم السياق لوحده لأنه قرأ الكود كله. اقترح حل كان متناسق مع الـ pattern اللي كنت بتستخدمه في باقي المشروع. ده الفرق الحقيقي — الـ AI بقا فاهم السياق مش بس بيخمن.
 
+![مساعد البرمجة بالذكاء الاصطناعي](/blog/inline-ai-coding.png)
+
 استخدام الذكاء الاصطناعي في الـ Debugging كان نقطة تحول كبيرة. قبل كده، لما كنت بلاقي Bug في تطبيق زي معركة الأسئلة — وليكن مشكلة إن اللاعبين مش شايفين نفس النقاط في نفس الوقت — كنت بقعد أحلل الـ Socket.io events يدويًا، أقرأ اللوجات، أحاول أعيد المشكلة. دلوقتي بقى بقول للـ AI "اللاعبين شايفين سكور مختلف" وبيحلل الكود ويلاقي إن المشكلة في Race condition في الـ event handler. الـ AI مش بيحل مكانك، بس بيوصلك للحل أسرع بكتير.
 
 في التصميم، الذكاء الاصطناعي بقا مساعد حقيقي. أدوات زي v0 بتقدر تحول وصف نصي لـ UI component كامل. في تطبيق إيه الكلام، كنت عايز تصميم كارد للترند المصري فيه صورة وعنوان وعدد المشاركات. وصفت التصميم لـ v0 ولقيت كارد جاهز بـ Tailwind تقريبًا مطابق للي كنت متخيله. عدلت عليه شوية وخلصت. قبل كده كنت هقعد ساعة أصمم الكارد ده من الصفر.
@@ -850,6 +856,8 @@ My advice for any developer wanting to start with agents: begin with tools like 
 The Assistant Phase (2022-2023) was the first appearance of GitHub Copilot. The idea was simple: you write a comment or the beginning of a function and AI completes the code. It wasn't much, but it genuinely saved time. I'd write a comment like "// function to validate Egyptian phone number" and Copilot would write the entire function. But it had many issues: it suggested code from outdated libraries, didn't understand the bigger context of the project, and sometimes hallucinated functions that didn't exist. In my projects like Esma3 Radio, it helped with small tasks like writing CSS or utility functions, but anything beyond that I had to write myself.
 
 The Partner Phase (2024-2025) changed everything. Tools like Cursor appeared and understood that AI needs to understand the whole project, not just the file you're working in. Cursor reads all files, understands the architecture, and suggests changes consistent with the rest of the project. In the Elmokhber project, I wanted to add a new feature to the game room. Instead of explaining everything to AI from scratch, Cursor understood the context on its own because it read all the code. It suggested a solution that was consistent with the pattern I was using throughout the project. That's the real difference — AI now understands context instead of just guessing.
+
+![AI Coding Assistant](/blog/inline-ai-coding.png)
 
 Using AI for debugging was a major turning point. Before, when I found a bug in an app like Battle of Questions — say, players not seeing the same scores at the same time — I'd sit and manually analyze the Socket.io events, read logs, and try to reproduce the problem. Now I tell AI "players are seeing different scores" and it analyzes the code and finds that the issue is a race condition in the event handler. AI doesn't solve it for you, but it gets you to the solution much faster.
 
