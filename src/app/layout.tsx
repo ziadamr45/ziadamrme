@@ -121,6 +121,11 @@ export default function RootLayout({
       "https://www.threads.com/@ziadamr455",
       "https://youtube.com/@alhayat_ala_eltarek?si=pcsc_31Kcv3Jym14",
     ],
+    image: "https://ziadamrme.vercel.app/logo.jpg",
+    logo: {
+      "@type": "ImageObject",
+      url: "https://ziadamrme.vercel.app/logo.jpg",
+    },
     knowsAbout: [
       "Next.js",
       "React",
@@ -150,6 +155,11 @@ export default function RootLayout({
       "@type": "Person",
       name: "Ziad Amr",
     },
+    potentialAction: {
+      "@type": "SearchAction",
+      target: "https://ziadamrme.vercel.app/blog?q={search_term_string}",
+      "query-input": "required name=search_term_string",
+    },
   };
 
   return (
@@ -166,6 +176,9 @@ export default function RootLayout({
         <meta name="apple-mobile-web-app-title" content="Ziad Amr" />
         <link rel="manifest" href="/manifest.json" />
         <link rel="alternate" type="application/rss+xml" title="مدونة زياد عمرو" href="https://ziadamrme.vercel.app/feed.xml" />
+        <link rel="alternate" hrefLang="ar" href="https://ziadamrme.vercel.app" />
+        <link rel="alternate" hrefLang="en" href="https://ziadamrme.vercel.app" />
+        <link rel="alternate" hrefLang="x-default" href="https://ziadamrme.vercel.app" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}

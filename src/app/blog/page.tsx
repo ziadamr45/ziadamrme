@@ -8,6 +8,7 @@ import { blogPosts } from "@/lib/blog-data";
 import { translations } from "@/lib/translations";
 import { formatDate } from "@/lib/utils";
 import Link from "next/link";
+import Image from "next/image";
 import { useScrollRestoration } from "@/hooks/use-scroll-restoration";
 import { TechBadge } from "@/components/tech-badge";
 import { techStack } from "@/lib/data";
@@ -61,6 +62,18 @@ export default function BlogPage() {
           {blogPosts.map((post) => (
             <Link key={post.slug} href={`/blog/${post.slug}`}>
               <Card className="relative w-full overflow-hidden border-0 shadow-lg shadow-slate-200/50 dark:shadow-black/30 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl transition-all duration-300 hover:scale-[1.02] cursor-pointer h-full">
+                {post.image && (
+                  <div className="relative w-full aspect-[16/9] overflow-hidden">
+                    <Image
+                      src={post.image}
+                      alt={post.title[language]}
+                      fill
+                      className="object-cover"
+                      sizes="(max-width: 640px) 100vw, 50vw"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
+                  </div>
+                )}
                 <CardContent className="p-6">
                   <div className="flex items-center gap-2 mb-3">
                     <span className="text-xs text-slate-400 dark:text-slate-500 font-medium">

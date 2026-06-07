@@ -7,7 +7,7 @@ type Props = {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
-  const post = blogPosts.find((p) => p.slug === slug);
+  const post = blogPosts.find((p) => p?.slug === slug);
 
   if (!post) {
     return {
@@ -28,11 +28,15 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       publishedTime: post.date,
       tags: post.tags,
       url: `https://ziadamrme.vercel.app/blog/${slug}`,
+      images: post.image
+        ? [{ url: `https://ziadamrme.vercel.app${post.image}`, width: 1344, height: 768, alt: post.title.ar }]
+        : undefined,
     },
     twitter: {
       card: "summary_large_image",
       title: post.title.ar,
       description: post.excerpt.ar,
+      images: post.image ? [`https://ziadamrme.vercel.app${post.image}`] : undefined,
     },
   };
 }
@@ -45,7 +49,7 @@ export default async function BlogPostLayout({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const post = blogPosts.find((p) => p.slug === slug);
+  const post = blogPosts.find((p) => p?.slug === slug);
 
   if (!post) {
     return <>{children}</>;
@@ -98,6 +102,7 @@ export default async function BlogPostLayout({
       "@type": "Person",
       name: "Ziad Amr",
     },
+    image: post.image ? `https://ziadamrme.vercel.app${post.image}` : undefined,
     keywords: post.tags.join(", "),
     inLanguage: "ar",
   };

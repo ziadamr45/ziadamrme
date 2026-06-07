@@ -1,6 +1,17 @@
-export const blogPosts = [
+export interface BlogPost {
+  slug: string;
+  image?: string;
+  title: { ar: string; en: string };
+  date: string;
+  excerpt: { ar: string; en: string };
+  content: { ar: string; en: string };
+  tags: string[];
+}
+
+export const blogPosts: BlogPost[] = [
   {
     slug: "building-modern-web-apps",
+    image: "/blog/building-modern-web-apps.png",
     title: { ar: "بناء تطبيقات ويب حديثة: رحلتي مع Next.js", en: "Building Modern Web Apps: My Journey with Next.js" },
     date: "2025-12-05",
     excerpt: {
@@ -43,6 +54,7 @@ Ultimately, Next.js isn't just a framework — it's a developer's journey compan
   },
   {
     slug: "real-time-apps-socketio",
+    image: "/blog/real-time-apps-socketio.png",
     title: { ar: "تطبيقات الوقت الحقيقي باستخدام Socket.io", en: "Real-Time Apps with Socket.io" },
     date: "2025-12-20",
     excerpt: {
@@ -89,6 +101,7 @@ Ultimately, Socket.io is a very powerful tool but requires good design from the 
   },
   {
     slug: "secure-location-sharing",
+    image: "/blog/secure-location-sharing.png",
     title: { ar: "مشاركة الموقع بأمان: التحديات والحلول", en: "Secure Location Sharing: Challenges and Solutions" },
     date: "2026-01-10",
     excerpt: {
@@ -131,6 +144,7 @@ A final piece of advice: test your security system yourself. Try to bypass the p
   },
   {
     slug: "building-arabic-web-apps",
+    image: "/blog/building-arabic-web-apps.png",
     title: { ar: "من المخبر لطمني: رحلة بناء تطبيقات ويب عربية", en: "From Elmokhber to Tammeny: Building Arabic Web Apps" },
     date: "2026-01-25",
     excerpt: {
@@ -173,6 +187,7 @@ My advice for anyone wanting to build an Arabic app: start with RTL design from 
   },
   {
     slug: "web-security-lessons",
+    image: "/blog/web-security-lessons.png",
     title: { ar: "الأمان في تطبيقات الويب: دروس تعلمتها", en: "Web App Security: Lessons I Learned" },
     date: "2026-02-08",
     excerpt: {
@@ -215,6 +230,7 @@ A final important piece of advice: security is an ongoing process, not a one-tim
   },
   {
     slug: "tailwind-css-journey",
+    image: "/blog/tailwind-css-journey.png",
     title: { ar: "Tailwind CSS: لماذا أصبح أسلوبي المفضل", en: "Tailwind CSS: Why It Became My Go-To Style" },
     date: "2026-02-22",
     excerpt: {
@@ -497,4 +513,179 @@ My advice for any developer who hasn't built a portfolio yet: start today, not t
     },
     tags: ["Portfolio", "Web Development", "Career"],
   },
+
+  {
+    slug: "typescript-type-safety",
+    image: "/blog/typescript-type-safety.png",
+    title: { ar: "أمان الأنواع في TypeScript: ليه TypeScript مش مجرد JavaScript مع أنواع", en: "TypeScript Type Safety: Why TypeScript Is More Than Just JavaScript With Types" },
+    date: "2026-03-15",
+    excerpt: {
+      ar: "دليل شامل لأهمية أمان الأنواع في TypeScript، الأنماط الشائعة، الـ Generics، الـ Utility Types، وإزاي بتمنع أخطاء قبل ما تحصل.",
+      en: "A comprehensive guide to TypeScript type safety, common patterns, generics, utility types, and how it prevents bugs before they happen.",
+    },
+    content: {
+      ar: `أمان الأنواع (Type Safety) في TypeScript مش مجرد ميزة إضافية لطيفة — ده الفرق بين مشروع بيتكسّر في الإنتاج ومشروع بيفضل شغال بثبات. أنا كنت من الناس اللي بتقول "JavaScript كافي ومش محتاج TypeScript"، وبعدين اكتشفت إن ده أكبر غلطة فنية عملتها في حياتي كمطور. في المقال ده هنفهم مع بعض ليه TypeScript مهم، وإزاي الأنواع بتمنع أخطاء حقيقية، وأهم الأنماط اللي لازم كل مطور يعرفها.
+
+أول حاجة لازم نفهمها: TypeScript مش لغة جديدة، ده JavaScript مع طبقة أنواع فوقها. يعني كل اللي بتعرفه عن JavaScript شغال زي ما هو، بس بتحصل على حماية إضافية من الأخطاء. لما بتكتب كود JavaScript عادي، ممكن تعمل متغير اسمه age وتحط فيه string بالغلط ومحدش هيقولك لحد ما التطبيق يقع. بس TypeScript هيقولك من الأول: "ده رقم مش string، إنت غلطان". الفرق ده بيوفّر ساعات من الـ debugging اللي كان ممكن يتحل في ثانية.
+
+أكثر نمط شائع بيساعدك في TypeScript هو الـ Interfaces و الـ Type Aliases. بدل ما تتعامل مع كائنات مجهولة (anonymous objects) مش عارف شكلها، بتعرف Type واضح لكل كائن. مثال عملي: لو بتعمل API بيرجع بيانات مستخدم، بدل ما تتخبط وتفتكر هل اسم الحقل userName ولا username ولا user_name، بتكتب Interface واضح:
+
+\`\`\`typescript
+interface User {
+  id: string;
+  userName: string;
+  email: string;
+  role: "admin" | "user" | "moderator";
+  createdAt: Date;
+}
+\`\`\`
+
+الـ role في المثال ده Union Type — مش مجرد string، ده string محدد بقيم معينة. يعني مفيش حد يقدر يحط role غلط زي "superadmin" أو "manager" بالغلط. TypeScript هيرفض ده وقت الترجمة (compile time) مش وقت التشغيل (runtime). تخيل لو عندك منطق حساس بيعتمد على الـ role، وزيادة حرف واحد ممكن يفتح صلاحيات غلط. TypeScript بيمنع الحاجة دي من الأساس.
+
+الـ Generics من أقوى ميزات TypeScript واكتر حاجة بترعب الناس. بس الحقيقة إن الـ Generics فكرتها بسيطة: إنك تكتب كود يتعامل مع أنواع مختلفة بس بطريقة آمنة. مثال: لو بتعمل دالة بترجع أول عنصر في Array، بدل ما تقول إنها بترجع any (وده بيخسر فايدة TypeScript كلها)، بتستخدم Generic:
+
+\`\`\`typescript
+function getFirst<T>(items: T[]): T | undefined {
+  return items[0];
+}
+
+const numbers = getFirst([1, 2, 3]); // TypeScript يعرف إن النتيجة رقم
+const names = getFirst(["أحمد", "سارة"]); // TypeScript يعرف إن النتيجة string
+\`\`\`
+
+الـ Generics مش بس للأكواد الأكاديمية — أنا باستخدمها كل يوم في مشاريعي. في مشروع إسمع راديو، كل API response كان ليه Generic Type محدد. لما بجيب بيانات محطة راديو، TypeScript بيعرف شكل البيانات اللي هترجع وبيمنعني أوصف حقل مش موجود. ده وفرّني من أخطاء كتير جدًا، خصوصًا لما الـ API بيتغير وبنسي أحدّث الأماكن اللي بتستخدمه.
+
+الـ Utility Types في TypeScript زي صندوق أدوات سحري. بدل ما تكتب أنواع جديدة من الصفر، بتأخذ نوع موجود وتعدّله. أهمهم: Partial بتخلي كل الحقول اختيارية (مفيد في الـ updates)، Required بتخلي كل الحقول إجبارية (عكس Partial)، Pick بتختار حقول معينة من Type، Omit بتشيل حقول معينة، وRecord لبناء Object بمفاتيح وقيم من أنواع محددة. مثال عملي:
+
+\`\`\`typescript
+type UpdateUser = Partial<Omit<User, "id">>;
+// يعني حد يقدر يحدّث أي حقل في User ماعدا id، وكل الحقول اختيارية
+
+type UserPreview = Pick<User, "id" | "userName">;
+// يعني بنعرض بس id وuserName
+\`\`\`
+
+هذا النمط بيخلي الكود نظيف ومقروء وآمن في نفس الوقت. بدل ما أكتب Type جديد من الصفر كل مرة، بستخدم Utility Types وأبنى على اللي عندي. في مشاريعي، كل الـ update DTOs بتستخدم Partial وكل الـ response types بتستخدم Pick. ده بيضمن إن أي تغيير في الـ User الأساسي بينعكس تلقائيًا على كل الأماكن اللي بتستخدمه.
+
+أحد أكثر الأخطاء اللي بشوفها في فرق التطوير هي الاستهانة بـ strict mode في TypeScript. كتير من الناس بتشغل TypeScript بس تكتب any في كل مكان وبتطفي strictNullChecks وبتتجاهل الأخطاء. ده بيخسّر فايدة TypeScript بالكامل — لو بتكتب any، إنت عمليًا بتكتب JavaScript. نصيحتي: فعّل strict mode من أول يوم وخلّي any يكون الاستثناء مش القاعدة. لو محتاج any فعلاً، استخدم unknown بدلها لأنها بتأجبرك تعمل type check قبل ما تستخدم القيمة.
+
+من الأمثلة العملية اللي واجهتها: في نظام الإقبال، كان في حقل grade من نوع string. في الأول كتبنا الكود كده وبس، وبعدين اكتشفنا إن في 7 قيم ممكنة للـ grade ومحدش بيعمل Validate. حوّلناه لـ Union Type:
+
+\`\`\`typescript
+type Grade = "ممتاز" | "جيد جدًا" | "جيد" | "مقبول" | "ضعيف";
+\`\`\`
+
+بس كده، أي محاولة تحط grade غلط TypeScript هيرفضها فورًا. ده منع أخطاء بيانات كتير جدًا كانت بتحصل قبل كده.
+
+في النهاية، TypeScript مش مجرد أداة بتضيف أنواع — ده طريقة تفكير مختلفة في كتابة الكود. بتفكر في شكل البيانات قبل ما تكتب الكود، وده بيخلي التصميم أحسن والكود أنضف والأخطاء أقل. لو لسه ما استخدمتهوش في مشاريعك، ابدأ النهاردة. ابدأ بملف واحد بس وشغّل strict mode واشوف الفرق بنفسك. صدقني، بعد أسبوع هتستغرب إزاي كنت بتكتب JavaScript بدون TypeScript.`,
+      en: `Type safety in TypeScript isn't just a nice additional feature — it's the difference between a project that breaks in production and one that runs reliably. I was one of those people who said "JavaScript is enough, I don't need TypeScript," then I discovered that was the biggest technical mistake I made in my career as a developer. In this article, we'll understand together why TypeScript matters, how types prevent real bugs, and the most important patterns every developer should know.
+
+The first thing we need to understand: TypeScript isn't a new language, it's JavaScript with a type layer on top. That means everything you know about JavaScript still works, but you get extra protection from errors. When you write regular JavaScript code, you might create a variable called age and accidentally put a string in it, and no one will tell you until the app crashes. But TypeScript will tell you from the start: "This is a number not a string, you're wrong." That difference saves hours of debugging that could have been resolved in a second.
+
+The most common pattern that helps you in TypeScript is Interfaces and Type Aliases. Instead of dealing with anonymous objects whose shape you don't know, you define a clear Type for each object. Practical example: if you're building an API that returns user data, instead of guessing whether the field is userName or username or user_name, you write a clear Interface.
+
+Generics are one of TypeScript's most powerful features and the one that scares people the most. But the truth is, Generics have a simple idea: you write code that handles different types but in a safe way. Instead of saying a function returns any (which loses all of TypeScript's benefits), you use a Generic to preserve type information.
+
+Utility Types in TypeScript are like a magic toolbox. Instead of writing new types from scratch, you take an existing type and modify it. The most important ones: Partial makes all fields optional, Required makes all fields mandatory, Pick selects specific fields from a Type, Omit removes specific fields, and Record builds an Object with keys and values of specified types.
+
+One of the most common mistakes I see in development teams is underestimating strict mode in TypeScript. Many people enable TypeScript but write any everywhere and turn off strictNullChecks and ignore errors. This completely negates TypeScript's benefits. My advice: enable strict mode from day one and let any be the exception, not the rule.
+
+Ultimately, TypeScript isn't just a tool that adds types — it's a different way of thinking about writing code. You think about the shape of data before writing the code, and this makes the design better, the code cleaner, and the bugs fewer. If you haven't used it in your projects yet, start today.`,
+    },
+    tags: ["TypeScript", "JavaScript", "Web Development"],
+  },
+  {
+    slug: "database-performance-postgresql",
+    image: "/blog/database-performance.png",
+    title: { ar: "أداء قواعد البيانات مع PostgreSQL: إزاي تخلي قاعدة بياناتك سريعة ومستقرة", en: "Database Performance with PostgreSQL: How to Make Your Database Fast and Stable" },
+    date: "2026-04-10",
+    excerpt: {
+      ar: "دليل عملي لتحسين أداء PostgreSQL — استراتيجيات الفهرسة، تحسين الاستعلامات، تجميع الاتصالات، ونصائح Prisma ORM من تجربة حقيقية.",
+      en: "A practical guide to PostgreSQL performance optimization — indexing strategies, query optimization, connection pooling, and Prisma ORM tips from real experience.",
+    },
+    content: {
+      ar: `PostgreSQL من أقوى قواعد البيانات العلاقية في السوق، بس القوة لوحدها مش كافية لو مش عارف تستخدمها صح. قاعدة البيانات هي قلب أي تطبيق — لو القلب ده بطيء، التطبيق كله هيكون بطيء مهما كان الكود حلو. في المقال ده هنتكلم عن أهم استراتيجيات تحسين الأداء في PostgreSQL، من الفهرسة لتحسين الاستعلامات لتجميع الاتصالات، كل حاجة من تجربة عملية مش من نظرية الكتب.
+
+أول وأهم حاجة في أداء PostgreSQL هي الفهرسة (Indexing). الفهرسة زي الفهرس في آخر الكتاب — بدل ما تقلّب كل صفحة عشان تلاقي موضوع معين، بتفتح الفهرس وتلاقي رقم الصفحة على طول. في PostgreSQL، الفهرس الافتراضي هو B-Tree وده مناسب لمعظم الحالات. بس المشكلة إن كتير من المطورين بيستخدموا الفهرس بطريقة غلط. الفهرس مش ضعّه على كل حاجة — كل فهرس بيزيد حجم قاعدة البيانات وبيبطّئ عمليات الكتابة (INSERT, UPDATE, DELETE). القاعدة: ضع فهرس على الأعمدة اللي بتستخدمها في WHERE و JOIN و ORDER BY بكثرة.
+
+أنواع الفهرسة في PostgreSQL أكتر من B-Tree. فيه Hash Index للبحث عن القيم المتساوية، وGIN Index للبيانات المعقدة زي JSONB و المصفوفات، وGiST Index للبيانات الجغرافية. مثال عملي: لو عندك عمود tags من نوع JSONB وبتدور عليه كتير، GIN Index هو الخيار الأمثل. لو حاولت تدور في JSONB بدون فهرس، PostgreSQL هتعمل Sequential Scan على كل صف في الجدول — يعني هتمر على ملايين الصفوف واحد واحد. مع GIN Index، البحث بيكون فوري تقريبًا. الفرق ممكن يكون من 5 ثواني لـ 5 ملي ثانية.
+
+تحليل الاستعلامات (Query Analysis) هو خطوتك الأولى لما تواجه مشكلة أداء. أداة EXPLAIN ANALYZE هي صديقتك الأولى. كل استعلام بطيء شغّل عليه EXPLAIN ANALYZE وشوف PostgreSQL بتعمل إيه بالظبط. اللي بتبص عليه هو: هل في Sequential Scan (ده علامة إن محتاج فهرس)؟ هل في Nested Loop مع صفوف كتير (ده ممكن يحتاج تحسين JOIN)؟ هل Sorting بيأخذ وقت طويل (ده ممكن يحتاج فهرس على عمود الترتيب)؟
+
+من أكثر أنماط الاستعلامات البطيئة اللي بشوفها: استخدام SELECT * بدل ما تختار الأعمدة اللي محتاجها فقط. في جدول فيه 20 عمود، لو محتاج 3 بس، اكتب أسماءهم. SELECT * بيحمّل بيانات مش محتاجها وبيستهلك الذاكرة وبيبطّئ الشبكة. كمان مشكلة الـ N+1 Query اللي بتحصل لما بتسحب قائمة وبعدين بتسحب تفاصيل كل عنصر لوحده. ده بيحصل كتير مع ORMs زي Prisma.
+
+تحدثنا عن Prisma — وهي الأداة اللي باستخدمها مع PostgreSQL في أغلب مشاريعي. Prisma بتوفّر تجربة مطور ممتازة بس لازم تفهم إزاي بتولّد SQL عشان متعملش أخطاء أداء. مثلاً، Prima بيسمح بـ include لجلب البيانات المرتبطة، بس لو بتشمل علاقات كتير متداخلة، الاستعلام المُولّد ممكن يكون معقد جدًا. الحل: استخدم select لتحديد الحقول المطلوبة، وinclude بس للعلاقات اللي فعلاً محتاجها.
+
+تجميع الاتصالات (Connection Pooling) من أهم المواضيع اللي كتير من المطورين بيتجاهلوها. PostgreSQL بيتعامل مع كل اتصال كـ Process منفصل، وده معناه إن كل اتصال بيستهلك ذاكرة ومعالج. لو عندك 100 مستخدم متصل في نفس الوقت، وكل واحد فاتح اتصال، السيرفر هيكون تحت ضغط كبير. الحل هو Connection Pooler زي PgBouncer. ده بيعمل طبقة وسيطة: التطبيق بيفتح اتصالات مع PgBouncer، وPgBouncer بيدير اتصالات حقيقية مع PostgreSQL. بدل 100 اتصال حقيقي، ممكن تخلّي PgBouncer يدير 20 اتصال بس ويعيد استخدامهم.
+
+في بيئة Serverless زي Vercel، المشكلة بتكون أكبر لأن كل Function Invocation ممكن يفتح اتصال جديد. Prisma عنده ميزة Connection Pooling مدمجة مع Prisma Data Proxy اللي بيحل المشكلة دي. في مشاريعي اللي على Vercel، كنت بواجه خطأ "too many connections" بشكل متكرر لحد ما فعّلت Prisma Connection Pooling. المشكلة اختفت تمامًا.
+
+مشكلة تانية شائعة هي عدم استخدام Transactions في العمليات اللي بتعدّل أكتر من جدول. لو عندك عملية بتخصم من رصيد المستخدم وتضيف طلب جديد، والعملية فشلت في النص، الرصيد هيتخصم بس الطلب مش هيتحط. ده كارثة بيانات. مع Transactions، لو أي خطأ حصل في أي نقطة، كل التغييرات بترجع زي ما كانت.
+
+نصائح أخيرة سريعة: استخدم pg_stat_statements عشان تعرف أكتر الاستعلامات اللي بتستهلك وقت، وشغّل auto_vacuum عشان PostgreSQL تنظّف نفسها تلقائيًا، وراقب حجم قاعدة البيانات بانتظام عشان تكتشف أي مشالة نمو مبكرًا. أداء قاعدة البيانات مش حاجة بتصلحها مرة وتنسى — ده عملية مستمرة بتحتاج مراقبة وتحسين دائم.`,
+      en: `PostgreSQL is one of the most powerful relational databases on the market, but power alone isn't enough if you don't know how to use it properly. The database is the heart of any application — if that heart is slow, the entire application will be slow no matter how beautiful the code is. In this article, we'll discuss the most important performance optimization strategies in PostgreSQL, from indexing to query optimization to connection pooling.
+
+The first and most important thing in PostgreSQL performance is indexing. Indexing is like the index at the back of a book — instead of flipping through every page to find a specific topic, you open the index and find the page number immediately. In PostgreSQL, the default index is B-Tree which is suitable for most cases. But many developers use indexes incorrectly. Don't put an index on everything — each index increases the database size and slows down write operations.
+
+There are more types of indexes in PostgreSQL than just B-Tree. There's Hash Index for equality lookups, GIN Index for complex data like JSONB and arrays, and GiST Index for geographic data. If you try to search JSONB without an index, PostgreSQL will do a Sequential Scan on every row in the table. With GIN Index, the search is almost instant. The difference can be from 5 seconds to 5 milliseconds.
+
+Query Analysis is your first step when facing a performance issue. The EXPLAIN ANALYZE tool is your best friend. For every slow query, run EXPLAIN ANALYZE and see what PostgreSQL is actually doing. What you look for: is there a Sequential Scan? Is there a Nested Loop with many rows? Is Sorting taking a long time?
+
+One of the most common slow query patterns I see: using SELECT * instead of choosing only the columns you need. Also the N+1 Query problem that happens when you fetch a list and then fetch details for each item separately. This happens a lot with ORMs like Prisma.
+
+Connection Pooling is one of the most important topics that many developers overlook. PostgreSQL treats each connection as a separate Process, meaning each connection consumes memory and CPU. The solution is a Connection Pooler like PgBouncer. In a Serverless environment like Vercel, Prisma has a built-in Connection Pooling feature that solves the "too many connections" problem.
+
+Quick final tips: use pg_stat_statements to know which queries consume the most time, enable auto_vacuum so PostgreSQL cleans itself automatically, and monitor database size regularly. Database performance isn't something you fix once and forget — it's an ongoing process.`,
+    },
+    tags: ["PostgreSQL", "Database", "Performance"],
+  },
+  {
+    slug: "progressive-web-apps",
+    image: "/blog/pwa-offline-first.png",
+    title: { ar: "تطبيقات الويب التقدمية (PWA): إزاي تخلي تطبيقك يشتغل بدون إنترنت", en: "Progressive Web Apps (PWA): How to Make Your App Work Offline" },
+    date: "2026-05-05",
+    excerpt: {
+      ar: "دليل شامل لتطبيقات الويب التقدمية — Service Workers، معمارية Offline-First، استراتيجيات التخزين المؤقت، الإشعارات، وتجربة تحويل إسمع راديو لـ PWA.",
+      en: "A comprehensive guide to Progressive Web Apps — Service Workers, offline-first architecture, caching strategies, push notifications, and the experience of making Esma3 Radio a PWA.",
+    },
+    content: {
+      ar: `تطبيقات الويب التقدمية (Progressive Web Apps أو PWA) غيّرت القاعدة القديمة اللي بتقول "التطبيق لازم يكون أما Native App أما Web App". PWA بيوفر أفضل العوالم: تجربة تطبيق أصلي مع إمكانية الوصول من المتصفح بدون تنزيل. في المقال ده هنتكلم عن الأساسيات التقنية لـ PWA، من Service Workers لاستراتيجيات التخزين المؤقت للإشعارات، كل حاجة من تجربة عملية مش من قراءة Documentation بس.
+
+الأساس اللي عليه PWA مبني هو Service Worker. Service Worker ده ملف JavaScript بيعمل كـ Proxy بين التطبيق والشبكة. يعني لما التطبيق يطلب ملف أو بيانات، الطلب بيمر على Service Worker الأول، وهو اللي بيقرر: يجيبها من الشبكة ولا من الكاش ولا يعمل حاجة تانية. أهم حاجة عن Service Worker إنه بيشتغل في الخلفية حتى لو المتصفح مقفول — ده اللي بيخلي الإشعارات والتزامن في الخلفية ممكنة.
+
+دورة حياة Service Worker ليها تلات مراحل: Install وActivate وFetch. في مرحلة Install، بتحصل على فرصة تحمّل الملفات الأساسية وتخزّنها في الكاش (ده اسمه Pre-caching). في مرحلة Activate، بتنظّف الكاش القديم من الإصدارات السابقة. وفي مرحلة Fetch، بتتعامل مع كل طلب شبكة وبتقرر إزاي ترد عليه. فهم الدورة دي مهم عشان مش عايز Service Worker يرد على طلبات بإصدار قديم من الكاش.
+
+استراتيجيات التخزين المؤقت (Caching Strategies) هي جوهر PWA. مش كل الطلبات بتتعامل بنفس الطريقة — لازم تعرف إيه اللي يتخزّن وإيه اللي يتجيب من الشبكة أولًا. أهم الاستراتيجيات: Cache First (الكاش الأول وبعدين الشبكة — مناسب للملفات الثابتة زي الصور والخطوط)، Network First (الشبكة الأول وبعدين الكاش — مناسب للبيانات اللي بتتغير باستمرار)، Stale While Revalidate (اعرض الكاش واطلب من الشبكة في نفس الوقت — مناسب للمحتوى اللي مش مهم يكون أحدث حاجة).
+
+المعمارية Offline-First هي الطريقة الصحيفة للتفكير في PWA. بدل ما تفكر "التطبيق يشتغل أونلاين وبس ممكن يشتغل أوفلاين"، فكر "التطبيق يشتغل أوفلاين وأول ما الشبكة ترجع يحدث البيانات". ده بيغيّر طريقة كتابة الكود بالكامل. بدل ما تعمل طلب شبكة وتستنى الرد، بتعرض البيانات المخزنة أولًا وبعدين بتحّدثها في الخلفية. ده بيدي تجربة مستخدم أسرع بكثير حتى لو الشبكة شغالة، لأن المستخدم مش بيشوف شاشة تحميل.
+
+في مشروع إسمع راديو، تحويل التطبيق لـ PWA كان قرار مهم جدًا. المستخدمين بيستمعوا للراديو في أماكن كتير فيها شبكة ضعيفة أو مفيش شبكة خالص — في المترو، في السفر، في مناطق بعيدة. قبل PWA، لما الشبكة بتقطع، التطبيق كان بيبطل يشتغل خالص. بعد PWA، التطبيق بيستمر يشتغل ببيانات الكاش وبيحاول يعيد الاتصال في الخلفية. كمان أضفنا ميزة تنزيل المحطات المفضلة للاستماع أوفلاين — ده خدم مستخدمين كتير بيقولوا "أنا عايز أسمع راديو في المترو من غير نت".
+
+Web App Manifest هو الملف اللي بيخلي المتصفح يتعامل مع تطبيقك كتطبيق أصلي. ده ملف JSON فيه اسم التطبيق وأيقونات وألوان واتجاه العرض. لما المستخدم يزور تطبيق PWA، المتصفح بيقترح عليه "إضافة للشاشة الرئيسية" — وده بيخلي التطبيق يظهر زي أي تطبيق Native على الموبايل بدون شريط المتصفح.
+
+الإشعارات (Push Notifications) من أقوى ميزات PWA. تخيل تقدر تبعت إشعار للمستخدم من غير ما التطبيق يكون مفتوح — ده كان محصور بتطبيقات Native زمان. مع Push API وService Worker، بقى ممكن تبعت إشعارات حتى لو المتصفح مقفول. بس انتبه: الإشعارات لازم تكون مفيدة وقليلة، مش تزعج المستخدم. الإشعارات العشوائية بتخلي المستخدم يلغي الإذن وده بيخسرك الميزة كلها.
+
+الخلفية (Background Sync) ميزة تانية مهمة في PWA. لما المستبيعمل حاجة محتاجة شبكة والشبكة مقطوعة، Background Sync بيحفظ العملية وبينتظر الشبكة ترجع وبعدين ينفذها تلقائيًا. مثال: المستخدم بيبعت تعليق والشبكة مقطوعة — التعليق بيتحفظ محليًا، وأول ما الشبكة ترجع، بيتحبعت من غير ما المستخدم يعمل حاجة. ده بيحل مشكلة شائعة جدًا خصوصًا في البلاد اللي فيها شبكات ضعيفة زي مصر.
+
+من الأخطاء الشائعة اللي بشوفها: نسيان تحديث Service Worker لما بتنزل إصدار جديد. Service Worker القديم بيفضل شغال على المتصفح وبيرد من الكاش القديم. الحل إنك تغيّر اسم الكاش في كل إصدار جديد وتحذف الكاش القديم في مرحلة Activate. كمان مشكلة تانية هي عدم التعامل مع الحالة اللي الكاش يكون فيه فارغ والشبكة مقطوعة — لازم تعرض صفحة أو رسالة مناسبة مش خطأ أبيض.
+
+نصيحتي لأي حد عايز يعمل تطبيقه PWA: ابدأ بالأساسيات — سجّل Service Worker واعمل Manifest واختبر التثبيت. بعدين أضف استراتيجيات الكاش المناسبة لنوع بياناتك. وبعدين فكّر في الإشعارات والـ Background Sync. مش لازم تعمل كل حاجة مرة واحدة — PWA زي الطبقات، كل طبقة بتضيف قيمة. والأهم: اختبر على أجهزة حقيقية خصوصًا على شبكات بطيئة لأن ده اللي هيبان الفرق الحقيقي.`,
+      en: `Progressive Web Apps (PWA) have changed the old rule that said "an app must be either a Native App or a Web App." PWA offers the best of both worlds: a native app experience with the accessibility of the browser without downloading. In this article, we'll discuss the technical fundamentals of PWA, from Service Workers to caching strategies to push notifications.
+
+The foundation PWA is built on is the Service Worker. A Service Worker is a JavaScript file that acts as a Proxy between the app and the network. When the app requests a file or data, the request goes through the Service Worker first, and it decides: fetch from the network, serve from cache, or do something else. The most important thing about Service Workers is they work in the background even if the browser is closed.
+
+The Service Worker lifecycle has three stages: Install, Activate, and Fetch. In the Install stage, you download and cache essential files (Pre-caching). In the Activate stage, you clean up old caches from previous versions. In the Fetch stage, you handle every network request and decide how to respond.
+
+Caching Strategies are the core of PWA. The most important strategies: Cache First (suitable for static files), Network First (suitable for data that changes frequently), Stale While Revalidate (suitable for content where being the latest isn't critical).
+
+Offline-First Architecture is the right way to think about PWA. Instead of thinking "the app works online and might work offline," think "the app works offline and updates data when the network returns." This completely changes how you write code and gives a much faster user experience.
+
+In the Esma3 Radio project, converting the app to a PWA was a very important decision. Users listen to radio in many places with weak or no network. After PWA, the app continues working with cached data and tries to reconnect in the background. We also added offline station downloads.
+
+The Web App Manifest makes the browser treat your app as a native application. Push Notifications are one of the most powerful PWA features. Background Sync saves operations when offline and executes them when the network returns.
+
+My advice: start with the basics, then add caching strategies, then think about notifications and Background Sync. PWA is like layers, each layer adds value. Test on real devices especially on slow networks.`,
+    },
+    tags: ["PWA", "Service Workers", "Web Development"],
+  }
 ];

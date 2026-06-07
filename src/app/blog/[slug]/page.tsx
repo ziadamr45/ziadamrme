@@ -9,6 +9,7 @@ import { translations } from "@/lib/translations";
 import { formatDate } from "@/lib/utils";
 import { techStack } from "@/lib/data";
 import Link from "next/link";
+import Image from "next/image";
 import { useParams, useRouter } from "next/navigation";
 import { useScrollRestoration } from "@/hooks/use-scroll-restoration";
 import ReactMarkdown from "react-markdown";
@@ -22,7 +23,7 @@ export default function BlogPostPage() {
   const router = useRouter();
   const slug = params.slug as string;
 
-  const post = blogPosts.find((p) => p.slug === slug);
+  const post = blogPosts.find((p) => p?.slug === slug);
 
   if (!post) {
     return (
@@ -49,8 +50,8 @@ export default function BlogPostPage() {
   }
 
   // Find related posts (same tags, exclude current)
-  const relatedPosts = blogPosts
-    .filter((p) => p.slug !== slug && p.tags.some((tag) => post.tags.includes(tag)))
+  const relatedPosts = (blogPosts
+    .filter((p) => p?.slug !== slug && p?.tags?.some((tag) => post.tags.includes(tag))) as typeof blogPosts[number][])
     .slice(0, 3);
 
   return (
@@ -71,6 +72,19 @@ export default function BlogPostPage() {
         </div>
 
         <Card className="relative w-full overflow-hidden border-0 shadow-2xl shadow-slate-200/50 dark:shadow-black/50 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl">
+          {post.image && (
+            <div className="relative w-full aspect-[16/9] overflow-hidden">
+              <Image
+                src={post.image}
+                alt={post.title[language]}
+                fill
+                className="object-cover"
+                sizes="(max-width: 768px) 100vw, 768px"
+                priority
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
+            </div>
+          )}
           <CardContent className="p-8 sm:p-10">
             <div className="flex items-center gap-2 mb-4">
               <span className="text-xs text-slate-400 dark:text-slate-500 font-medium">
@@ -144,9 +158,23 @@ export default function BlogPostPage() {
               {language === "ar" ? "مقالات مشابهة" : "Related Articles"}
             </h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-              {relatedPosts.map((relatedPost) => (
+              {relatedPosts.map((relatedPost, i) => {
+                if (!relatedPost) return null;
+                return (
                 <Link key={relatedPost.slug} href={`/blog/${relatedPost.slug}`}>
                   <Card className="relative w-full overflow-hidden border-0 shadow-lg shadow-slate-200/50 dark:shadow-black/30 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl transition-all duration-300 hover:scale-[1.02] cursor-pointer h-full">
+                    {relatedPost.image && (
+                      <div className="relative w-full aspect-[16/9] overflow-hidden">
+                        <Image
+                          src={relatedPost.image}
+                          alt={relatedPost.title[language]}
+                          fill
+                          className="object-cover"
+                          sizes="(max-width: 640px) 100vw, 33vw"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
+                      </div>
+                    )}
                     <CardContent className="p-5">
                       <span className="text-[11px] text-slate-400 dark:text-slate-500 font-medium block mb-2">
                         {formatDate(relatedPost.date, language)}
@@ -156,7 +184,8 @@ export default function BlogPostPage() {
                     </CardContent>
                   </Card>
                 </Link>
-              ))}
+              );
+              })}
             </div>
           </div>
         )}
