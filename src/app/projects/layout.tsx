@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "مشاريع تطوير الويب",
+  title: "مشاريع تطوير الويب | Web Development Projects",
   description:
-    "مشاريع ويب احترافية: تطبيقات راديو، ألعاب تفاعلية، أنظمة مشاركة موقع، بوابات أخبار ذكية، وأدوات تحميل. مشاريع حقيقية باستخدام Next.js و React و TypeScript.",
+    "مشاريع ويب احترافية: تطبيقات راديو، ألعاب تفاعلية، أنظمة مشاركة موقع، بوابات أخبار ذكية، وأدوات تحميل. مشاريع حقيقية باستخدام Next.js و React و TypeScript. Professional web projects: radio apps, interactive games, location sharing, smart news portals, and download tools.",
   alternates: {
     canonical: "https://ziadamrme.vercel.app/projects",
   },
@@ -12,6 +12,8 @@ export const metadata: Metadata = {
     description:
       "مشاريع ويب احترافية متنوعة باستخدام أحدث التقنيات.",
     url: "https://ziadamrme.vercel.app/projects",
+    locale: "ar_EG",
+    alternateLocale: "en_US",
   },
 };
 
@@ -27,13 +29,15 @@ export default function ProjectsLayout({
       {
         "@type": "ListItem",
         position: 1,
-        name: "الرئيسية",
+        name: "Home",
+        alternateName: "الرئيسية",
         item: "https://ziadamrme.vercel.app",
       },
       {
         "@type": "ListItem",
         position: 2,
-        name: "المشاريع",
+        name: "Projects",
+        alternateName: "المشاريع",
         item: "https://ziadamrme.vercel.app/projects",
       },
     ],
@@ -42,10 +46,12 @@ export default function ProjectsLayout({
   const webPageJsonLd = {
     "@context": "https://schema.org",
     "@type": "CollectionPage",
-    name: "مشاريع تطوير الويب",
+    name: "Web Development Projects",
+    alternateName: "مشاريع تطوير الويب",
     description:
-      "مشاريع ويب احترافية متنوعة باستخدام أحدث التقنيات.",
+      "Professional web projects built with modern technologies like Next.js, React, and TypeScript.",
     url: "https://ziadamrme.vercel.app/projects",
+    inLanguage: ["ar", "en"],
     isPartOf: {
       "@type": "WebSite",
       name: "Ziad Amr Portfolio",

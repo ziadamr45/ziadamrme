@@ -5,37 +5,52 @@ type Props = {
   params: Promise<{ slug: string }>;
 };
 
+// Pre-render all blog posts at build time for faster loading and better SEO
+export function generateStaticParams() {
+  return blogPosts
+    .filter((p) => p?.slug)
+    .map((post) => ({
+      slug: post.slug,
+    }));
+}
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const post = blogPosts.find((p) => p?.slug === slug);
 
   if (!post) {
     return {
-      title: "مقال غير موجود",
+      title: "مقال غير موجود | Post Not Found",
     };
   }
 
+  // Bilingual title: Arabic | English — works for both AR and EN visitors
+  const bilingualTitle = `${post.title.ar} | ${post.title.en}`;
+  const bilingualDescription = `${post.excerpt.ar} ${post.excerpt.en}`;
+
   return {
-    title: post.title.ar,
-    description: post.excerpt.ar,
+    title: bilingualTitle,
+    description: bilingualDescription,
     alternates: {
       canonical: `https://ziadamrme.vercel.app/blog/${slug}`,
     },
     openGraph: {
-      title: post.title.ar,
-      description: post.excerpt.ar,
+      title: bilingualTitle,
+      description: bilingualDescription,
       type: "article",
       publishedTime: post.date,
       tags: post.tags,
       url: `https://ziadamrme.vercel.app/blog/${slug}`,
+      locale: "ar_EG",
+      alternateLocale: "en_US",
       images: post.image
-        ? [{ url: `https://ziadamrme.vercel.app${post.image}`, width: 1344, height: 768, alt: post.title.ar }]
+        ? [{ url: `https://ziadamrme.vercel.app${post.image}`, width: 1344, height: 768, alt: bilingualTitle }]
         : undefined,
     },
     twitter: {
       card: "summary_large_image",
-      title: post.title.ar,
-      description: post.excerpt.ar,
+      title: bilingualTitle,
+      description: bilingualDescription,
       images: post.image ? [`https://ziadamrme.vercel.app${post.image}`] : undefined,
     },
   };
@@ -62,19 +77,22 @@ export default async function BlogPostLayout({
       {
         "@type": "ListItem",
         position: 1,
-        name: "الرئيسية",
+        name: "Home",
+        alternateName: "الرئيسية",
         item: "https://ziadamrme.vercel.app",
       },
       {
         "@type": "ListItem",
         position: 2,
-        name: "المدونة",
+        name: "Blog",
+        alternateName: "المدونة",
         item: "https://ziadamrme.vercel.app/blog",
       },
       {
         "@type": "ListItem",
         position: 3,
-        name: post.title.ar,
+        name: post.title.en,
+        alternateName: post.title.ar,
         item: `https://ziadamrme.vercel.app/blog/${slug}`,
       },
     ],
@@ -83,8 +101,9 @@ export default async function BlogPostLayout({
   const blogPostingJsonLd = {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
-    headline: post.title.ar,
-    description: post.excerpt.ar,
+    headline: post.title.en,
+    alternativeHeadline: post.title.ar,
+    description: post.excerpt.en,
     datePublished: post.date,
     dateModified: post.date,
     author: {
@@ -101,10 +120,11 @@ export default async function BlogPostLayout({
     publisher: {
       "@type": "Person",
       name: "Ziad Amr",
+      url: "https://ziadamrme.vercel.app",
     },
     image: post.image ? `https://ziadamrme.vercel.app${post.image}` : undefined,
     keywords: post.tags.join(", "),
-    inLanguage: "ar",
+    inLanguage: ["ar", "en"],
   };
 
   return (

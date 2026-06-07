@@ -7,12 +7,13 @@ export async function GET() {
     .map(
       (post) => `
     <item>
-      <title><![CDATA[${post.title.ar}]]></title>
+      <title><![CDATA[${post.title.ar} | ${post.title.en}]]></title>
       <link>${BASE_URL}/blog/${post.slug}</link>
-      <description><![CDATA[${post.excerpt.ar}]]></description>
+      <description><![CDATA[${post.excerpt.ar} ${post.excerpt.en}]]></description>
       <pubDate>${new Date(post.date).toUTCString()}</pubDate>
       <guid isPermaLink="true">${BASE_URL}/blog/${post.slug}</guid>
       ${post.tags.map((tag) => `<category>${tag}</category>`).join("\n      ")}
+      ${post.image ? `<enclosure url="${BASE_URL}${post.image}" type="image/png" />` : ""}
     </item>`
     )
     .join("");
@@ -22,7 +23,7 @@ export async function GET() {
   <channel>
     <title>مدونة زياد عمرو — Ziad Amr Blog</title>
     <link>${BASE_URL}</link>
-    <description>مقالات تقنية عن تطوير الويب، Next.js، React، TypeScript، Socket.io، أمان التطبيقات وأكثر من تجربة عملية.</description>
+    <description>مقالات تقنية عن تطوير الويب، Next.js، React، TypeScript، Socket.io، أمان التطبيقات وأكثر من تجربة عملية. Technical articles on web development from Ziad Amr.</description>
     <language>ar-eg</language>
     <lastBuildDate>${new Date().toUTCString()}</lastBuildDate>
     <atom:link href="${BASE_URL}/feed.xml" rel="self" type="application/rss+xml"/>

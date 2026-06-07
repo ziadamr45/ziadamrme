@@ -5,32 +5,45 @@ type Props = {
   params: Promise<{ slug: string }>;
 };
 
+// Pre-render all project pages at build time for faster loading and better SEO
+export function generateStaticParams() {
+  return projects.map((project) => ({
+    slug: project.key,
+  }));
+}
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const project = projects.find((p) => p.key === slug);
 
   if (!project) {
     return {
-      title: "مشروع غير موجود",
+      title: "مشروع غير موجود | Project Not Found",
     };
   }
 
+  // Bilingual title: Arabic | English
+  const bilingualTitle = `${project.name.ar} | ${project.name.en}`;
+  const bilingualDescription = `${project.description.ar} ${project.description.en}`;
+
   return {
-    title: project.name.ar,
-    description: project.description.ar,
+    title: bilingualTitle,
+    description: bilingualDescription,
     alternates: {
       canonical: `https://ziadamrme.vercel.app/projects/${slug}`,
     },
     openGraph: {
-      title: project.name.ar,
-      description: project.description.ar,
+      title: bilingualTitle,
+      description: bilingualDescription,
       type: "article",
       url: `https://ziadamrme.vercel.app/projects/${slug}`,
+      locale: "ar_EG",
+      alternateLocale: "en_US",
     },
     twitter: {
       card: "summary_large_image",
-      title: project.name.ar,
-      description: project.description.ar,
+      title: bilingualTitle,
+      description: bilingualDescription,
     },
   };
 }
@@ -56,19 +69,22 @@ export default async function ProjectDetailLayout({
       {
         "@type": "ListItem",
         position: 1,
-        name: "الرئيسية",
+        name: "Home",
+        alternateName: "الرئيسية",
         item: "https://ziadamrme.vercel.app",
       },
       {
         "@type": "ListItem",
         position: 2,
-        name: "المشاريع",
+        name: "Projects",
+        alternateName: "المشاريع",
         item: "https://ziadamrme.vercel.app/projects",
       },
       {
         "@type": "ListItem",
         position: 3,
-        name: project.name.ar,
+        name: project.name.en,
+        alternateName: project.name.ar,
         item: `https://ziadamrme.vercel.app/projects/${slug}`,
       },
     ],
@@ -77,9 +93,9 @@ export default async function ProjectDetailLayout({
   const softwareAppJsonLd = {
     "@context": "https://schema.org",
     "@type": "SoftwareApplication",
-    name: project.name.ar,
-    alternateName: project.name.en,
-    description: project.description.ar,
+    name: project.name.en,
+    alternateName: project.name.ar,
+    description: project.description.en,
     url: project.url || `https://ziadamrme.vercel.app/projects/${slug}`,
     applicationCategory: "WebApplication",
     operatingSystem: "Web",
@@ -87,6 +103,7 @@ export default async function ProjectDetailLayout({
     author: {
       "@type": "Person",
       name: "Ziad Amr",
+      alternateName: "زياد عمرو",
       url: "https://ziadamrme.vercel.app",
     },
     offers: {
@@ -94,6 +111,7 @@ export default async function ProjectDetailLayout({
       price: "0",
       priceCurrency: "EGP",
     },
+    inLanguage: ["ar", "en"],
   };
 
   return (

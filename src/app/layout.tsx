@@ -197,8 +197,7 @@ export default async function RootLayout({
         <meta name="apple-mobile-web-app-title" content="Ziad Amr" />
         <link rel="manifest" href="/manifest.json" />
         <link rel="alternate" type="application/rss+xml" title="مدونة زياد عمرو" href="https://ziadamrme.vercel.app/feed.xml" />
-        <link rel="alternate" hrefLang="ar" href="https://ziadamrme.vercel.app" />
-        <link rel="alternate" hrefLang="en" href="https://ziadamrme.vercel.app" />
+        {/* Single-URL bilingual site: hreflang not needed (Google requires separate URLs per language). x-default points to the main URL. */}
         <link rel="alternate" hrefLang="x-default" href="https://ziadamrme.vercel.app" />
         <script
           type="application/ld+json"

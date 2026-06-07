@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "التقنيات المستخدمة",
+  title: "التقنيات المستخدمة | Tech Stack",
   description:
-    "التقنيات والأدوات التي أستخدمها في تطوير الويب: Next.js، React، TypeScript، Tailwind CSS، PostgreSQL، Prisma، Socket.io، LiveKit، Docker، وأكثر من 50 تقنية.",
+    "التقنيات والأدوات التي أستخدمها في تطوير الويب: Next.js، React، TypeScript، Tailwind CSS، PostgreSQL، Prisma، Socket.io، LiveKit، Docker، وأكثر من 50 تقنية. Technologies and tools I use for web development.",
   alternates: {
     canonical: "https://ziadamrme.vercel.app/tech",
   },
@@ -12,6 +12,8 @@ export const metadata: Metadata = {
     description:
       "التقنيات والأدوات التي أستخدمها في تطوير الويب الاحترافي.",
     url: "https://ziadamrme.vercel.app/tech",
+    locale: "ar_EG",
+    alternateLocale: "en_US",
   },
 };
 
@@ -27,13 +29,15 @@ export default function TechLayout({
       {
         "@type": "ListItem",
         position: 1,
-        name: "الرئيسية",
+        name: "Home",
+        alternateName: "الرئيسية",
         item: "https://ziadamrme.vercel.app",
       },
       {
         "@type": "ListItem",
         position: 2,
-        name: "التقنيات",
+        name: "Tech Stack",
+        alternateName: "التقنيات",
         item: "https://ziadamrme.vercel.app/tech",
       },
     ],
@@ -42,10 +46,12 @@ export default function TechLayout({
   const webPageJsonLd = {
     "@context": "https://schema.org",
     "@type": "WebPage",
-    name: "التقنيات المستخدمة",
+    name: "Tech Stack",
+    alternateName: "التقنيات المستخدمة",
     description:
-      "التقنيات والأدوات التي أستخدمها في تطوير الويب الاحترافي.",
+      "Technologies and tools used for professional web development.",
     url: "https://ziadamrme.vercel.app/tech",
+    inLanguage: ["ar", "en"],
     isPartOf: {
       "@type": "WebSite",
       name: "Ziad Amr Portfolio",

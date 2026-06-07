@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "مدونة تطوير الويب",
+  title: "مدونة تطوير الويب | Web Development Blog",
   description:
-    "مقالات تقنية عن تطوير الويب، Next.js، React، TypeScript، Socket.io، أمان التطبيقات، تصميم RTL، و Tailwind CSS. مدونة زياد عمرو للمطورين العرب.",
+    "مقالات تقنية عن تطوير الويب، Next.js، React، TypeScript، Socket.io، أمان التطبيقات، تصميم RTL، و Tailwind CSS. مدونة زياد عمرو للمطورين العرب. Technical articles on web development, Next.js, React, TypeScript, and more.",
   alternates: {
     canonical: "https://ziadamrme.vercel.app/blog",
   },
@@ -12,6 +12,8 @@ export const metadata: Metadata = {
     description:
       "مقالات تقنية عن تطوير الويب، Next.js، React، TypeScript، وأكثر من تجربة عملية.",
     url: "https://ziadamrme.vercel.app/blog",
+    locale: "ar_EG",
+    alternateLocale: "en_US",
   },
 };
 
@@ -27,13 +29,15 @@ export default function BlogLayout({
       {
         "@type": "ListItem",
         position: 1,
-        name: "الرئيسية",
+        name: "Home",
+        alternateName: "الرئيسية",
         item: "https://ziadamrme.vercel.app",
       },
       {
         "@type": "ListItem",
         position: 2,
-        name: "المدونة",
+        name: "Blog",
+        alternateName: "المدونة",
         item: "https://ziadamrme.vercel.app/blog",
       },
     ],
@@ -42,10 +46,12 @@ export default function BlogLayout({
   const webPageJsonLd = {
     "@context": "https://schema.org",
     "@type": "CollectionPage",
-    name: "مدونة تطوير الويب",
+    name: "Web Development Blog",
+    alternateName: "مدونة تطوير الويب",
     description:
-      "مقالات تقنية عن تطوير الويب، Next.js، React، TypeScript، وأكثر.",
+      "Technical articles on web development, Next.js, React, TypeScript, and more.",
     url: "https://ziadamrme.vercel.app/blog",
+    inLanguage: ["ar", "en"],
     isPartOf: {
       "@type": "WebSite",
       name: "Ziad Amr Portfolio",
