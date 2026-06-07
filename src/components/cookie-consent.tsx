@@ -22,16 +22,6 @@ export function CookieConsent() {
 
   const handleAccept = () => {
     localStorage.setItem(COOKIE_CONSENT_KEY, "accepted");
-    // Enable personalized ads
-    try {
-      // @ts-expect-error AdSense push
-      (window.adsbygoogle = window.adsbygoogle || []).push({
-        google_ad_client: "ca-pub-8502551436802377",
-        enable_page_level_ads: true,
-      });
-    } catch {
-      // AdSense not loaded yet, that's fine
-    }
     setVisible(false);
   };
 
@@ -55,8 +45,8 @@ export function CookieConsent() {
             </div>
             <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
               {language === "ar"
-                ? "نستخدم ملفات تعريف الارتباط لتحسين تجربتك وعرض إعلانات ذات صلة. يمكنك قبول الكوكيز للتخصيص أو رفضها."
-                : "We use cookies to improve your experience and show relevant ads. You can accept cookies for personalization or decline them."}
+                ? "نستخدم ملفات تعريف الارتباط لتحسين تجربتك. يمكنك قبول الكوكيز للتخصيص أو رفضها."
+                : "We use cookies to improve your experience. You can accept cookies for personalization or decline them."}
               {" "}
               <Link
                 href="/privacy-policy"

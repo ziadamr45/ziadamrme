@@ -14,7 +14,6 @@ import { useScrollRestoration } from "@/hooks/use-scroll-restoration";
 import { TechBadge } from "@/components/tech-badge";
 import { techStack } from "@/lib/data";
 import { ShareButton } from "@/components/share-button";
-import { AdSlot } from "@/components/ad-slot";
 
 export default function BlogPage() {
   const { language } = useApp();
@@ -64,10 +63,6 @@ export default function BlogPage() {
           </div>
         </a>
 
-        {/* Ad unit — blog listing page */}
-        <div className="mb-6">
-          <AdSlot slot="blog_list_top" format="horizontal" className="min-h-[90px] rounded-xl overflow-hidden" />
-        </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           {blogPosts.map((post) => (

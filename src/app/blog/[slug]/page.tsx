@@ -17,7 +17,6 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { TechBadge } from "@/components/tech-badge";
 import { ShareButton } from "@/components/share-button";
-import { AdSlot } from "@/components/ad-slot";
 
 export default function BlogPostPage() {
   const { language } = useApp();
@@ -193,11 +192,6 @@ export default function BlogPostPage() {
             </div>
           </CardContent>
         </Card>
-
-        {/* Ad unit — after article content */}
-        <div className="mt-6">
-          <AdSlot slot="blog_article_bottom" format="horizontal" className="min-h-[90px] rounded-xl overflow-hidden" />
-        </div>
 
         {/* Related Posts */}
         {relatedPosts.length > 0 && (
