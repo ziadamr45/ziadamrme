@@ -12,6 +12,7 @@ import Image from "next/image";
 import { useScrollRestoration } from "@/hooks/use-scroll-restoration";
 import { TechBadge } from "@/components/tech-badge";
 import { techStack } from "@/lib/data";
+import { ShareButton } from "@/components/share-button";
 
 export default function BlogPage() {
   const { language } = useApp();
@@ -98,10 +99,13 @@ export default function BlogPage() {
                         );
                       })}
                     </div>
-                    <span className="inline-flex items-center gap-1.5 text-xs font-medium text-orange-600 dark:text-orange-400">
-                      {t.readMore}
-                      <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={language === "ar" ? "M19 12H5m0 0l7 7m-7-7l7-7" : "M5 12h14m0 0l-7-7m7 7l-7 7"} /></svg>
-                    </span>
+                    <div className="flex items-center gap-1">
+                      <ShareButton url={`/blog/${post.slug}`} title={post.title[language]} language={language} size="sm" />
+                      <span className="inline-flex items-center gap-1.5 text-xs font-medium text-orange-600 dark:text-orange-400">
+                        {t.readMore}
+                        <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={language === "ar" ? "M19 12H5m0 0l7 7m-7-7l7-7" : "M5 12h14m0 0l-7-7m7 7l-7 7"} /></svg>
+                      </span>
+                    </div>
                   </div>
                 </CardContent>
               </Card>

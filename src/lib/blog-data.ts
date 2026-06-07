@@ -21,6 +21,8 @@ export const blogPosts: BlogPost[] = [
     content: {
       ar: `بدأت رحلتي مع Next.js منذ فترة، وكانت نقطة تحول كبيرة في مسيرتي كمطور ويب. قبل Next.js، كنت أواجه صعوبات حقيقية في بناء تطبيقات ويب متكاملة بأداء عالي. كنت أستخدم React لوحده، وكل مرة أحتاج أعمل Server-Side Rendering أو SEO محترم، كنت أضطر أعيد اختراع العجلة. Next.js وفّر لي الحل الأمثل مع ميزات مثل Server-Side Rendering وStatic Site Generation من أول يوم.
 
+![Next.js Architecture](/blog/inline-nextjs-architecture.png)
+
 أهم ما يميز Next.js هو تجربة المطور الممتازة. نظام الملفات التلقائي للتوجيه (File-based Routing) غيّر طريقة تعاملي مع المشروع بالكامل. بدل ما أكتب إعدادات Routing معقدة، كل صفحة في مجلد app تتحول تلقائيًا لمسار. هذا وفّر عليّ وقت كثير وجعل هيكل المشروع واضح ومنظم. كذلك دعم TypeScript المدمج والتحسين التلقائي للصور من خلال مكون Image كلها ميزات جعلت عملية التطوير أكثر سلاسة وإنتاجية.
 
 في مشروع إسمع راديو، كان Next.js هو الخيار الأمثل لعدة أسباب. التطبيق يحتاج SEO قوي عشان محطات الراديو تظهر في نتائج البحث، وNext.js بـ Server-Side Rendering وفّر ده بشكل تلقائي. كمان كنا محتاجين سرعة تحميل عالية لأن المستخدم بيدخل يسمع راديو مش يستنى صفحة تحمّل. مع Next.js قدرنا نحقق أداء ممتاز في Lighthouse وأوقات تحميل سريعة.
@@ -35,6 +37,8 @@ export const blogPosts: BlogPost[] = [
 
 في النهاية، Next.js مش مجرد إطار عمل، ده رفيق رحلة المطور. كل مشروع بنيته بيه كان تجربة تعلم جديدة. من إسمع راديو لمعركة الأسئلة لطمني، كل تطبيق علمني حاجة جديدة عن Next.js وعن تطوير الويب بشكل عام. لو لسه ما جربتهوش، أنصحك تبدأ النهاردة — هتلاقي نفسك بتبني تطبيقات أفضل وأسرع.`,
       en: `I started my journey with Next.js a while ago, and it was a major turning point in my career as a web developer. Before Next.js, I struggled with real difficulties building complete, high-performance web applications. I was using React alone, and every time I needed Server-Side Rendering or proper SEO, I had to reinvent the wheel. Next.js provided me with the ideal solution with features like Server-Side Rendering and Static Site Generation from day one.
+
+![Next.js Architecture](/blog/inline-nextjs-architecture.png)
 
 What makes Next.js stand out is the excellent developer experience. The file-based routing system completely changed how I approach projects. Instead of writing complex routing configurations, every page in the app folder automatically becomes a route. This saved me significant time and made the project structure clear and organized. The built-in TypeScript support and automatic image optimization through the Image component are features that made development smoother and more productive.
 
@@ -66,6 +70,8 @@ Ultimately, Next.js isn't just a framework — it's a developer's journey compan
 
 في مشروع معركة الأسئلة، استخدمت Socket.io لإنشاء نظام غرف لعب تفاعلي يسمح للاعبين بالتنافس في الوقت الحقيقي. التحدي الأكبر كان إدارة حالة اللعبة عبر جميع العملاء المتصلين. كل حاجة في اللعبة لازم تتزامن: الأسئلة، الإجابات، النقاط، المؤقت. لو أي حاجة اتأخرت حتى ثانية واحدة، اللعبة هتبقى ظالمة للاعب اللي استنى أكتر.
 
+![Socket.io Rooms](/blog/inline-socketio-rooms.png)
+
 تصميم معمارية Socket.io مع Next.js كان التحدي الأول. Next.js بيعمل Server-Side Rendering، وSocket.io محتاج اتصال مستمر. الحل كان إني أعمل Custom Server أو أستخدم API Route كمكان لإنشاء Socket.io Server. في معركة الأسئلة، استخدمت نمط مختلط: Next.js للواجهات وSocket.io Server منفصل يعمل على بورت تاني. الاتصال بين الاتنين بيتم عبر الأحداث (Events).
 
 أهم نمط تصميمي تعلمته هو "Server as Source of Truth". في البداية كنت بخلي كل عميل (Client) يدير حالة اللعبة لوحده، وده أدى لمشاكل كتير في التزامن. بعد كده غيّرت النهج وخليت السيرفر هو المصدر الوحيد للحقيقة. كل إجراء بيتعمل على العميل بيتعمل Validate على السيرفر الأول، وبعدين السيرفر بيبث التحديث لكل العملاء. ده ضمن إن كل اللاعبين شايفين نفس الحاجة في نفس الوقت.
@@ -82,6 +88,8 @@ Ultimately, Next.js isn't just a framework — it's a developer's journey compan
       en: `Real-time interactive applications have become essential in the modern web world. From multiplayer games to chat applications and notification systems, Socket.io provides the ideal foundation for building these applications. In this article, I'll share my practical experience with Socket.io and how I used it in real projects.
 
 In the Battle of Questions project, I used Socket.io to create an interactive game room system that allows players to compete in real time. The biggest challenge was managing game state across all connected clients. Everything in the game needs to be synchronized: questions, answers, scores, and the timer. If anything is delayed even by a single second, the game becomes unfair to the player who waited longer.
+
+![Socket.io Rooms](/blog/inline-socketio-rooms.png)
 
 Designing the architecture of Socket.io with Next.js was the first challenge. Next.js does Server-Side Rendering, and Socket.io needs a persistent connection. The solution was to create a Custom Server or use an API Route as the place to set up the Socket.io Server. In Battle of Questions, I used a hybrid pattern: Next.js for the frontend and a separate Socket.io Server running on a different port. Communication between them happens through events.
 
@@ -197,6 +205,8 @@ My advice for anyone wanting to build an Arabic app: start with RTL design from 
     content: {
       ar: `الأمان في تطبيقات الويب مش رفاهية — ده ضرورة. وأنا ببني تطبيقات زي طمني وإسمع راديو ونظام الإقبال، اكتشفت إن الثغرات الأمنية مش نظرية، دي حقيقية وممكن تحصل لأي حد. في المقال ده هشارك الدروس اللي تعلمتها بالطريقة الصعبة عشان ماتتعلمهاش بنفس الطريقة.
 
+![Web Security](/blog/inline-web-security.png)
+
 أول درس كان عن XSS (Cross-Site Scripting). في مشروع بسيط كنت بعمله، كنت بعرض تعليقات المستخدمين بدون ما أعالج النص (sanitize). يوم اكتشفت إن شخص قدر يحط كود JavaScript في التعليق وشغّله على أجهزة المستخدمين التانيين. من يومها وأنا بستخدم DOMPurify لتنظيف أي HTML بتأتي من المستخدم قبل ما أعرضه. كمان React بطبيعته بيحمي من XSS لأنه بيهرب (escape) النصوص تلقائيًا، بس لما بتستخدم dangerouslySetInnerHTML بتفقد الحماية دي.
 
 الدرس التاني كان عن CSRF (Cross-Site Request Forgery). تخيل إنك داخل في طمني ومشارك موقعك، وفجأة تفتح موقع تاني خبيث يبعت طلب لطمني باسمك بدون ماتعرف. الحل كان استخدام CSRF Tokens — كل نموذج بيحتوي على توكن سري يتأكد منه السيرفر. في نظام الإقبال، كل نموذج تسجيل بيحتوي على CSRF Token عشان نتأكد إن الطلب جاي من الموقع نفسه مش من مكان تاني.
@@ -211,6 +221,8 @@ Rate Limiting عمومًا درس مهم. في إسمع راديو، لاحظت 
 
 نصيحة أخيرة ومهمة: الأمان عملية مستمرة مش خطوة واحدة. كل ما تكتشف ثغرة جديدة، أصلحها ووثّقها. اعمل Security Audit دوري لكودك. واستخدم أدوات زي npm audit عشان تكتشف الثغرات في المكتبات اللي بتستخدمها. الثغرات الأمنية مش عيب فيك كمطور — العيب إنك تتجاهلها.`,
       en: `Security in web applications isn't a luxury — it's a necessity. While building apps like Tammeny, Esma3 Radio, and Eleqbal Form, I discovered that security vulnerabilities aren't theoretical; they're real and can happen to anyone. In this article, I'll share the lessons I learned the hard way so you don't have to learn them the same way.
+
+![Web Security](/blog/inline-web-security.png)
 
 The first lesson was about XSS (Cross-Site Scripting). In a simple project I was working on, I was displaying user comments without sanitizing the text. One day I discovered someone had inserted JavaScript code into a comment and executed it on other users' devices. Since that day, I've used DOMPurify to sanitize any HTML coming from users before displaying it. React naturally protects against XSS because it escapes text automatically, but when you use dangerouslySetInnerHTML, you lose that protection.
 
@@ -239,6 +251,8 @@ A final important piece of advice: security is an ongoing process, not a one-tim
     },
     content: {
       ar: `لما بدأت أتعلم CSS، كنت كتبت كل حاجة بالطريقة التقليدية: أسماء كلاسات معبرة، ملفات CSS منفصلة، وكل كلاس ليه خصائص محددة. كنت حاسس إن ده الطريقة الصح والأكثر تنظيمًا. بس مع كبر المشاريع، لقيت نفسي بتكتب CSS أكتر من الكود نفسه.Tailwind CSS غيّر الطريقة دي تمامًا، وفي المقال ده هقولك إزاي وليه.
+
+![Tailwind CSS Utility-First](/blog/inline-tailwind-utility.png)
 
 أول حاجة لاحظتها مع Tailwind كانت السرعة. بدل ما أفتح ملف CSS وأكتب كلاس جديد وأروح أضيفه في HTML، بقيت أكتب كل حاجة في مكان واحد. في إسمع راديو، الصفحة الرئيسية كانت محتاجة تصميم معقد: بطاقات محطات، مشغل صوت، قسم قرآن. بالـ CSS التقليدي كان هاخد يومين بس في التنسيق. مع Tailwind خلصت في نص يوم.
 
@@ -687,5 +701,99 @@ The Web App Manifest makes the browser treat your app as a native application. P
 My advice: start with the basics, then add caching strategies, then think about notifications and Background Sync. PWA is like layers, each layer adds value. Test on real devices especially on slow networks.`,
     },
     tags: ["PWA", "Service Workers", "Web Development"],
+  },
+  {
+    slug: "ai-agents-future",
+    image: "/blog/ai-agents-future.png",
+    title: { ar: "وكلاء الذكاء الصناعي: ثورة في طريقة بناء البرمجيات", en: "AI Agents: Revolutionizing How We Build Software" },
+    date: "2026-05-25",
+    excerpt: {
+      ar: "نظرة معمقة على وكلاء الذكاء الصناعي — الفرق بينهم وبين الشات بوت العادي، إزاي بيفكروا ويخططوا، وإيه مستقبل تطوير البرمجيات معاهم.",
+      en: "A deep look at AI agents — how they differ from simple chatbots, how they reason and plan, and what the future of software development looks like with them.",
+    },
+    content: {
+      ar: `لو سألت أي حد في المجال التقني سنة 2024 عن الذكاء الاصطناعي، كان هيقولك ChatGPT وكفاية. بس سنة 2025 و2026 غيّرت اللعبة تمامًا. مبقناش بنتكلم عن موديل بيرد على سؤال ويديك إجابة — احنا بنتكلم عن وكلاء (Agents) بيعرفوا يفكروا، يخططوا، ينفذوا مهام معقدة لوحدهم. الفرق بين الشات بوت والوكيل زي الفرق بين موظف استقبال ومدير مشروع. الاول بيرد على أسئلتك، التاني بياخد هدف منك وبيحققه من أول خطوة لآخر خطوة.
+
+إيه هو الوكيل الذكي (AI Agent) بالظبط؟ الوكيل هو نظام ذكاء اصطناعي بيقدر يحقق هدف معقد من خلال سلسلة خطوات مستقلة. يعني مش بس بتقولو "اكتبلي كود" وبيكتب — بتقولو "ابني لي صفحة تسجيل دخول متكاملة فيها تحقق وربط بقاعدة بيانات وتجربة مستخدم كويسة" وهو بيخطط الخطوات: أولًا هيصمم الواجهة، بعدين هيكتب الـ API، بعدين هيربط الداتابيز، بعدين هيضيف الـ validation، وبعدين هيختبر كل حاجة. كل ده لوحده من غير ما تتدخل في كل خطوة.
+
+المكونات الأساسية لأي وكيل ذكي أربعة: الأول هو المحرك (LLM) زي Claude أو GPT — ده العقل اللي بيفكر ويأخذ القرارات. التاني هو الذاكرة (Memory) — الوكيل لازم يفتكر اللي عمله واللي لسه عايز يعمله، وده بيتحقق من خلال سياق المحادثة أو ذاكرة طويلة المدى. التالت هو الأدوات (Tools) — الوكيل بيقدر يتصفح الويب، يقرأ ويكتب ملفات، يشغّل أوامر في التيرمنال، يتعامل مع APIs. الرابع هو التخطيط (Planning) — القدرة إنه يقسم الهدف الكبير لخطوات صغيرة وينفذها بالترتيب الصح.
+
+الفريق بين الوكيل والشات بوت العادي واضح جدًا. الشات بوت لو سألتو "إزاي أعمل نظام إشعارات؟" هيديك شرح نظري وأمثلة كود. الوكيل لو قلتو "ضيف نظام إشعارات في مشروعي"، هيقرأ الكود بتاعك، يفهم الهيكل، يضيف الإشعارات في المكان الصح، يربطها بالـ database، ويختبرها. ده تحول جوهري — من استشارة لتنفيذ.
+
+في مشاريعي الشخصية، بدأت أستفيد من الوكلاء بشكل عملي. في مشروع إسمع راديو، استخدمت وكيل ذكي عشان يعمل تحليل شامل لأداء التطبيق. الوكيل قرأ الـ Lighthouse report، حلل الـ bundle size، واقترح تحسينات محددة مع الكود الجاهز. كان هيأخذ مني يوم كامل أعمل التحليل ده يدويًا، لكن الوكيل خلصه في دقائق. كمان في طمني، استخدمت وكيل عشان يكتب اختبارات (Tests) للأجزاء اللي متصلة بمشاركة الموقع — وكتب كود اختبار شامل غطّى حالات كنت هنساها لو كتبت الاختبارات لوحدي.
+
+فكرة الوكلاء المتعدين (Multi-Agent Systems) هي الخطوة الجاية. بدل ما وكيل واحد يعمل كل حاجة، عندك فريق وكلاء: واحد متخصص في التصميم، واحد في الـ backend، واحد في الـ frontend، واحد في الاختبارات. كل واحد بيشتغل في مجاله وبيتواصل مع الباقيين. تخيل مشروع زي معركة الأسئلة — وكيل يكتب الـ Socket.io logic، ووكيل يصمم واجهة غرفة اللعب، ووكيل يكتب اختبارات الضغط. كل دول بيشتغلوا بالتوازي وبينسقوا مع بعض. ده مش خيال علمي — ده بيحصل دلوقتي.
+
+طيب هل الوكلاء هيستبدلونا كمطورين؟ الإجابة القصيرة: لا. الإجابة الطويلة: لا، بس هتغيّر طريقة شغلنا تمامًا. الوكلاء ممتازين في المهام المتكررة والمعرفة، لكن لسه محتاجين حد يحدد الهدف الصح، يراجع النتائج، ويتخذ القرارات اللي محتاجة سياق بشري. في نظام الإقبال، الوكيل يقدر يكتب كود الـ form validation بسرعة، لكن التصميم القرارات زي إزاي نخلي التجربة سهلة للطالب — دي محتاجة تفكير بشري.
+
+من التحديات الحقيقية للوكلاء: الهلوسة (Hallucination). الوكيل ممكن ياخد قرار غلط ويكمل عليه، وده بيضيع وقت أكتر لو مكنتش بتراجع. كمان مشكلة الحلقة اللانهائية — الوكيل ممكن يدور في حلقة مفرغة لو المشكلة معقدة ومش عارف يحلها. الحل إنك تحط حدود واضحة: أقصى عدد خطوات، نقاط مراجعة في النص، وآلية إيقاف لو الوكيل حاسس إنه مش بيتقدم.
+
+نصيحتي لأي مطور عايز يبدأ مع الوكلاء: ابدأ بأدوات زي Claude Code أو Cursor Agent على مشاريع صغيرة. جرّب تعطي الوكيل مهام محددة وواضحة وشوف النتائج. متتوقعش الكمال من أول مرة — هتلاحظ إن الوكيل بيعمل حاجات كويسة وحاجات محتاجة تعديل. بس مع الوقت هتتعلم إزاي تكتب الأوامر (Prompts) بطريقة تخلي الوكيل ينتج نتائج أفضل. المستقبل مش للوكيل لوحده ولا للمطور لوحده — المستقبل للمطور اللي بيستخدم الوكلاء بذكاء.`,
+      en: `If you asked anyone in tech in 2024 about AI, they'd say ChatGPT and leave it at that. But 2025 and 2026 changed the game entirely. We're no longer talking about a model that responds to a question with an answer — we're talking about agents that can think, plan, and execute complex tasks on their own. The difference between a chatbot and an agent is like the difference between a receptionist and a project manager. The former answers your questions; the latter takes a goal from you and achieves it from first step to last.
+
+What exactly is an AI Agent? An agent is an AI system capable of achieving a complex goal through a sequence of independent steps. It's not just "write me code" and it writes — you say "build me a complete login page with validation, database integration, and good UX" and it plans the steps: first it designs the interface, then writes the API, then connects the database, adds validation, and tests everything. All on its own without you intervening at every step.
+
+An AI agent has four essential components: First, the engine (LLM) like Claude or GPT — the brain that thinks and makes decisions. Second, memory — the agent needs to remember what it's done and what's left to do, achieved through conversation context or long-term memory. Third, tools — the agent can browse the web, read and write files, run terminal commands, and interact with APIs. Fourth, planning — the ability to break a large goal into small steps and execute them in the right order.
+
+The difference between an agent and a regular chatbot is clear. A chatbot asked "how do I build a notification system?" gives you theoretical explanation and code examples. An agent told "add a notification system to my project" reads your code, understands the architecture, adds notifications in the right place, connects them to the database, and tests them. This is a fundamental shift — from consultation to execution.
+
+In my own projects, I've started leveraging agents practically. In the Esma3 Radio project, I used an AI agent to do a comprehensive performance analysis. The agent read the Lighthouse report, analyzed the bundle size, and suggested specific improvements with ready-to-use code. It would have taken me a full day to do that analysis manually, but the agent completed it in minutes. In Tammeny, I used an agent to write tests for the location sharing components — it wrote comprehensive test code that covered edge cases I would have missed if I wrote the tests myself.
+
+The concept of Multi-Agent Systems is the next step. Instead of one agent doing everything, you have a team of agents: one specialized in design, one in backend, one in frontend, one in testing. Each works in their domain and communicates with the others. Imagine a project like Battle of Questions — one agent writes the Socket.io logic, another designs the game room interface, and another writes stress tests. All working in parallel and coordinating with each other. This isn't science fiction — it's happening right now.
+
+So will agents replace us as developers? The short answer: no. The long answer: no, but they'll completely change how we work. Agents are excellent at repetitive and knowledge-based tasks, but they still need someone to define the right goal, review results, and make decisions that require human context. In Eleqbal Form, an agent can write form validation code quickly, but design decisions like how to make the experience easy for students — that needs human thinking.
+
+One of the real challenges with agents: hallucination. An agent can make a wrong decision and keep building on it, which wastes more time if you're not reviewing. There's also the infinite loop problem — an agent can get stuck in a loop if the problem is complex and it can't solve it. The solution is to set clear boundaries: maximum number of steps, review checkpoints, and a stop mechanism if the agent feels it's not making progress.
+
+My advice for any developer wanting to start with agents: begin with tools like Claude Code or Cursor Agent on small projects. Try giving the agent specific, clear tasks and see the results. Don't expect perfection on the first try — you'll notice the agent does some things well and others need adjustment. But over time, you'll learn how to write prompts in a way that gets better results from the agent. The future isn't for the agent alone or the developer alone — it's for the developer who uses agents intelligently.`,
+    },
+    tags: ["AI", "Web Development", "Future"],
+  },
+  {
+    slug: "ai-web-development",
+    image: "/blog/ai-web-development.png",
+    title: { ar: "الذكاء الاصطناعي في تطوير الويب: من المساعد للشريك", en: "AI in Web Development: From Assistant to Partner" },
+    date: "2026-06-01",
+    excerpt: {
+      ar: "كيف تحول الذكاء الاصطناعي من مجرد مساعد لكتابة الكود لشريك حقيقي في عملية التطوير — من Copilot لCursor لتجربة التطوير بالكامل.",
+      en: "How AI evolved from a simple code assistant to a true development partner — from Copilot to Cursor and the complete development experience.",
+    },
+    content: {
+      ar: `أنا عارف إن فيه ناس لسه بتتعامل مع الذكاء الاصطناعي كأنه مجرد "أوتوكومبليت ذكي" — بتكتب سطر وبيكمللك الباقي. بس الحقيقة إن الذكاء الاصطناعي في تطوير الويب عدّى المرحلة دي من زمان. دلوقتي بقى شريك حقيقي في عملية التطوير: بيفهم السياق، بيقترح حلول معمارية، بيكتب كود كامل، بيشتغل معاك على حل المشاكل. في المقال ده هشارك إزاي غيّر الذكاء الاصطناعي طريقة شغلي كمطور ويب، من أول GitHub Copilot لحد الأدوات اللي بنستخدمها النهاردة.
+
+مرحلة المساعد (2022-2023) كانت أول ظهور لـ GitHub Copilot. الفكرة كانت بسيطة: تكتب تعليق أو بداية دالة والـ AI يكمل الكود. كانت مفيشة كتير بس وفّرت وقت فعلاً. كنت بكتب تعليق زي "// function to validate Egyptian phone number" وCopilot بيكتب الدالة كاملة. بس كانت مشاكله كتير: بيقترح كود من مكتبات قديمة، مش بيفهم السياق الكبير للمشروع، وبمرات بيـ hallucinate دوال مش موجودة. في مشاريعي زي إسمع راديو، كان بيساعد في المهام الصغيرة زي كتابة CSS أو دوال مساعدة، بس أي حاجة أكتر من كده كنت لازم أكتبها بنفسي.
+
+مرحلة الشريك (2024-2025) غيّرت كل حاجة. أدوات زي Cursor ظهرت وفهمت إن الـ AI محتاج يفهم المشروع كله مش بس الملف اللي شغال فيه. Cursor بيقرأ كل الملفات، يفهم الـ architecture، وبيقترح تغييرات متناسقة مع باقي المشروع. في مشروع المخبر، كنت عايز أضيف ميزة جديدة في غرفة اللعب. بدل ما أشرح للـ AI كل حاجة من الأول، Cursor فهم السياق لوحده لأنه قرأ الكود كله. اقترح حل كان متناسق مع الـ pattern اللي كنت بتستخدمه في باقي المشروع. ده الفرق الحقيقي — الـ AI بقا فاهم السياق مش بس بيخمن.
+
+استخدام الذكاء الاصطناعي في الـ Debugging كان نقطة تحول كبيرة. قبل كده، لما كنت بلاقي Bug في تطبيق زي معركة الأسئلة — وليكن مشكلة إن اللاعبين مش شايفين نفس النقاط في نفس الوقت — كنت بقعد أحلل الـ Socket.io events يدويًا، أقرأ اللوجات، أحاول أعيد المشكلة. دلوقتي بقى بقول للـ AI "اللاعبين شايفين سكور مختلف" وبيحلل الكود ويلاقي إن المشكلة في Race condition في الـ event handler. الـ AI مش بيحل مكانك، بس بيوصلك للحل أسرع بكتير.
+
+في التصميم، الذكاء الاصطناعي بقا مساعد حقيقي. أدوات زي v0 بتقدر تحول وصف نصي لـ UI component كامل. في تطبيق إيه الكلام، كنت عايز تصميم كارد للترند المصري فيه صورة وعنوان وعدد المشاركات. وصفت التصميم لـ v0 ولقيت كارد جاهز بـ Tailwind تقريبًا مطابق للي كنت متخيله. عدلت عليه شوية وخلصت. قبل كده كنت هقعد ساعة أصمم الكارد ده من الصفر.
+
+الاختبارات (Testing) من أكتر المجالات اللي الذكاء الاصطناعي أثر فيها. كتابة الاختبارات كانت دايمًا من أكتر الحاجات اللي المطورين بيكرهوها — مملة ومحتاجة وقت وبتتنسى بسهولة. في نظام الإقبال، استخدمت AI عشان يكتب اختبارات شاملة لنموذج التسجيل. الوكيل كتب اختبارات لكل حاجة: الإيميل الغلط، الرقم المصري بصيغ مختلفة، الحقول الفاضية، الـ SQL injection. اللي كان هياخد مني يوم كامل اختبارات خلصته في نص ساعة.
+
+طيب إيه اللي الذكاء الاصطناعي لسه بيتعثر فيه؟ أول حاجة: فهم النية الحقيقية خلف الطلب. أحيانًا بطلب حاجة والـ AI بيفهمها بطريقة تانية وبيعمل حاجة شبه الصح بس مش الصح. مثلًا في طمني، طلبت من الـ AI "أضف ميزة إشعار لما حد يوصل لموقعك" — هو فهم إنني عايز Push Notification، بس أنا كنت قصدي إشعار جوه التطبيق نفسه. الفرق دقيق بس مهم. تاني حاجة: الـ AI بيحب يعمل Over-engineering. بتطلب حاجة بسيطة بيرد بحل معقد فيه Design Patterns وتقنيات مش محتاجها. عشان كده دايمًا بيكون لازم تبقى واضح ومحدد في طلباتك.
+
+من أكتر الأسئلة اللي بتتسأل: هل الذكاء الاصطناعي هيستبدل المطورين؟ رأيي الشخصي: لا، بس هيستبدل المطورين اللي مش بيستخدموا الذكاء الاصطناعي. الفرق زي اللي بيكتب بالقلم واللي بيستخدم الكيبورد — الاتنين بيكتوب، بس التاني أسرع بكتير. المطور اللي بيستخدم AI بيقدر يبني في يوم واحد اللي المطور العادي بيستنى أسبوع يعمله. بس في حاجات الـ AI مش هيقدر يعملها: يفهم احتياجات العميل الحقيقية، يتخذ قرارات معمارية بناءً على سياق المشروع، ويبدع في الحلول. التفكير النقدي والإبداع لسه بشريين.
+
+نصيحتي لأي مطور: ابدأ دمج الذكاء الاصطناعي في ورقتك تدريجيًا. مش لازم تستخدمه في كل حاجة من أول يوم. ابدأ بالحاجات اللي بتاخد وقت كبير وبتكون مملة: كتابة الاختبارات، التوثيق، الـ refactoring. وبعدين تدريجيًا استخدمه في مهام أكبر زي تصميم المكونات وكتابة الـ APIs. المهم إنك تراجع كل حاجة الـ AI بيولّدها — متنساش إنك أنت المسؤول عن الكود في الآخر. الذكاء الاصطناعي شريك قوي جدًا، بس الشريك محتاج حد يوجهه.`,
+      en: `I know some people still treat AI like a "smart autocomplete" — you write a line and it finishes the rest. But the truth is, AI in web development passed that stage a long time ago. It's now a true partner in the development process: it understands context, suggests architectural solutions, writes complete code, and works with you to solve problems. In this article, I'll share how AI has changed my workflow as a web developer, from the early GitHub Copilot days to the tools we use today.
+
+The Assistant Phase (2022-2023) was the first appearance of GitHub Copilot. The idea was simple: you write a comment or the beginning of a function and AI completes the code. It wasn't much, but it genuinely saved time. I'd write a comment like "// function to validate Egyptian phone number" and Copilot would write the entire function. But it had many issues: it suggested code from outdated libraries, didn't understand the bigger context of the project, and sometimes hallucinated functions that didn't exist. In my projects like Esma3 Radio, it helped with small tasks like writing CSS or utility functions, but anything beyond that I had to write myself.
+
+The Partner Phase (2024-2025) changed everything. Tools like Cursor appeared and understood that AI needs to understand the whole project, not just the file you're working in. Cursor reads all files, understands the architecture, and suggests changes consistent with the rest of the project. In the Elmokhber project, I wanted to add a new feature to the game room. Instead of explaining everything to AI from scratch, Cursor understood the context on its own because it read all the code. It suggested a solution that was consistent with the pattern I was using throughout the project. That's the real difference — AI now understands context instead of just guessing.
+
+Using AI for debugging was a major turning point. Before, when I found a bug in an app like Battle of Questions — say, players not seeing the same scores at the same time — I'd sit and manually analyze the Socket.io events, read logs, and try to reproduce the problem. Now I tell AI "players are seeing different scores" and it analyzes the code and finds that the issue is a race condition in the event handler. AI doesn't solve it for you, but it gets you to the solution much faster.
+
+In design, AI has become a real assistant. Tools like v0 can turn a text description into a complete UI component. In the Eah ElKalam app, I wanted a card design for Egyptian trends with an image, title, and share count. I described the design to v0 and got a complete card with Tailwind that was almost exactly what I imagined. I tweaked it a bit and was done. Previously, I would have spent an hour designing that card from scratch.
+
+Testing is one of the areas where AI has had the biggest impact. Writing tests was always one of the things developers hate most — tedious, time-consuming, and easily forgotten. In Eleqbal Form, I used AI to write comprehensive tests for the registration form. The agent wrote tests for everything: invalid email, Egyptian phone numbers in different formats, empty fields, SQL injection. What would have taken me a full day of testing took half an hour.
+
+So what does AI still struggle with? First: understanding the real intent behind a request. Sometimes I ask for something and AI interprets it differently and produces something almost right but not quite. For example, in Tammeny, I asked AI to "add a notification feature when someone accesses your location" — it understood I wanted Push Notifications, but I meant an in-app notification. The difference is subtle but important. Second: AI loves over-engineering. You ask for something simple and it responds with a complex solution full of Design Patterns and techniques you don't need. That's why you always need to be clear and specific in your requests.
+
+One of the most frequently asked questions: will AI replace developers? My personal opinion: no, but it will replace developers who don't use AI. The difference is like someone writing with a pen versus someone using a keyboard — both write, but the latter is much faster. A developer using AI can build in one day what a traditional developer takes a week to do. But there are things AI can't do: understand real client needs, make architectural decisions based on project context, and be creative in solutions. Critical thinking and creativity are still human.
+
+My advice for any developer: start integrating AI into your workflow gradually. You don't have to use it for everything from day one. Start with things that take a lot of time and are tedious: writing tests, documentation, refactoring. Then gradually use it for bigger tasks like designing components and writing APIs. The important thing is to review everything AI generates — don't forget that you're ultimately responsible for the code. AI is a powerful partner, but a partner needs someone to guide them.`,
+    },
+    tags: ["AI", "Web Development", "Productivity"],
   }
 ];
