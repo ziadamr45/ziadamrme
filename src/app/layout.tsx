@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import { Providers } from "@/components/providers";
+import { Footer } from "@/components/footer";
 
 export const viewport: Viewport = {
   width: "device-width",
@@ -188,7 +189,7 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
         />
       </head>
-      <body className="antialiased"><Providers>{children}</Providers></body>
+      <body className="antialiased"><Providers>{children}<Footer /></Providers></body>
     </html>
   );
 }

@@ -200,12 +200,6 @@ export default function ProjectsPage() {
         </div>
       </section>
 
-      {/* FOOTER */}
-      <footer className="w-full pb-8 pt-4 mt-auto">
-        <p className="text-xs text-slate-400 dark:text-slate-500 text-center">
-          &copy; {new Date().getFullYear()} Ziad Amr
-        </p>
-      </footer>
     </div>
   );
 }
